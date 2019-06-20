@@ -22,7 +22,7 @@ class Posts extends REST_Controller
         // Posts from a data store e.g. database
         $posts = $this->posts_model->_get_all();
 
-        $id = $this->uri->segment(4);
+        $id = $this->get('id');
 
         // If the id parameter doesn't exists return all the posts
         if (empty($id)) {
