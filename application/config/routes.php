@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
 
 // Home
 $route['posts'] = 'home/posts/posts';
@@ -59,6 +59,6 @@ $route['posts/format/(:any)'] = 'home/posts/posts/format/$1';
 $route['post/id/(:num)'] = 'home/posts/post/id/$1';
 $route['post/id/(:num)/format/(:any)'] = 'home/posts/post/id/$1/format/$2';
 $route['post/create'] = 'home/posts/create';
-$route['post/update/id/(:num)'] = 'home/posts/update/id/$1';
-$route['post/soft-delete/id/(:num)'] = 'home/posts/soft_delete/id/$1';
-$route['post/hard-delete/id/(:num)'] = 'home/posts/hard_delete/id/$1';
+$route['post/id/(:num)/update'] = 'home/posts/update/id/$1';
+$route['post/id/(:num)/soft_delete'] = 'home/posts/soft_delete/id/$1';
+$route['post/id/(:num)/hard_delete'] = 'home/posts/hard_delete/id/$1';
