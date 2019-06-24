@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'mountcarmel',
+    'hostname' => '192.168.254.109',
+    'username' => 'mtcarmel',
+    'password' => '123456',
+    'database' => 'mountcarmel',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

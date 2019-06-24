@@ -9,7 +9,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Posts extends REST_Controller
+class History extends REST_Controller
 {
     function __construct()
     {
@@ -17,17 +17,17 @@ class Posts extends REST_Controller
         parent::__construct();
     }
 
-    public function posts_get()
+    public function history_get()
     {
-        // Posts from a data store e.g. database
-        $posts = $this->posts_model->_get_all();
+        // History from a data store e.g. database
+        $history = $this->history_model->_get_all();
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the posts
+        // If the id parameter doesn't exists return all the history
         if (empty($id)) {
-            // Check if the posts data store contains posts (in case the database result returns NULL)
-            if (empty($posts)) {
+            // Check if the history data store contains history (in case the database result returns NULL)
+            if (empty($history)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -35,7 +35,7 @@ class Posts extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($history, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -46,9 +46,9 @@ class Posts extends REST_Controller
         }
     }
 
-    public function post_get()
+    public function histories_get()
     {
-        // Find and return a single record for a particular post.
+        // Find and return a single record for a particular history.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -60,27 +60,29 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
+        // Get the histories from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        $histories = $this->history_model->_get_by_id($id);
 
-        if (empty($post)) {
+        if (empty($histories)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($post, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($histories, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function create_post()
+    public function create_histories()
     {
         $data = [
             'branch_id' => 1,
-            'title' => $this->post('title'),
+            'date_of_establishment' => $this->post('date_of_establishment'),
+            'feast_day' => $this->post('feast_day'),
+            'titular' => $this->post('titular'),
+            'diocese' => $this->post('diocese'),
             'content' => $this->post('content'),
-            'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -94,7 +96,7 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->posts_model->_create($data);
+            $this->history_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -107,14 +109,16 @@ class Posts extends REST_Controller
 {
     $data = [
         'branch_id' => $this->put('branch_id'),
-        'title' => $this->put('title'),
+        'date_of_establishment' => $this->put('date_of_establishment'),
+        'feast_day' => $this->put('feast_day'),
+        'titular' => $this->put('titular'),
+        'diocese' => $this->put('diocese'),
         'content' => $this->put('content'),
-        'media_id' => $this->put('media_id'),
         'updated_by' => $this->put('user_id'),
         'dt_updated' => date('Y-m-d H:i:s')
     ];
 
-    // Find and return a single record for a particular post.
+    // Find and return a single record for a particular histories.
     $id = (int)$this->get('id');
 
     // Validate the id.
@@ -126,11 +130,11 @@ class Posts extends REST_Controller
         ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
     }
 
-    // Get the post from the array, using the id as key for retrieval.
+    // Get the histories from the array, using the id as key for retrieval.
     // Usually a model is to be used for this.
-    $post = $this->posts_model->_get_by_id($id);
+    $histories = $this->history_model->_get_by_id($id);
 
-    if (empty($post)) {
+    if (empty($histories)) {
         $this->response([
             'status' => FALSE,
             'message' => 'Not Found'
@@ -146,7 +150,7 @@ class Posts extends REST_Controller
         ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
     } else {
         // If data array does not contains NULL values, update the resource
-        $this->posts_model->_update($id, $data);
+        $this->history_model->_update($id, $data);
 
         $this->response([
             'status' => TRUE,
@@ -163,7 +167,7 @@ class Posts extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular post.
+        // Find and return a single record for a particular histories.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -175,11 +179,11 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
+        // Get the histories from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        $histories = $this->history_model->_get_by_id($id);
 
-        if (empty($post)) {
+        if (empty($histories)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -195,7 +199,7 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->posts_model->_update($id, $data);
+            $this->history_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -206,7 +210,7 @@ class Posts extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular post.
+        // Find and return a single record for a particular histories.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -218,11 +222,11 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
+        // Get the histories from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        $histories = $this->history_model->_get_by_id($id);
 
-        if (empty($post)) {
+        if (empty($histories)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -238,7 +242,7 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->posts_model->_hard_delete($id);
+            $this->history_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
@@ -249,5 +253,5 @@ class Posts extends REST_Controller
     }
 }
 
-/* End of file: Posts.php */
-/* Location: application/controller/home/Posts.php */
+/* End of file: History.php */
+/* Location: application/controller/basilica/History.php */
