@@ -60,7 +60,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the histories from the array, using the id as key for retrieval.
+        // Get the history from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
         $histories = $this->history_model->_get_by_id($id);
 
@@ -78,11 +78,6 @@ class History extends REST_Controller
     {
         $data = [
             'branch_id' => 1,
-            'date_of_establishment' => $this->post('date_of_establishment'),
-            'feast_day' => $this->post('feast_day'),
-            'titular' => $this->post('titular'),
-            'diocese' => $this->post('diocese'),
-            'content' => $this->post('content'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -109,16 +104,11 @@ class History extends REST_Controller
 {
     $data = [
         'branch_id' => $this->put('branch_id'),
-        'date_of_establishment' => $this->put('date_of_establishment'),
-        'feast_day' => $this->put('feast_day'),
-        'titular' => $this->put('titular'),
-        'diocese' => $this->put('diocese'),
-        'content' => $this->put('content'),
         'updated_by' => $this->put('user_id'),
         'dt_updated' => date('Y-m-d H:i:s')
     ];
 
-    // Find and return a single record for a particular histories.
+    // Find and return a single record for a particular history.
     $id = (int)$this->get('id');
 
     // Validate the id.
@@ -130,7 +120,7 @@ class History extends REST_Controller
         ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
     }
 
-    // Get the histories from the array, using the id as key for retrieval.
+    // Get the history from the array, using the id as key for retrieval.
     // Usually a model is to be used for this.
     $histories = $this->history_model->_get_by_id($id);
 
@@ -167,7 +157,7 @@ class History extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular histories.
+        // Find and return a single record for a particular history.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -179,7 +169,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the histories from the array, using the id as key for retrieval.
+        // Get the history from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
         $histories = $this->history_model->_get_by_id($id);
 
@@ -210,7 +200,7 @@ class History extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular histories.
+        // Find and return a single record for a particular history.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -222,7 +212,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the histories from the array, using the id as key for retrieval.
+        // Get the history from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
         $histories = $this->history_model->_get_by_id($id);
 
@@ -254,4 +244,4 @@ class History extends REST_Controller
 }
 
 /* End of file: History.php */
-/* Location: application/controller/basilica/History.php */
+/* Location: application/controller/home/History.php */

@@ -143,5 +143,12 @@ $autoload['language'] = array();
 $autoload['model'] = array(
     'posts_model',
     'ads_model',
-    'donations_model'
+    'donations_model',
+    'modules_model',
+    'schedules_model',
+    'priests_model',
+    'pastors_model',
+    'contacts_model',
+    'maps_model',
+    'history_model'
 );

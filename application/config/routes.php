@@ -126,14 +126,25 @@ $route['boundary/id/(:num)/soft_delete'] = 'basilica/boundaries/soft_delete/id/$
 $route['boundary/id/(:num)/hard_delete'] = 'basilica/boundaries/hard_delete/id/$1';
 
 // Basilica - Schedules
-$route['schedules'] = 'basilica/pastors/pastors';
-$route['pastors/format/(:any)'] = 'basilica/pastors/pastors/format/$1';
-$route['pastor/id/(:num)'] = 'basilica/pastors/pastor/id/$1';
-$route['pastor/id/(:num)/format/(:any)'] = 'basilica/pastors/pastor/id/$1/format/$2';
-$route['pastor/create'] = 'basilica/pastors/create';
-$route['pastor/id/(:num)/update'] = 'basilica/pastors/update/id/$1';
-$route['pastor/id/(:num)/soft_delete'] = 'basilica/pastors/soft_delete/id/$1';
-$route['pastor/id/(:num)/hard_delete'] = 'basilica/pastors/hard_delete/id/$1';
+$route['schedules'] = 'basilica/schedules/schedules';
+$route['schedules/format/(:any)'] = 'basilica/schedules/schedules/format/$1';
+$route['schedule/id/(:num)'] = 'basilica/schedules/schedule/id/$1';
+$route['schedule/id/(:num)/format/(:any)'] = 'basilica/schedules/schedule/id/$1/format/$2';
+$route['schedule/create'] = 'basilica/schedules/create';
+$route['schedule/id/(:num)/update'] = 'basilica/schedules/update/id/$1';
+$route['schedule/id/(:num)/soft_delete'] = 'basilica/schedules/soft_delete/id/$1';
+$route['schedule/id/(:num)/hard_delete'] = 'basilica/schedules/hard_delete/id/$1';
+
+// Basilica - Map
+$route['maps'] = 'basilica/maps/maps';
+$route['maps/format/(:any)'] = 'basilica/maps/maps/format/$1';
+$route['map/id/(:num)'] = 'basilica/maps/map/id/$1';
+$route['map/id/(:num)/format/(:any)'] = 'basilica/maps/map/id/$1/format/$2';
+$route['map/create'] = 'basilica/maps/create';
+$route['map/id/(:num)/update'] = 'basilica/maps/update/id/$1';
+$route['map/id/(:num)/soft_delete'] = 'basilica/maps/soft_delete/id/$1';
+$route['map/id/(:num)/hard_delete'] = 'basilica/maps/hard_delete/id/$1';
+
 
 // Send-Help
 $route['donations'] = 'send_help/donations/donations';
@@ -144,4 +155,14 @@ $route['donation/create'] = 'send_help/donations/create';
 $route['donation/id/(:num)/update'] = 'send_help/donations/update/id/$1';
 $route['donation/id/(:num)/soft_delete'] = 'send_help/donations/soft_delete/id/$1';
 $route['donation/id/(:num)/hard_delete'] = 'send_help/donations/hard_delete/id/$1';
+
+// Services / Modules
+$route['modules'] = 'services/modules/modules';
+$route['modules/format/(:any)'] = 'services/modules/modules/format/$1';
+$route['module/id/(:num)'] = 'services/modules/module/id/$1';
+$route['module/id/(:num)/format/(:any)'] = 'services/modules/module/id/$1/format/$2';
+$route['module/create'] = 'services/modules/create';
+$route['module/id/(:num)/update'] = 'services/modules/update/id/$1';
+$route['module/id/(:num)/soft_delete'] = 'services/modules/soft_delete/id/$1';
+$route['module/id/(:num)/hard_delete'] = 'services/modules/hard_delete/id/$1';
 
