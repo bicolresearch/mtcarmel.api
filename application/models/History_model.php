@@ -23,7 +23,7 @@ class History_model extends CI_Model
                 't1.titular,' .
                 't1.diocese,' .
                 't1.content,')
-            ->from('posts AS t1')
+            ->from('history AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0);
         $query = $this->db->get();
@@ -42,7 +42,7 @@ class History_model extends CI_Model
                 't1.titular,' .
                 't1.diocese,' .
                 't1.content,' )
-            ->from('posts AS t1')
+            ->from('history AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);

@@ -150,5 +150,6 @@ $autoload['model'] = array(
     'pastors_model',
     'contacts_model',
     'maps_model',
-    'history_model'
+    'history_model',
+    'boundaries_model'
 );
