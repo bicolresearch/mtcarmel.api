@@ -54,7 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
 // Home
-// Home - News & Updates / Post
 $route['posts'] = 'home/posts/posts';
 $route['posts/format/(:any)'] = 'home/posts/posts/format/$1';
 $route['post/id/(:num)'] = 'home/posts/post/id/$1';
@@ -75,7 +74,6 @@ $route['ads/id/(:num)/soft_delete'] = 'home/ads/soft_delete/id/$1';
 $route['ads/id/(:num)/hard_delete'] = 'home/ads/hard_delete/id/$1';
 
 // Basilica
-// Basilica - Contacts
 $route['contacts'] = 'basilica/contacts/contacts';
 $route['contacts/format/(:any)'] = 'basilica/contacts/contacts/format/$1';
 $route['contact/id/(:num)'] = 'basilica/contacts/contact/id/$1';

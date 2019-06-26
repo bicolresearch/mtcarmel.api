@@ -10,7 +10,7 @@ class Welcome extends CI_Controller
     public function index()
     {
         $view_data = [
-            'page_title' => 'API v1.0.0',
+            'page_title' => 'Mount Carmel API v1.0',
             'page_header' => 'Bicol Research'
         ];
 

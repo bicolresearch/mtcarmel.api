@@ -16,8 +16,6 @@ class Maps_model extends CI_Model
     {
         $this->db
             ->select(
-                't1.id,' .
-                't1.branch_id,' .
                 't1.lat,' .
                 't1.lng,')
             ->from('maps AS t1')
