@@ -27,7 +27,7 @@ class Donations_model extends CI_Model
             ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('media AS t3', 't3.id = t1.media_id', 'left')
             ->join('branch AS t4', 't4.id = t1.branch_id', 'left')
-            ->join('users_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
@@ -49,7 +49,7 @@ class Donations_model extends CI_Model
             ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('media AS t3', 't3.id = t1.media_id', 'left')
             ->join('branch AS t4', 't4.id = t1.branch_id', 'left')
-            ->join('users_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
         $query = $this->db->get();
