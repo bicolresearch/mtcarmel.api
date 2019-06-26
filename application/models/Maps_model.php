@@ -16,8 +16,10 @@ class Maps_model extends CI_Model
     {
         $this->db
             ->select(
-                't1.lat,' .
-                't1.lng,')
+                't1.id,' .
+                't1.branch_id,' .
+                't1.lng,' .
+                't1.lat')
             ->from('maps AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0);
