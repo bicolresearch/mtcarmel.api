@@ -20,9 +20,11 @@ class Schedules_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.day,' .
+                't2.name as language,' .
                 't1.time_from,' .
                 't1.time_to')
             ->from('schedules AS t1')
+            ->join('language AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0);
         $query = $this->db->get();
@@ -38,9 +40,11 @@ class Schedules_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.day,' .
+                't2.name as language,' .
                 't1.time_from,' .
                 't1.time_to')
             ->from('schedules AS t1')
+            ->join('language AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);

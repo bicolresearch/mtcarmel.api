@@ -16,13 +16,18 @@ class Donations_model extends CI_Model
     {
         $this->db
             ->select(
-                't1.id,' .
                 't1.branch_id,' .
+                't5.first_name,' .
+                't5.last_name,' .
                 't1.amount,' .
-                't2.full_path as cover_photo')
+                't1.dt_created as posted_on,' .
+                't2.name as donation_type,' .
+                't3.full_path as cover_photo')
             ->from('donations AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
+            ->join('media AS t3', 't3.id = t1.media_id', 'left')
+            ->join('branch AS t4', 't4.id = t1.branch_id', 'left')
+            ->join('users_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
@@ -33,13 +38,18 @@ class Donations_model extends CI_Model
     {
         $this->db
             ->select(
-                't1.id,' .
                 't1.branch_id,' .
+                't5.first_name,' .
+                't5.last_name,' .
                 't1.amount,' .
-                't2.full_path as cover_photo')
+                't1.dt_created as posted_on,' .
+                't2.name as donation_type,' .
+                't3.full_path as cover_photo')
             ->from('donations AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
+            ->join('media AS t3', 't3.id = t1.media_id', 'left')
+            ->join('branch AS t4', 't4.id = t1.branch_id', 'left')
+            ->join('users_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
         $query = $this->db->get();
