@@ -16,6 +16,7 @@ class Donations_model extends CI_Model
     {
         $this->db
             ->select(
+                't1.id,' .
                 't1.branch_id,' .
                 't5.first_name,' .
                 't5.last_name,' .
@@ -38,6 +39,7 @@ class Donations_model extends CI_Model
     {
         $this->db
             ->select(
+                't1.id,' .
                 't1.branch_id,' .
                 't5.first_name,' .
                 't5.last_name,' .
