@@ -17,9 +17,6 @@ class Maps extends REST_Controller
         parent::__construct();
     }
 
-    /**
-     * @throws Exception
-     */
     public function maps_get()
     {
         // Maps from a data store e.g. database
@@ -52,9 +49,6 @@ class Maps extends REST_Controller
 
     }
 
-    /**
-     * @throws Exception
-     */
     public function map_get()
     {
         // Find and return a single record for a particular map.
@@ -83,9 +77,6 @@ class Maps extends REST_Controller
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function create_map()
     {
         $data = [
@@ -114,9 +105,6 @@ class Maps extends REST_Controller
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function update_put()
     {
         $data = [
@@ -168,9 +156,6 @@ class Maps extends REST_Controller
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function soft_delete_put()
     {
         $data = [
@@ -220,9 +205,6 @@ class Maps extends REST_Controller
         }
     }
 
-    /**
-     * @throws Exception
-     */
     public function hard_delete_delete()
     {
         // Find and return a single record for a particular map.
@@ -269,4 +251,4 @@ class Maps extends REST_Controller
 }
 
 /* End of file: Maps.php */
-/* Location: application/controller/basilica/Maps.php*/
+/* Location: application/controller/basilica/Maps.php */
