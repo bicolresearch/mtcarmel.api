@@ -26,9 +26,11 @@ class Contacts_model extends CI_Model
                 't1.country,' .
                 't1.landline,' .
                 't1.mobile,' .
-                't1.email,')
+                't1.email,' .
+                't3.description as social_media')
             ->from('contacts AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+            ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')
             ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
@@ -49,9 +51,11 @@ class Contacts_model extends CI_Model
                 't1.country,' .
                 't1.landline,' .
                 't1.mobile,' .
-                't1.email,')
+                't1.email,' .
+                't3.description as social_media')
             ->from('contacts AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+            ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
         $query = $this->db->get();
