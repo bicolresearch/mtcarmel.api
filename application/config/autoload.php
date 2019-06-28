@@ -151,5 +151,6 @@ $autoload['model'] = array(
     'contacts_model',
     'maps_model',
     'history_model',
-    'boundaries_model'
+    'boundaries_model',
+    'locations_model'
 );

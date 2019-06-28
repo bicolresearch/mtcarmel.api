@@ -4,7 +4,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Maps_model extends CI_Model
+class Locations_model extends CI_Model
 {
 
     public function __construct()
@@ -18,12 +18,11 @@ class Maps_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.branch_id,' .
-            't1.lat,' .
-            't1.lng,')
-        ->from('maps AS t1')
+            't1.lat_center,' .
+            't1.lng_center,')
+        ->from('locations AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-        ->where('t1.is_deleted', 0)
-        ->order_by('t1.id', 'asc');
+        ->where('t1.is_deleted', 0);
 
         $query = $this->db->get();
 
@@ -36,13 +35,12 @@ class Maps_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.branch_id,' .
-            't1.lat,' .
-            't1.lng,')
-        ->from('maps AS t1')
+            't1.lat_center,' .
+            't1.lng_center,')
+        ->from('locations AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->where('t1.is_deleted', 0)        
-        ->where('t1.id', $id)
-        ->order_by('t1.id', 'asc');
+        ->where('t1.id', $id);
 
         $query = $this->db->get();
 
@@ -53,7 +51,7 @@ class Maps_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db->insert('maps', $data);
+        $this->db->insert('locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -64,7 +62,7 @@ class Maps_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('maps', $data);
+            ->update('locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -75,7 +73,7 @@ class Maps_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('maps', $data);
+            ->update('locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -86,7 +84,7 @@ class Maps_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->delete('maps');
+            ->delete('locations');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

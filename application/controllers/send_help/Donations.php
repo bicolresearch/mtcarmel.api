@@ -21,6 +21,7 @@ class Donations extends REST_Controller
     {
         // Donations from a data store e.g. database
         $donations = $this->donations_model->_get_all();
+        $totaldonations = $this->donations_model->_get_total_donations();
 
         $id = $this->get('id');
 
@@ -35,7 +36,10 @@ class Donations extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($donations, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response([
+                    'total donations' => $totaldonations,
+                    'donations' => $donations
+                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -71,6 +75,35 @@ class Donations extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
             $this->response($donation, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
+    }
+
+    public function total_donations_get()
+    {
+        // Donations from a data store e.g. database
+        $donations = $this->donations_model->_get_all_donations();
+
+        $amount = $this->get('amount');
+
+        // If the id parameter doesn't exists return all the donations
+        if (empty($amount)) {
+            // Check if the donations data store contains donations (in case the database result returns NULL)
+            if (empty($donations)) {
+                // Set the response and exit
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'Not Found'
+                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            } else {
+                // Set the response and exit
+                $this->response($donations, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            }
+        } else {
+            // Set the response and exit.
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 

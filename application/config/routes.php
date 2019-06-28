@@ -143,9 +143,19 @@ $route['map/id/(:num)/update'] = 'basilica/maps/update/id/$1';
 $route['map/id/(:num)/soft_delete'] = 'basilica/maps/soft_delete/id/$1';
 $route['map/id/(:num)/hard_delete'] = 'basilica/maps/hard_delete/id/$1';
 
+// Map Location
+$route['locations'] = 'basilica/locations/locations';
+$route['locations/format/(:any)'] = 'basilica/locations/locations/format/$1';
+$route['location/id/(:num)'] = 'basilica/locations/location/id/$1';
+$route['location/id/(:num)/format/(:any)'] = 'basilica/locations/location/id/$1/format/$2';
+$route['location/create'] = 'basilica/locations/create';
+$route['location/id/(:num)/update'] = 'basilica/locations/update/id/$1';
+$route['location/id/(:num)/soft_delete'] = 'basilica/locations/soft_delete/id/$1';
+$route['location/id/(:num)/hard_delete'] = 'basilica/locations/hard_delete/id/$1';
 
 // Send-Help
 $route['donations'] = 'send_help/donations/donations';
+$route['donations/amount/(:any)'] = 'send_help/donations/donations/amount/$1';
 $route['donations/format/(:any)'] = 'send_help/donations/donations/format/$1';
 $route['donation/id/(:num)'] = 'send_help/donations/donation/id/$1';
 $route['donation/id/(:num)/format/(:any)'] = 'send_help/donations/donation/id/$1/format/$2';
