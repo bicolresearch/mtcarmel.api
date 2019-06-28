@@ -23,7 +23,7 @@ class Donations_model extends CI_Model
                 't1.amount,' .
                 't1.dt_created as posted_on,' .
                 't2.name as donation_type,' .
-                't3.full_path as cover_photo')
+                't3.full_path as profile_photo')
             ->from('donations AS t1')
             ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('media AS t3', 't3.id = t1.media_id', 'left')
@@ -49,17 +49,17 @@ class Donations_model extends CI_Model
                 't1.amount,' .
                 't1.dt_created as posted_on,' .
                 't2.name as donation_type,' .
-                't3.full_path as cover_photo')
+                't3.full_path as profile_photo')
             ->from('donations AS t1')
             ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('media AS t3', 't3.id = t1.media_id', 'left')
             ->join('branch AS t4', 't4.id = t1.branch_id', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->where('t1.is_deleted', 0)
+            ->where('t1.id', $id)
             ->order_by('t1.dt_created', 'desc')
             ->order_by('t1.id', 'desc')
-            ->limit(30)
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
+            ->limit(30);
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
@@ -68,7 +68,8 @@ class Donations_model extends CI_Model
     public function _get_total_donations()
     {
         $this->db
-        ->select('(SELECT SUM(donations.amount) FROM donations) AS total_donations', FALSE); 
+            ->select('SUM(amount) AS donations')
+            ->from('donations');
 
         $query = $this->db->get();
 

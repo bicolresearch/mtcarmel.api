@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Donations.php
+    Location    : application/controllers/send_help/Donations.php
+    Purpose     : Donations Controller
+    Created     : 6/24/2019 by Sherlock Holmes
+    Updated     : 6/28/2019 by Sherlock Holmes
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -20,8 +29,10 @@ class Donations extends REST_Controller
     public function donations_get()
     {
         // Donations from a data store e.g. database
-        $donations = $this->donations_model->_get_all();
-        $totaldonations = $this->donations_model->_get_total_donations();
+        $donations = [
+            'total' => $this->donations_model->_get_total_donations(),
+            'list' => $this->donations_model->_get_all()
+        ];
 
         $id = $this->get('id');
 
@@ -36,10 +47,7 @@ class Donations extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response([
-                    'total donations' => $totaldonations,
-                    'donations' => $donations
-                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($donations, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -107,7 +115,7 @@ class Donations extends REST_Controller
         }
     }
 
-    public function create_donation()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
