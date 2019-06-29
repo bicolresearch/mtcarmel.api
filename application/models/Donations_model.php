@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Donations_model.php
+    Location    : application/models/Donations_model.php
+    Purpose     : Donations model
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -68,7 +77,7 @@ class Donations_model extends CI_Model
     public function _get_total_donations()
     {
         $this->db
-            ->select('SUM(amount) AS donations')
+            ->select('SUM(amount) AS amount')
             ->from('donations');
 
         $query = $this->db->get();
@@ -118,8 +127,3 @@ class Donations_model extends CI_Model
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 }
-
-/* 
- * end of file 
- * location: models/Donations_model.php
- */

@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Schedules_model.php
+    Location    : application/models/Schedules_model.php
+    Purpose     : Schedules model
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -95,8 +104,3 @@ class Schedules_model extends CI_Model
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 }
-
-/* 
- * end of file 
- * location: models/Schedules_model.php
- */

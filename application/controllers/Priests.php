@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Priests.php
+    Location    : application/controllers/Priests.php
+    Purpose     : Priests controller
+    Created     : 6/24/2019 by Spiderman
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -17,7 +26,7 @@ class Priests extends REST_Controller
         parent::__construct();
     }
 
-    public function priests_get()
+    public function index_get()
     {
         // Priests from a data store e.g. database
         $priests = $this->priests_model->_get_all();
@@ -74,7 +83,7 @@ class Priests extends REST_Controller
         }
     }
 
-    public function create_priest()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
@@ -242,6 +251,3 @@ class Priests extends REST_Controller
         }
     }
 }
-
-/* End of file: Priests.php */
-/* Location: application/controller/basilica/Priests.php */

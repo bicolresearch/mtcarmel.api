@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Ads_model.php
+    Location    : application/models/Ads_model.php
+    Purpose     : Ads model
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -89,8 +98,3 @@ class Ads_model extends CI_Model
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 }
-
-/* 
- * end of file 
- * location: models/Ads_model.php
- */

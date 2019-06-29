@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Contacts_model.php
+    Location    : application/models/Contacts_model.php
+    Purpose     : Contacts model
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -105,8 +114,3 @@ class Contacts_model extends CI_Model
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 }
-
-/*
- * end of file
- * location: models/Contacts_model.php
- */

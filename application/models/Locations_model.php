@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Locations_model.php
+    Location    : application/models/Locations_model.php
+    Purpose     : Locations model
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -89,7 +98,3 @@ class Locations_model extends CI_Model
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 }
-
-/* 
- * end of file 
- * location: models/Maps_model.php */

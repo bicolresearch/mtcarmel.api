@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Key.php
+    Location    : application/controllers/Key.php
+    Purpose     : API Key controller
+    Created     : 6/24/2019 by Spiderman
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 use Restserver\Libraries\REST_Controller;
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -185,7 +194,6 @@ class Key extends REST_Controller
     }
 
     /* Helper Methods */
-
     private function _generate_key()
     {
         do {
@@ -204,7 +212,6 @@ class Key extends REST_Controller
     }
 
     /* Private Data Methods */
-
     private function _get_key($key)
     {
         return $this->rest->db
@@ -244,6 +251,3 @@ class Key extends REST_Controller
             ->delete(config_item('rest_keys_table'));
     }
 }
-
-/* End of file: Key.php */
-/* Location: application/controller/Key.php */

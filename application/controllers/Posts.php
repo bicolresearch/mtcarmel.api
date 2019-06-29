@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Posts.php
+    Location    : application/controllers/Posts.php
+    Purpose     : Posts controller
+    Created     : 6/20/2019 by Spiderman
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -9,7 +18,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Maps extends REST_Controller
+class Posts extends REST_Controller
 {
     function __construct()
     {
@@ -17,21 +26,17 @@ class Maps extends REST_Controller
         parent::__construct();
     }
 
-    public function maps_get()
+    public function index_get()
     {
-        // Maps from a data store e.g. database
-        $maps = $this->maps_model->_get_all();
-
-        $locations = $this->locations_model->_get_all();
-
-        //var_dump($maps);
+        // Posts from a data store e.g. database
+        $posts = $this->posts_model->_get_all();
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the maps
+        // If the id parameter doesn't exists return all the posts
         if (empty($id)) {
-            // Check if the maps data store contains maps (in case the database result returns NULL)
-            if (empty($maps)) {
+            // Check if the posts data store contains posts (in case the database result returns NULL)
+            if (empty($posts)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -39,10 +44,7 @@ class Maps extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response([
-                    'locations' => $locations,
-                    'coordinates' => $maps,
-                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -51,12 +53,11 @@ class Maps extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
-
     }
 
-    public function map_get()
+    public function post_get()
     {
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular post.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -68,26 +69,27 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the post from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $post = $this->posts_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($post)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($map, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($post, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function create_map()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
-            'lat' => $this->post('lat'),
-            'lng' => $this->post('lng'),
+            'title' => $this->post('title'),
+            'content' => $this->post('content'),
+            'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -101,7 +103,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->maps_model->_create($data);
+            $this->posts_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -111,55 +113,56 @@ class Maps extends REST_Controller
     }
 
     public function update_put()
-    {
-        $data = [
-            'branch_id' => $this->put('branch_id'),
-            'lat' => $this->put('lat'),
-            'lng' => $this->put('lng'),
-            'updated_by' => $this->put('user_id'),
-            'dt_updated' => date('Y-m-d H:i:s')
-        ];
+{
+    $data = [
+        'branch_id' => $this->put('branch_id'),
+        'title' => $this->put('title'),
+        'content' => $this->put('content'),
+        'media_id' => $this->put('media_id'),
+        'updated_by' => $this->put('user_id'),
+        'dt_updated' => date('Y-m-d H:i:s')
+    ];
 
-        // Find and return a single record for a particular map.
-        $id = (int)$this->get('id');
+    // Find and return a single record for a particular post.
+    $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the map from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
-
-        if (empty($map)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
-        if (in_array(null, $data, true)) {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
-            // If data array does not contains NULL values, update the resource
-            $this->maps_model->_update($id, $data);
-
-            $this->response([
-                'status' => TRUE,
-                'message' => 'Updated'
-            ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-        }
+    // Validate the id.
+    if (empty($id)) {
+        // Invalid id, set the response and exit.
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Bad Request'
+        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
     }
+
+    // Get the post from the array, using the id as key for retrieval.
+    // Usually a model is to be used for this.
+    $post = $this->posts_model->_get_by_id($id);
+
+    if (empty($post)) {
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Not Found'
+        ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+    }
+
+    // Validate data array if it contains NULL value
+    if (in_array(null, $data, true)) {
+        // Set the response and exit
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Bad Request'
+        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    } else {
+        // If data array does not contains NULL values, update the resource
+        $this->posts_model->_update($id, $data);
+
+        $this->response([
+            'status' => TRUE,
+            'message' => 'Updated'
+        ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+    }
+}
 
     public function soft_delete_put()
     {
@@ -169,7 +172,7 @@ class Maps extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular post.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -181,11 +184,11 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the post from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $post = $this->posts_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($post)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -201,7 +204,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->maps_model->_update($id, $data);
+            $this->posts_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -212,7 +215,7 @@ class Maps extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular post.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -224,11 +227,11 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the post from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $post = $this->posts_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($post)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -244,7 +247,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->maps_model->_hard_delete($id);
+            $this->posts_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
@@ -254,6 +257,3 @@ class Maps extends REST_Controller
         }
     }
 }
-
-/* End of file: Maps.php */
-/* Location: application/controller/basilica/Maps.php */

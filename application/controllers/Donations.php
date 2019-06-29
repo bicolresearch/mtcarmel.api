@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Donations.php
+    Location    : application/controllers/Donations.php
+    Purpose     : Donations controller
+    Created     : 6/24/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -9,7 +18,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Ads extends REST_Controller
+class Donations extends REST_Controller
 {
     function __construct()
     {
@@ -17,17 +26,20 @@ class Ads extends REST_Controller
         parent::__construct();
     }
 
-    public function ads_get()
+    public function index_get()
     {
-        // Ads from a data store e.g. database
-        $ads = $this->ads_model->_get_all();
+        // Donations from a data store e.g. database
+        $donations = [
+            'total_donations' => $this->donations_model->_get_total_donations(),
+            'donations_list' => $this->donations_model->_get_all()
+        ];
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the ads
+        // If the id parameter doesn't exists return all the donations
         if (empty($id)) {
-            // Check if the ads data store contains ads (in case the database result returns NULL)
-            if (empty($ads)) {
+            // Check if the donations data store contains donations (in case the database result returns NULL)
+            if (empty($donations)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -35,7 +47,7 @@ class Ads extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($ads, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($donations, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -46,9 +58,9 @@ class Ads extends REST_Controller
         }
     }
 
-    public function ad_get()
+    public function donation_get()
     {
-        // Find and return a single record for a particular ad.
+        // Find and return a single record for a particular donation.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -60,26 +72,24 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ad from the array, using the id as key for retrieval.
+        // Get the donation from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $ad = $this->ads_model->_get_by_id($id);
+        $donation = $this->donations_model->_get_by_id($id);
 
-        if (empty($ad)) {
+        if (empty($donation)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($ad, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($donation, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function create_ad()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
-            'name' => $this->post('name'),
-            'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -93,7 +103,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->ads_model->_create($data);
+            $this->donations_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -106,13 +116,11 @@ class Ads extends REST_Controller
     {
         $data = [
             'branch_id' => $this->put('branch_id'),
-            'name' => $this->put('name'),
-            'media_id' => $this->put('media_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular ad.
+        // Find and return a single record for a particular donation.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -124,11 +132,11 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ad from the array, using the id as key for retrieval.
+        // Get the donation from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $ad = $this->ads_model->_get_by_id($id);
+        $donation = $this->donations_model->_get_by_id($id);
 
-        if (empty($ad)) {
+        if (empty($donation)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -144,7 +152,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->ads_model->_update($id, $data);
+            $this->donations_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -161,7 +169,7 @@ class Ads extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular ad.
+        // Find and return a single record for a particular donation.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -173,11 +181,11 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ad from the array, using the id as key for retrieval.
+        // Get the donation from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $ad = $this->ads_model->_get_by_id($id);
+        $donation = $this->donations_model->_get_by_id($id);
 
-        if (empty($ad)) {
+        if (empty($donation)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -193,7 +201,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->ads_model->_update($id, $data);
+            $this->donations_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -204,7 +212,7 @@ class Ads extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular ad.
+        // Find and return a single record for a particular donation.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -216,11 +224,11 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ad from the array, using the id as key for retrieval.
+        // Get the donation from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $ad = $this->ads_model->_get_by_id($id);
+        $donation = $this->donations_model->_get_by_id($id);
 
-        if (empty($ad)) {
+        if (empty($donation)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -236,7 +244,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->ads_model->_hard_delete($id);
+            $this->donations_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
@@ -246,6 +254,3 @@ class Ads extends REST_Controller
         }
     }
 }
-
-/* End of file: Ads.php */
-/* Location: application/controller/home/Ads.php */

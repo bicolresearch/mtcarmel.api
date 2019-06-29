@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Boundaries.php
+    Location    : application/controllers/Boundaries.php
+    Purpose     : Boundaries controller
+    Created     : 6/27/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -9,7 +18,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Locations extends REST_Controller
+class Boundaries extends REST_Controller
 {
     function __construct()
     {
@@ -17,17 +26,17 @@ class Locations extends REST_Controller
         parent::__construct();
     }
 
-    public function locations_get()
+    public function index_get()
     {
-        // Locations from a data store e.g. database
-        $locations = $this->locations_model->_get_all();
+        // Boundaries from a data store e.g. database
+        $boundaries = $this->boundaries_model->_get_all();
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the locations
+        // If the id parameter doesn't exists return all the boundaries
         if (empty($id)) {
-            // Check if the locations data store contains locations (in case the database result returns NULL)
-            if (empty($locations)) {
+            // Check if the boundaries data store contains boundaries (in case the database result returns NULL)
+            if (empty($boundaries)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -35,7 +44,7 @@ class Locations extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($locations, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($boundaries, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -46,9 +55,9 @@ class Locations extends REST_Controller
         }
     }
 
-    public function location_get()
+    public function boundary_get()
     {
-        // Find and return a single record for a particular location.
+        // Find and return a single record for a particular boundary.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -60,21 +69,21 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the location from the array, using the id as key for retrieval.
+        // Get the boundary from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $location = $this->location_model->_get_by_id($id);
+        $boundary = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($location)) {
+        if (empty($boundary)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($location, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($boundary, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function create_location()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
@@ -91,7 +100,7 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->contacts_model->_create($data);
+            $this->boundaries_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -108,7 +117,7 @@ class Locations extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular location.
+        // Find and return a single record for a particular boundary.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -120,11 +129,11 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the location from the array, using the id as key for retrieval.
+        // Get the boundary from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $location = $this->locations_model->_get_by_id($id);
+        $boundary = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($location)) {
+        if (empty($boundary)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -140,7 +149,7 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->locations_model->_update($id, $data);
+            $this->boundaries_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -157,7 +166,7 @@ class Locations extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular location.
+        // Find and return a single record for a particular boundary.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -169,11 +178,11 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the location from the array, using the id as key for retrieval.
+        // Get the boundary from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $location = $this->locations_model->_get_by_id($id);
+        $boundary = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($location)) {
+        if (empty($boundary)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -189,7 +198,7 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->locations_model->_update($id, $data);
+            $this->boundaries_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -200,7 +209,7 @@ class Locations extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular location.
+        // Find and return a single record for a particular boundary.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -212,11 +221,11 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the location from the array, using the id as key for retrieval.
+        // Get the boundary from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $location = $this->locations_model->_get_by_id($id);
+        $boundary = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($location)) {
+        if (empty($boundary)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -232,7 +241,7 @@ class Locations extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->locations_model->_hard_delete($id);
+            $this->boundaries_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
@@ -242,6 +251,3 @@ class Locations extends REST_Controller
         }
     }
 }
-
-/* End of file: Locations.php */
-/* Location: application/controller/basilica/Locations.php */

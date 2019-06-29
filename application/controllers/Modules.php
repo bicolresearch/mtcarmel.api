@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Modules.php
+    Location    : application/controllers/Modules.php
+    Purpose     : Modules controller
+    Created     : 6/24/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -17,7 +26,7 @@ class Modules extends REST_Controller
         parent::__construct();
     }
 
-    public function modules_get()
+    public function index_get()
     {
         // Modules from a data store e.g. database
         $modules = $this->modules_model->_get_all();
@@ -74,7 +83,7 @@ class Modules extends REST_Controller
         }
     }
 
-    public function create_module()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
@@ -248,6 +257,3 @@ class Modules extends REST_Controller
         }
     }
 }
-
-/* End of file: Modules.php */
-/* Location: application/controller/services/Modules.php */

@@ -1,5 +1,14 @@
 <?php
 
+/*
+    Filename    : Maps.php
+    Location    : application/controllers/Maps.php
+    Purpose     : Maps controller
+    Created     : 6/24/2019 by Scarlet Witch
+    Updated     : 6/28/2019 by Spiderman
+    Changes     : Changed commenting format
+*/
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
@@ -9,7 +18,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Schedules extends REST_Controller
+class Maps extends REST_Controller
 {
     function __construct()
     {
@@ -17,17 +26,20 @@ class Schedules extends REST_Controller
         parent::__construct();
     }
 
-    public function schedules_get()
+    public function index_get()
     {
-        // Schedules from a data store e.g. database
-        $schedules = $this->schedules_model->_get_all();
+        // Maps from a data store e.g. database
+        $maps = [
+            'map_center' => $this->locations_model->_get_all(),
+            'map_boundaries' => $this->maps_model->_get_all()
+        ];
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the schedules
+        // If the id parameter doesn't exists return all the maps
         if (empty($id)) {
-            // Check if the schedules data store contains schedules (in case the database result returns NULL)
-            if (empty($schedules)) {
+            // Check if the maps data store contains maps (in case the database result returns NULL)
+            if (empty($maps)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -35,7 +47,7 @@ class Schedules extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($schedules, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($maps, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -46,9 +58,9 @@ class Schedules extends REST_Controller
         }
     }
 
-    public function schedule_get()
+    public function map_get()
     {
-        // Find and return a single record for a particular schedule.
+        // Find and return a single record for a particular map.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -60,24 +72,26 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the map from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $map = $this->maps_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($map)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($schedule, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($map, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function create_schedule()
+    public function create_post()
     {
         $data = [
             'branch_id' => 1,
+            'lat' => $this->post('lat'),
+            'lng' => $this->post('lng'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -91,7 +105,7 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->schedules_model->_create($data);
+            $this->maps_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -104,11 +118,13 @@ class Schedules extends REST_Controller
     {
         $data = [
             'branch_id' => $this->put('branch_id'),
+            'lat' => $this->put('lat'),
+            'lng' => $this->put('lng'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular schedule.
+        // Find and return a single record for a particular map.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -120,11 +136,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the map from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $map = $this->maps_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($map)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -140,7 +156,7 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->schedules_model->_update($id, $data);
+            $this->maps_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -157,7 +173,7 @@ class Schedules extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular schedule.
+        // Find and return a single record for a particular map.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -169,11 +185,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the map from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $map = $this->maps_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($map)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -189,7 +205,7 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->schedules_model->_update($id, $data);
+            $this->maps_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -200,7 +216,7 @@ class Schedules extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular schedule.
+        // Find and return a single record for a particular map.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -212,11 +228,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the map from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $map = $this->maps_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($map)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -232,7 +248,7 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->schedules_model->_hard_delete($id);
+            $this->maps_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
@@ -242,6 +258,3 @@ class Schedules extends REST_Controller
         }
     }
 }
-
-/* End of file: Schedules.php */
-/* Location: application/controller/basilica/Schedules.php */
