@@ -14,7 +14,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Donation_Type_model extends CI_Model
+class Donation_type_model extends CI_Model
 {
 
     public function __construct()

@@ -20,7 +20,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Donation_Type extends REST_Controller
+class Donation_type extends REST_Controller
 {
     function __construct()
     {
