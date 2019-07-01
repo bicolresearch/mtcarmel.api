@@ -152,5 +152,6 @@ $autoload['model'] = array(
     'maps_model',
     'history_model',
     'boundaries_model',
-    'locations_model'
+    'locations_model',
+    'donation_type_model'
 );

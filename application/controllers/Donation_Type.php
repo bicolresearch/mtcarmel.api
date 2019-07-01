@@ -1,13 +1,15 @@
 <?php
 
 /*
-    Filename    : Maps.php
-    Location    : application/controllers/Maps.php
-    Purpose     : Maps controller
-    Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 7/1/2019 by Scarlet Witch
-    Changes     : Back to previous format for location
+    Filename    : Donation_Type.php
+    Location    : application/controllers/Donation_Type.php
+    Purpose     : Donation Type controller
+    Created     : 2019-07-01 16:15:16 by Scarlet Witch 
+    Updated     : 
+    Changes     : 
 */
+
+
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
@@ -18,7 +20,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Maps extends REST_Controller
+class Donation_Type extends REST_Controller
 {
     function __construct()
     {
@@ -28,18 +30,15 @@ class Maps extends REST_Controller
 
     public function index_get()
     {
-        // Maps from a data store e.g. database
-        $maps = [
-            'map_center' => $this->locations_model->_get_all(),
-            'map_boundaries' => $this->maps_model->_get_all()
-        ];
+        // Donation Type from a data store e.g. database
+        $donation_type = $this->donation_type_model->_get_all();
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the maps
+        // If the id parameter doesn't exists return all the Donation Type
         if (empty($id)) {
-            // Check if the maps data store contains maps (in case the database result returns NULL)
-            if (empty($maps)) {
+            // Check if the Donation Type data store contains Donation Type (in case the database result returns NULL)
+            if (empty($donation_type)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -47,7 +46,7 @@ class Maps extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($maps, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($donation_type, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.
@@ -58,9 +57,9 @@ class Maps extends REST_Controller
         }
     }
 
-    public function map_get()
+    public function history_get()
     {
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular Donation Type.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -72,17 +71,17 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the Donation Type from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $donation_type = $this->donation_type_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($donation_type)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($map, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($donation_type, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -90,8 +89,6 @@ class Maps extends REST_Controller
     {
         $data = [
             'branch_id' => 1,
-            'lat' => $this->post('lat'),
-            'lng' => $this->post('lng'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -105,7 +102,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, create new resource to database
-            $this->maps_model->_create($data);
+            $this->history_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -115,55 +112,53 @@ class Maps extends REST_Controller
     }
 
     public function update_put()
-    {
-        $data = [
-            'branch_id' => $this->put('branch_id'),
-            'lat' => $this->put('lat'),
-            'lng' => $this->put('lng'),
-            'updated_by' => $this->put('user_id'),
-            'dt_updated' => date('Y-m-d H:i:s')
-        ];
+{
+    $data = [
+        'branch_id' => $this->put('branch_id'),
+        'updated_by' => $this->put('user_id'),
+        'dt_updated' => date('Y-m-d H:i:s')
+    ];
 
-        // Find and return a single record for a particular map.
-        $id = (int)$this->get('id');
+    // Find and return a single record for a particular Donation Type.
+    $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the map from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
-
-        if (empty($map)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
-        if (in_array(null, $data, true)) {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
-            // If data array does not contains NULL values, update the resource
-            $this->maps_model->_update($id, $data);
-
-            $this->response([
-                'status' => TRUE,
-                'message' => 'Updated'
-            ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-        }
+    // Validate the id.
+    if (empty($id)) {
+        // Invalid id, set the response and exit.
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Bad Request'
+        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
     }
+
+    // Get the Donation Type from the array, using the id as key for retrieval.
+    // Usually a model is to be used for this.
+    $donation_types = $this->donation_type_model->_get_by_id($id);
+
+    if (empty($donation_types)) {
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Not Found'
+        ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+    }
+
+    // Validate data array if it contains NULL value
+    if (in_array(null, $data, true)) {
+        // Set the response and exit
+        $this->response([
+            'status' => FALSE,
+            'message' => 'Bad Request'
+        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+    } else {
+        // If data array does not contains NULL values, update the resource
+        $this->donation_type_model->_update($id, $data);
+
+        $this->response([
+            'status' => TRUE,
+            'message' => 'Updated'
+        ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+    }
+}
 
     public function soft_delete_put()
     {
@@ -173,7 +168,7 @@ class Maps extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular Donation Type.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -185,11 +180,11 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the Donation Type from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $donation_types = $this->donation_type_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($donation_types)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -205,7 +200,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->maps_model->_update($id, $data);
+            $this->donation_type_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -216,7 +211,7 @@ class Maps extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular map.
+        // Find and return a single record for a particular Donation Type.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -228,11 +223,11 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
+        // Get the Donation Type from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $map = $this->maps_model->_get_by_id($id);
+        $donation_types = $this->donation_type_model->_get_by_id($id);
 
-        if (empty($map)) {
+        if (empty($donation_types)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -248,7 +243,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->maps_model->_hard_delete($id);
+            $this->donation_type_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([
