@@ -55,7 +55,7 @@ class Donations_model extends CI_Model
                 't1.branch_id,' .
                 't5.first_name,' .
                 't5.last_name,' .
-                't1.amount,' .
+                'FORMAT(t1.amount, 0),' .
                 't1.dt_created as posted_on,' .
                 't2.name as donation_type,' .
                 't3.full_path as profile_photo')
@@ -77,7 +77,7 @@ class Donations_model extends CI_Model
     public function _get_total_donations()
     {
         $this->db
-            ->select('SUM(amount) AS amount')
+            ->select('FORMAT(SUM(amount), 2) AS amount')
             ->from('donations');
 
         $query = $this->db->get();
