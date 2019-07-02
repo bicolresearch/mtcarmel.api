@@ -5,8 +5,8 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 6/20/2019 by Spiderman
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 7/02/2019 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -86,12 +86,12 @@ class Posts extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
             'title' => $this->post('title'),
             'content' => $this->post('content'),
             'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
-            'dt_created' => date('Y-m-d H:i:s'),
+            'dt_created' => date('Y-m-d H:i:s')
         ];
 
         // Validate data array if it contains NULL values
