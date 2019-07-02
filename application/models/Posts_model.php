@@ -5,8 +5,8 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 2019-07-02 13:41:04 by Scarlet Witch 
+    Changes     : Delete lower commenting 
 */
 
 if (!defined('BASEPATH')) {
@@ -109,7 +109,3 @@ class Posts_model extends CI_Model
     }
 }
 
-/* 
- * end of file 
- * location: models/Posts_model.php
- */
