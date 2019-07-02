@@ -5,9 +5,10 @@
     Location    : application/models/Donations_model.php
     Purpose     : Donations model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 2019-07-01 21:02:35 by Scarlet Witch 
+    Changes     : return back the amount (no format)
 */
+
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -55,7 +56,7 @@ class Donations_model extends CI_Model
                 't1.branch_id,' .
                 't5.first_name,' .
                 't5.last_name,' .
-                'FORMAT(t1.amount, 0),' .
+                't1.amount,' .
                 't1.dt_created as posted_on,' .
                 't2.name as donation_type,' .
                 't3.full_path as profile_photo')
@@ -77,7 +78,7 @@ class Donations_model extends CI_Model
     public function _get_total_donations()
     {
         $this->db
-            ->select('FORMAT(SUM(amount), 2) AS amount')
+            ->select('SUM(amount) AS amount')
             ->from('donations');
 
         $query = $this->db->get();
