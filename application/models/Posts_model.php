@@ -42,7 +42,7 @@ class Posts_model extends CI_Model
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
-
+    
     public function _get_by_id($id)
     {
         $this->db

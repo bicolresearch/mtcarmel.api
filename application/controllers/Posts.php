@@ -5,7 +5,7 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 6/20/2019 by Spiderman
-    Updated     : 7/02/2019 by Spiderman
+    Updated     : 7/03/2019 by Spiderman
     Changes     : 
 */
 
@@ -29,7 +29,23 @@ class Posts extends REST_Controller
     public function index_get()
     {
         // Posts from a data store e.g. database
-        $posts = $this->posts_model->_get_all();
+         $this->datatables
+            ->select(
+                't1.id,' .
+                't1.branch_id,' .
+                't1.title,' .
+                't1.content,' .
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on,' .
+                't4.username as author,' .
+                't2.full_path as cover_photo')
+            ->from('posts AS t1')
+            ->join('media AS t2', 't2.id = t1.media_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('users AS t4', 't4.id = t1.created_by', 'left')
+            ->where('t1.is_deleted', 0);
+
+        $posts = json_decode($this->datatables->generate());
 
         $id = $this->get('id');
 
@@ -113,56 +129,56 @@ class Posts extends REST_Controller
     }
 
     public function update_put()
-{
-    $data = [
-        'branch_id' => $this->put('branch_id'),
-        'title' => $this->put('title'),
-        'content' => $this->put('content'),
-        'media_id' => $this->put('media_id'),
-        'updated_by' => $this->put('user_id'),
-        'dt_updated' => date('Y-m-d H:i:s')
-    ];
+    {
+        $data = [
+            'branch_id' => $this->put('branch_id'),
+            'title' => $this->put('title'),
+            'content' => $this->put('content'),
+            'media_id' => $this->put('media_id'),
+            'updated_by' => $this->put('user_id'),
+            'dt_updated' => date('Y-m-d H:i:s')
+        ];
 
-    // Find and return a single record for a particular post.
-    $id = (int)$this->get('id');
+        // Find and return a single record for a particular post.
+        $id = (int)$this->get('id');
 
-    // Validate the id.
-    if (empty($id)) {
-        // Invalid id, set the response and exit.
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Bad Request'
-        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        // Validate the id.
+        if (empty($id)) {
+            // Invalid id, set the response and exit.
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+
+        // Get the post from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        $post = $this->posts_model->_get_by_id($id);
+
+        if (empty($post)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        }
+
+        // Validate data array if it contains NULL value
+        if (in_array(null, $data, true)) {
+            // Set the response and exit
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            // If data array does not contains NULL values, update the resource
+            $this->posts_model->_update($id, $data);
+
+            $this->response([
+                'status' => TRUE,
+                'message' => 'Updated'
+            ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
     }
-
-    // Get the post from the array, using the id as key for retrieval.
-    // Usually a model is to be used for this.
-    $post = $this->posts_model->_get_by_id($id);
-
-    if (empty($post)) {
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Not Found'
-        ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-    }
-
-    // Validate data array if it contains NULL value
-    if (in_array(null, $data, true)) {
-        // Set the response and exit
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Bad Request'
-        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-    } else {
-        // If data array does not contains NULL values, update the resource
-        $this->posts_model->_update($id, $data);
-
-        $this->response([
-            'status' => TRUE,
-            'message' => 'Updated'
-        ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-    }
-}
 
     public function soft_delete_put()
     {
