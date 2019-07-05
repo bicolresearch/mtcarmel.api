@@ -4,18 +4,16 @@
     Filename    : Posts.php
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
-    Created     : 6/20/2019 by Spiderman
-    Updated     : 7/03/2019 by Spiderman
-    Changes     : 
+    Created     : 06/20/2019 11:48:09 by Spiderman
+    Updated     : 07/05/2019 11:48:01 by Spiderman
+    Changes     : Change commenting format
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Posts extends REST_Controller
@@ -29,23 +27,7 @@ class Posts extends REST_Controller
     public function index_get()
     {
         // Posts from a data store e.g. database
-         $this->datatables
-            ->select(
-                't1.id,' .
-                't1.branch_id,' .
-                't1.title,' .
-                't1.content,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
-                't4.username as author,' .
-                't2.full_path as cover_photo')
-            ->from('posts AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('users AS t4', 't4.id = t1.created_by', 'left')
-            ->where('t1.is_deleted', 0);
-
-        $posts = json_decode($this->datatables->generate());
+        $posts = $this->posts_model->_get_all();
 
         $id = $this->get('id');
 

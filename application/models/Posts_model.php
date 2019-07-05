@@ -5,8 +5,8 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 2019-07-02 13:41:04 by Scarlet Witch 
-    Changes     : Delete lower commenting 
+    Updated     : 07/04/2019 15:35:23 by Spiderman
+    Changes     : Implement datatables 
 */
 
 if (!defined('BASEPATH')) {
@@ -23,7 +23,7 @@ class Posts_model extends CI_Model
 
     public function _get_all()
     {
-        $this->db
+        $this->datatables
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
@@ -38,9 +38,8 @@ class Posts_model extends CI_Model
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0);
-        $query = $this->db->get();
 
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
+        return json_decode($this->datatables->generate());
     }
     
     public function _get_by_id($id)
