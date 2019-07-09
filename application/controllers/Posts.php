@@ -113,11 +113,11 @@ class Posts extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => 1, //$this->put('branch_id'),
+            'branch_id' => $this->put('branch_id'),
             'title' => $this->put('title'),
-            'content' => 'sample', //$this->put('content'),
-            'media_id' => 1, //$this->put('media_id'),
-            'updated_by' => 1, //$this->put('user_id'),
+            'content' => $this->put('content'),
+            'media_id' => $this->put('media_id'),
+            'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 

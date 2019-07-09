@@ -154,5 +154,6 @@ $autoload['model'] = array(
     'history_model',
     'boundaries_model',
     'locations_model',
-    'donation_type_model'
+    'donation_type_model',
+    'auth_model'
 );
