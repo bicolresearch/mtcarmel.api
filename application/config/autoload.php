@@ -155,5 +155,6 @@ $autoload['model'] = array(
     'boundaries_model',
     'locations_model',
     'donation_type_model',
-    'auth_model'
+    'auth_model',
+    'user_profile_model'
 );
