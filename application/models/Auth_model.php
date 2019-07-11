@@ -5,8 +5,8 @@
     Location    : application/models/Auth_model.php
     Purpose     : Auth model
     Created     : 07/09/2019 10:01:25 by Spiderman
-    Updated     : 
-    Changes     : 
+    Updated     : 2019-07-11 15:34:24 by Scarlet Witch 
+    Changes     : added id 
 */
 
 if (!defined('BASEPATH')) {
@@ -24,7 +24,7 @@ class Auth_model extends CI_Model
     public function _get_all()
     {
         $this->db
-            ->select('username, password, role_id')
+            ->select('id, username, password, role_id')
             ->from('users')
             ->where('is_deleted', 0);
 
@@ -36,7 +36,7 @@ class Auth_model extends CI_Model
     public function _get_by_id($id)
     {
         $this->db
-            ->select('username, password, role_id')
+            ->select('id, username, password, role_id')
             ->from('users')
             ->where([
                 'is_deleted'=> 0,
@@ -51,7 +51,7 @@ class Auth_model extends CI_Model
     public function _get_by_username($username, $password)
     {
         $this->db
-            ->select('username, password, role_id')
+            ->select('id, username, password, role_id')
             ->from('users')
             ->where([
                 'is_deleted'=> 0,
