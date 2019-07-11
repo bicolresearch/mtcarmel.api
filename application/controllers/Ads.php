@@ -86,8 +86,9 @@ class Ads extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
             'name' => $this->post('name'),
+            'description' => $this->post('description'),
             'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
@@ -116,6 +117,7 @@ class Ads extends REST_Controller
         $data = [
             'branch_id' => $this->put('branch_id'),
             'name' => $this->put('name'),
+            'description' => $this->put('description'),
             'media_id' => $this->put('media_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')

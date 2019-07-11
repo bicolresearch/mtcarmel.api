@@ -85,7 +85,7 @@ class Auth extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
