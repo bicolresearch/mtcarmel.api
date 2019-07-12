@@ -24,7 +24,7 @@ class Auth_model extends CI_Model
     public function _get_all()
     {
         $this->db
-            ->select('id, username, password, role_id')
+            ->select('*')
             ->from('users')
             ->where('is_deleted', 0);
 
@@ -36,11 +36,15 @@ class Auth_model extends CI_Model
     public function _get_by_id($id)
     {
         $this->db
-            ->select('id, username, password, role_id')
+            ->select(
+                'id,' . 
+                'username,' . 
+                'password,' . 
+                'role_id')
             ->from('users')
             ->where([
-                'is_deleted'=> 0,
-                'id' => $id
+                'id' => $id,
+                'is_deleted'=> 0
             ]);
 
         $query = $this->db->get();
@@ -51,12 +55,16 @@ class Auth_model extends CI_Model
     public function _get_by_username($username, $password)
     {
         $this->db
-            ->select('id, username, password, role_id')
+            ->select(
+                'id,' . 
+                'username,' . 
+                'password,' . 
+                'role_id')
             ->from('users')
             ->where([
-                'is_deleted'=> 0,
                 'username' => $username,
-                'password' => $password
+                'password' => $password,
+                'is_deleted'=> 0
             ]);
 
         $query = $this->db->get();

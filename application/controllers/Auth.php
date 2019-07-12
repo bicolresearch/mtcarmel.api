@@ -53,7 +53,7 @@ class Auth extends REST_Controller
         }
     }
 
-    public function auth_get()
+    public function login_get()
     {
         // Find and return a single record for a particular ads.
         $username = (string) $this->get('username');
