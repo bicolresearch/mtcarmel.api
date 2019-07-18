@@ -92,8 +92,10 @@ class Users extends REST_Controller
         ];
 
         $arr2 = [
+            'email' => $this->post('email'),
             'first_name' => $this->post('first_name'),
             'last_name' => $this->post('last_name'),
+            'media_id' => $this->post('media_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
