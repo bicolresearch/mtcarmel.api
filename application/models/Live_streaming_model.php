@@ -1,20 +1,19 @@
 <?php
 
 /*
-    Filename    : Donation_type_model.php
-    Location    : application/models/Donation_type_model.php
-    Purpose     : Donation Type model
-    Created     : 2019-07-01 15:57:35 by Scarlet Witch
-    Updated     : 2019-07-02 19:24:48 by Scarlet Witch 
-    Changes     : update script, check the datenow if same month as scheduled
+    Filename    : Live_streaming_model.php
+    Location    : application/models/Live_streaming_model.php
+    Purpose     : Live streaming model
+    Created     : 07/19/2019 22:12:58 by Spiderman
+    Updated     : 
+    Changes     : 
 */
-
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Donation_type_model extends CI_Model
+class Live_streaming_model extends CI_Model
 {
 
     public function __construct()
@@ -24,24 +23,20 @@ class Donation_type_model extends CI_Model
 
     public function _get_all()
     {
-        $this->db
+        $this->datatables
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
-                't1.name,' .             
+                't1.title,' .
                 't1.description,' .
-                't3.name as schedule, '  .
-                't4.full_path as cover_photo')  
-            ->from('donation_type AS t1')
+                't1.video_url,' .
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on')
+            ->from('live_streaming AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->join('donation_schedule_type AS t3', 't3.id = t1.donation_schedule_type_id', 'left') 
-            ->join('media AS t4', 't4.id = t1.media_id', 'left')               
-            ->where_in('t3.name', array('Always', date('F')))   
             ->where('t1.is_deleted', 0);
-            
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
+        
+        return json_decode($this->datatables->generate());
     }
 
     public function _get_by_id($id)
@@ -50,17 +45,16 @@ class Donation_type_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
-                't1.name,' .             
+                't1.title,' .
                 't1.description,' .
-                't3.name as schedule, '  .
-                't4.full_path as cover_photo')  
-            ->from('donation_type AS t1')
+                't1.video_url,' .
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on')
+            ->from('live_streaming AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->join('donation_schedule_type AS t3', 't3.id = t1.donation_schedule_type_id', 'left') 
-            ->join('media AS t4', 't4.id = t1.media_id', 'left')               
-            ->where_in('t3.name', array('Always', date('F')))                  
-            ->where('t1.is_deleted', 0)            
+            ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
@@ -70,7 +64,7 @@ class Donation_type_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db->insert('donation_type', $data);
+        $this->db->insert('live_streaming', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -81,7 +75,7 @@ class Donation_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('donation_type', $data);
+            ->update('live_streaming', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -92,7 +86,7 @@ class Donation_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('donation_type', $data);
+            ->update('live_streaming', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -103,7 +97,7 @@ class Donation_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->delete('donation_type');
+            ->delete('live_streaming');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
