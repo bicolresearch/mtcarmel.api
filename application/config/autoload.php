@@ -156,5 +156,6 @@ $autoload['model'] = array(
     'locations_model',
     'donation_type_model',
     'users_model',
-    'live_streaming_model'
+    'live_streaming_model',
+    'media_model'
 );
