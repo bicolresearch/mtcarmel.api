@@ -5,9 +5,10 @@
     Location    : application/controllers/Schedules.php
     Purpose     : Schedules controller
     Created     : 6/24/2019 by Spiderman
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 07/23/2019 20:00:56 by Scarlet Witch
+    Changes     : update the script for datatables
 */
+
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
@@ -33,9 +34,9 @@ class Schedules extends REST_Controller
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the schedules
+        // If the id parameter doesn't exists return all the Schedules
         if (empty($id)) {
-            // Check if the schedules data store contains schedules (in case the database result returns NULL)
+            // Check if the Schedules data store contains Schedules (in case the database result returns NULL)
             if (empty($schedules)) {
                 // Set the response and exit
                 $this->response([
@@ -55,9 +56,9 @@ class Schedules extends REST_Controller
         }
     }
 
-    public function schedule_get()
+    public function schedules_get()
     {
-        // Find and return a single record for a particular schedule.
+        // Find and return a single record for a particular schedules.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -69,24 +70,29 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the Schedules from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $schedules = $this->schedules_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($schedules)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($schedule, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($schedules, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
+            'name' => $this->post('name'),
+            'description' => $this->post('description'),
+            'time_from' => $this->post('time_from'),
+            'time_to' => $this->post('time_to'),
+            'day' => $this->post('day'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -113,6 +119,11 @@ class Schedules extends REST_Controller
     {
         $data = [
             'branch_id' => $this->put('branch_id'),
+            'name' => $this->put('name'),
+            'description' => $this->put('description'),
+            'time_from' => $this->put('time_from'),
+            'time_to' => $this->put('time_to'),
+            'day' => $this->put('day'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -129,11 +140,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the Schedules from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $schedules = $this->schedules_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($schedules)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -178,11 +189,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the Schedules from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $schedules = $this->schedules_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($schedules)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -221,11 +232,11 @@ class Schedules extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the schedule from the array, using the id as key for retrieval.
+        // Get the Schedules from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $schedule = $this->schedules_model->_get_by_id($id);
+        $schedules = $this->schedules_model->_get_by_id($id);
 
-        if (empty($schedule)) {
+        if (empty($schedules)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'

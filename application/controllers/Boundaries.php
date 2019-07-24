@@ -5,8 +5,8 @@
     Location    : application/controllers/Boundaries.php
     Purpose     : Boundaries controller
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 2019-07-23 15:22:50 by Scarlet Witch 
+    Changes     : update the script for datatables
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -33,9 +33,9 @@ class Boundaries extends REST_Controller
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the boundaries
+        // If the id parameter doesn't exists return all the Boundaries
         if (empty($id)) {
-            // Check if the boundaries data store contains boundaries (in case the database result returns NULL)
+            // Check if the Boundaries data store contains Boundaries (in case the database result returns NULL)
             if (empty($boundaries)) {
                 // Set the response and exit
                 $this->response([
@@ -55,9 +55,9 @@ class Boundaries extends REST_Controller
         }
     }
 
-    public function boundary_get()
+    public function boundaries_get()
     {
-        // Find and return a single record for a particular boundary.
+        // Find and return a single record for a particular Boundaries.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -69,24 +69,26 @@ class Boundaries extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the boundary from the array, using the id as key for retrieval.
+        // Get the Boundaries from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $boundary = $this->boundaries_model->_get_by_id($id);
+        $boundaries = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($boundary)) {
+        if (empty($boundaries)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($boundary, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($boundaries, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
+            'name' => $this->post('name'),
+            'description' => $this->post('description'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -113,6 +115,8 @@ class Boundaries extends REST_Controller
     {
         $data = [
             'branch_id' => $this->put('branch_id'),
+            'name' => $this->put('name'),
+            'description' => $this->put('description'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -129,11 +133,11 @@ class Boundaries extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the boundary from the array, using the id as key for retrieval.
+        // Get the Boundaries from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $boundary = $this->boundaries_model->_get_by_id($id);
+        $boundaries = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($boundary)) {
+        if (empty($boundaries)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -178,11 +182,11 @@ class Boundaries extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the boundary from the array, using the id as key for retrieval.
+        // Get the Boundaries from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $boundary = $this->boundaries_model->_get_by_id($id);
+        $boundaries = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($boundary)) {
+        if (empty($boundaries)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -221,11 +225,11 @@ class Boundaries extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the boundary from the array, using the id as key for retrieval.
+        // Get the Boundaries from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $boundary = $this->boundaries_model->_get_by_id($id);
+        $boundaries = $this->boundaries_model->_get_by_id($id);
 
-        if (empty($boundary)) {
+        if (empty($boundaries)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'

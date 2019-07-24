@@ -5,8 +5,8 @@
     Location    : application/models/Priests_model.php
     Purpose     : Priests model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 07/23/2019 12:57:25 by Scarlet Witch
+    Changes     : update the script for datatables
 */
 
 if (!defined('BASEPATH')) {
@@ -23,21 +23,22 @@ class Priests_model extends CI_Model
 
     public function _get_all()
     {
-        $this->db
+        $this->datatables
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
                 't1.name,' .
                 't1.position,' .
-                't1.rank,' .
+                't1.rank,' .                
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on,' .
                 't2.full_path as cover_photo')
             ->from('priests AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0);
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
+        
+        return json_decode($this->datatables->generate());
     }
 
     public function _get_by_id($id)
@@ -48,13 +49,16 @@ class Priests_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.position,' .
-                't1.rank,' .
+                't1.rank,' .                
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on,' .
                 't2.full_path as cover_photo')
             ->from('priests AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

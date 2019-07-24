@@ -5,8 +5,8 @@
     Location    : application/controllers/Priests.php
     Purpose     : Priests controller
     Created     : 6/24/2019 by Spiderman
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 07/23/2019 12:57:25 by Scarlet Witch
+    Changes     : update the script for datatables
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -33,9 +33,9 @@ class Priests extends REST_Controller
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the priests
+        // If the id parameter doesn't exists return all the Priests
         if (empty($id)) {
-            // Check if the priests data store contains priests (in case the database result returns NULL)
+            // Check if the Priests data store contains Priests (in case the database result returns NULL)
             if (empty($priests)) {
                 // Set the response and exit
                 $this->response([
@@ -55,9 +55,9 @@ class Priests extends REST_Controller
         }
     }
 
-    public function priest_get()
+    public function priests_get()
     {
-        // Find and return a single record for a particular priest.
+        // Find and return a single record for a particular priests.
         $id = (int)$this->get('id');
 
         // Validate the id.
@@ -69,24 +69,27 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the priest from the array, using the id as key for retrieval.
+        // Get the Priests from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $priest = $this->priests_model->_get_by_id($id);
+        $priests = $this->priests_model->_get_by_id($id);
 
-        if (empty($priest)) {
+        if (empty($priests)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($priest, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($priests, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
     public function create_post()
     {
         $data = [
-            'branch_id' => 1,
+            'branch_id' => $this->post('branch_id'),
+            'name' => $this->post('name'),
+            'position' => $this->post('position'),
+            'rank' => $this->post('rank'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -110,53 +113,56 @@ class Priests extends REST_Controller
     }
 
     public function update_put()
-{
-    $data = [
-        'branch_id' => $this->put('branch_id'),
-        'updated_by' => $this->put('user_id'),
-        'dt_updated' => date('Y-m-d H:i:s')
-    ];
+    {
+        $data = [
+            'branch_id' => $this->put('branch_id'),
+            'name' => $this->put('name'),
+            'position' => $this->put('position'),
+            'rank' => $this->put('rank'),
+            'updated_by' => $this->put('user_id'),
+            'dt_updated' => date('Y-m-d H:i:s')
+        ];
 
-    // Find and return a single record for a particular priest.
-    $id = (int)$this->get('id');
+        // Find and return a single record for a particular priest.
+        $id = (int)$this->get('id');
 
-    // Validate the id.
-    if (empty($id)) {
-        // Invalid id, set the response and exit.
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Bad Request'
-        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        // Validate the id.
+        if (empty($id)) {
+            // Invalid id, set the response and exit.
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+
+        // Get the Priests from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        $priests = $this->priests_model->_get_by_id($id);
+
+        if (empty($priests)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        }
+
+        // Validate data array if it contains NULL value
+        if (in_array(null, $data, true)) {
+            // Set the response and exit
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            // If data array does not contains NULL values, update the resource
+            $this->priests_model->_update($id, $data);
+
+            $this->response([
+                'status' => TRUE,
+                'message' => 'Updated'
+            ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
     }
-
-    // Get the priest from the array, using the id as key for retrieval.
-    // Usually a model is to be used for this.
-    $priest = $this->priests_model->_get_by_id($id);
-
-    if (empty($priest)) {
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Not Found'
-        ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-    }
-
-    // Validate data array if it contains NULL value
-    if (in_array(null, $data, true)) {
-        // Set the response and exit
-        $this->response([
-            'status' => FALSE,
-            'message' => 'Bad Request'
-        ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-    } else {
-        // If data array does not contains NULL values, update the resource
-        $this->priests_model->_update($id, $data);
-
-        $this->response([
-            'status' => TRUE,
-            'message' => 'Updated'
-        ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-    }
-}
 
     public function soft_delete_put()
     {
@@ -178,11 +184,11 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the priest from the array, using the id as key for retrieval.
+        // Get the Priests from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $priest = $this->priests_model->_get_by_id($id);
+        $priests = $this->priests_model->_get_by_id($id);
 
-        if (empty($priest)) {
+        if (empty($priests)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -221,11 +227,11 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the priest from the array, using the id as key for retrieval.
+        // Get the Priests from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $priest = $this->priests_model->_get_by_id($id);
+        $priests = $this->priests_model->_get_by_id($id);
 
-        if (empty($priest)) {
+        if (empty($priests)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'

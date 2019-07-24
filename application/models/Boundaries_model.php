@@ -5,8 +5,8 @@
     Location    : application/models/Boundaries_model.php
     Purpose     : Boundaries model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 2019-07-23 15:22:50 by Scarlet Witch 
+    Changes     : update the script for datatables
 */
 
 if (!defined('BASEPATH')) {
@@ -23,18 +23,19 @@ class Boundaries_model extends CI_Model
 
     public function _get_all()
     {
-        $this->db
+        $this->datatables
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
                 't1.name,' .
-                't1.description')
+                't1.description,' .          
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on')
             ->from('boundaries AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0);
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
+        
+        return json_decode($this->datatables->generate());
     }
 
     public function _get_by_id($id)
@@ -44,11 +45,14 @@ class Boundaries_model extends CI_Model
                 't1.id,' .
                 't1.branch_id,' .
                 't1.name,' .
-                't1.description')
+                't1.description,' .          
+                't1.dt_created as posted_on,' .
+                't1.dt_updated as updated_on')
             ->from('boundaries AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
