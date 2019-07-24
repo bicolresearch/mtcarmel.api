@@ -31,11 +31,13 @@ class Priests_model extends CI_Model
                 't1.position,' .
                 't1.rank,' .                
                 't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
+                't1.dt_updated as updated_on,' .                
+                't4.username as author,' .
                 't2.full_path as cover_photo')
             ->from('priests AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                              
+            ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0);
         
         return json_decode($this->datatables->generate());
@@ -51,11 +53,13 @@ class Priests_model extends CI_Model
                 't1.position,' .
                 't1.rank,' .                
                 't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
+                't1.dt_updated as updated_on,' .               
+                't4.username as author,' .
                 't2.full_path as cover_photo')
             ->from('priests AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                              
+            ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
 

@@ -30,9 +30,11 @@ class Boundaries_model extends CI_Model
                 't1.name,' .
                 't1.description,' .          
                 't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on')
+                't1.dt_updated as updated_on,' .                
+                't4.username as author,')
             ->from('boundaries AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
+            ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0);
         
         return json_decode($this->datatables->generate());
@@ -47,9 +49,11 @@ class Boundaries_model extends CI_Model
                 't1.name,' .
                 't1.description,' .          
                 't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on')
+                't1.dt_updated as updated_on,' .                
+                't4.username as author,')
             ->from('boundaries AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
+            ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
 

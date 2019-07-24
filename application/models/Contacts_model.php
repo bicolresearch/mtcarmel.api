@@ -38,11 +38,13 @@
                     't1.mobile,' .
                     't1.email,' .
                     't1.dt_created as posted_on,' .
-                    't1.dt_updated as updated_on,' .
+                    't1.dt_updated as updated_on,' .                        
+                    't4.username as author,' .
                     't3.description as social_media')
                 ->from('contacts AS t1')
                 ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-                ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')
+                ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')                        
+                ->join('users AS t4', 't4.id = t1.created_by', 'left')
                 ->where('t1.is_deleted', 0);
             
             return json_decode($this->datatables->generate());
@@ -65,11 +67,13 @@
                     't1.mobile,' .
                     't1.email,' .
                     't1.dt_created as posted_on,' .
-                    't1.dt_updated as updated_on,' .
+                    't1.dt_updated as updated_on,' .                            
+                    't4.username as author,' .
                     't3.description as social_media')
                 ->from('contacts AS t1')
                 ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-                ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')
+                ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')                        
+                ->join('users AS t4', 't4.id = t1.created_by', 'left')
                 ->where('t1.is_deleted', 0)
                 ->where('t1.id', $id);
     
