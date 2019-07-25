@@ -85,8 +85,17 @@ class Media extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),
+            'name' => $this->post('name'),
+            'description' => $this->post('description'),
+            'file_name' => $this->post('file_name'),
+            'file_type' => $this->post('file_type'),
+            'file_ext' => $this->post('file_ext'),
+            'file_size' => $this->post('file_size'),
+            'file_path' => $this->post('file_path'),
+            'full_path' => $this->post('full_path'),
+            'base64' => $this->post('base64'),
             'created_by' => $this->post('user_id'),
-            'dt_created' => date('Y-m-d H:i:s'),
+            'dt_created' => date('Y-m-d H:i:s')
         ];
 
         // Validate data array if it contains NULL values
@@ -94,11 +103,16 @@ class Media extends REST_Controller
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Bad Request'
+                'message' => 'Bad Request',
+                'data' => $data
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
+            // Convert base64 string to an image file
+            $this->base64_to_image($data['base64'], 'public/assets/images/' . $data['file_name']);
+
             // If data array does not contains NULL values, create new resource to database
             $this->media_model->_create($data);
+            
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -244,5 +258,17 @@ class Media extends REST_Controller
                 'message' => 'Deleted'
             ], REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
         }
+    }
+
+    // TODO: This should be in the custom helper
+    private function base64_to_image($base64_string, $output_file) {
+        $file = fopen($output_file, "wb");
+    
+        $data = explode(',', $base64_string);
+    
+        fwrite($file, base64_decode($data[1]));
+        fclose($file);
+    
+        return $output_file;
     }
 }
