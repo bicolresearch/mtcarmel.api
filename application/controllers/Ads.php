@@ -4,18 +4,16 @@
     Filename    : Ads.php
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Created     : 06/2/2019 16:14:47 by Scarlet Witch
+    Updated     : 07/25/2019 16:14:41 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Ads extends REST_Controller

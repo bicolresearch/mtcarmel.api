@@ -4,9 +4,9 @@
     Filename    : Ads_model.php
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Created     : 06/27/2019 16:15:38 by Scarlet Witch
+    Updated     : 07/25/2019 16:15:29 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -29,9 +29,9 @@ class Ads_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
-                't2.full_path as cover_photo')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .
+                't2.full_path')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
@@ -48,14 +48,18 @@ class Ads_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
-                't2.full_path as cover_photo')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .
+                't2.full_path')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
+            ->where(
+                [
+                    't1.is_deleted' => 0,
+                    't1.id' => $id
+                ]
+            );
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

@@ -41,7 +41,7 @@ class Users_model extends CI_Model
                 't2.country,' .
                 't2.mobile,' .
                 't2.landline,' .
-                't5.file_name as avatar')
+                't5.full_path as avatar')
             ->from('users AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')             
@@ -74,7 +74,7 @@ class Users_model extends CI_Model
                 't2.country,' .
                 't2.mobile,' .
                 't2.landline,' .
-                't5.file_name as avatar')   
+                't5.full_path as avatar')   
             ->from('users AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')             
@@ -109,7 +109,7 @@ class Users_model extends CI_Model
                 't2.country,' .
                 't2.mobile,' .
                 't2.landline,' .
-                't5.file_name as avatar')   
+                't5.full_path as avatar')   
             ->from('users AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')             

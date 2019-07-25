@@ -93,7 +93,6 @@ class Media extends REST_Controller
             'file_size' => $this->post('file_size'),
             'file_path' => $this->post('file_path'),
             'full_path' => $this->post('full_path'),
-            'base64' => $this->post('base64'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -108,7 +107,7 @@ class Media extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Convert base64 string to an image file
-            $this->base64_to_image($data['base64'], 'public/assets/images/' . $data['file_name']);
+            $this->base64_to_image($this->post('base64'), $data['full_path']);
 
             // If data array does not contains NULL values, create new resource to database
             $this->media_model->_create($data);
@@ -124,7 +123,8 @@ class Media extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
+            'name' => $this->put('name'),
+            'description' => $this->put('description'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
