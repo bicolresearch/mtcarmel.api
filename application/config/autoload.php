@@ -159,5 +159,9 @@ $autoload['model'] = array(
     'live_streaming_model',
     'media_model',
     'history_details_model',
-    'contact_details_model'
+    'contact_details_model',
+    //'naming_schedules_model',
+    'sub_modules_model',
+    'service_confraternity_model'
+    
 );
