@@ -5,8 +5,8 @@
     Location    : application/models/Sub_modules_model.php
     Purpose     : Sub_modules_model model
     Created     : 2019-07-26 10:44:51 by Scarlet Witch 
-    Updated     : 
-    Changes     : 
+    Updated     : 07/26/2019 17:04:51 by Scarlet Witch
+    Changes     : changed the value of service to module id
 */
 
 if (!defined('BASEPATH')) {
@@ -25,6 +25,7 @@ class Sub_modules_model extends CI_Model
     {
         $this->db
             ->select(
+                't4.id as service_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .
@@ -33,7 +34,8 @@ class Sub_modules_model extends CI_Model
                 't2.full_path as cover_photo')
             ->from('sub_modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
+            ->join('modules AS t4', 't4.id = t1.module_id', 'left')
             ->where('t1.program_id', 3)
             ->where('t1.id', 1)
             ->where('t1.is_deleted', 0);
@@ -46,6 +48,7 @@ class Sub_modules_model extends CI_Model
     {
         $this->db
             ->select(
+                't4.id as service_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .
@@ -54,7 +57,8 @@ class Sub_modules_model extends CI_Model
                 't2.full_path as cover_photo')
             ->from('sub_modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
+            ->join('modules AS t4', 't4.id = t1.module_id', 'left')
             ->where('t1.program_id', 3)
             ->where('t1.id', 1)
             ->where('t1.id', $id);
