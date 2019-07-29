@@ -162,6 +162,6 @@ $autoload['model'] = array(
     'contact_details_model',
     //'naming_schedules_model',
     'sub_modules_model',
-    'service_confraternity_model'
+    'service_references_model'
     
 );

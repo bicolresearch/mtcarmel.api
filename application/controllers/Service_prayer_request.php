@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : Service_confraternity.php
-    Location    : application/controllers/Service_confraternity.php
-    Purpose     : Service confraternity controller
-    Created     : 07/25/2019 19:05:13 by Scarlet Witch
-    Updated     : 07/29/2019 14:18:55 by Scarlet Witch
-    Changes     : delete by id, renamed model
+    Filename    : Service_prayer_request.php
+    Location    : application/controllers/Service_prayer_request.php
+    Purpose     : Service_prayer_request controller
+    Created     : 07/29/2019 14:19:42 by Scarlet Witch
+    Updated     : 
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -18,7 +18,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 /** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
-class Service_confraternity extends REST_Controller
+class Service_prayer_request extends REST_Controller
 {
     function __construct()
     {
@@ -28,18 +28,18 @@ class Service_confraternity extends REST_Controller
 
     public function index_get()
     {
-        // Service confraternity from a data store e.g. database
-        $service_confraternity = [
-        'service_subtypes' => $this->sub_modules_model->_get_by_id(1),
-           'form_fields' => $this->service_references_model->_get_all_confraternity()     
+        // Service prayer request from a data store e.g. database
+        $service_prayer_request = [
+           'service_subtypes' => $this->sub_modules_model->_get_by_id(2),
+           'form_fields' => $this->service_references_model->_get_all_prayer_request()     
         ];
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the service confraternity
+        // If the id parameter doesn't exists return all the service prayer request
         if (empty($id)) {
-            // Check if the Service confraternity data store contains service confraternity (in case the database result returns NULL)
-            if (empty($service_confraternity)) {
+            // Check if the service prayer request data store contains service prayer request (in case the database result returns NULL)
+            if (empty($service_prayer_request)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -47,7 +47,7 @@ class Service_confraternity extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($service_confraternity,REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($service_prayer_request,REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
             // Set the response and exit.

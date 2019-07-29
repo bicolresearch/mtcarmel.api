@@ -5,8 +5,8 @@
     Location    : application/controllers/Sub_modules.php
     Purpose     : Sub modules controller
     Created     : 07/26/2019 10:48:51 by Scarlet Witch
-    Updated     : 
-    Changes     :
+    Updated     : 07/29/2019 14:28:35 by Scarlet Witch
+    Changes     : add other services
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
