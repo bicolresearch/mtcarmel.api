@@ -27,6 +27,7 @@ class Ads_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
+                't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created AS posted_on,' .
@@ -46,6 +47,7 @@ class Ads_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
+                't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created AS posted_on,' .
