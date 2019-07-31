@@ -5,8 +5,8 @@
     Location    : application/controllers/Prayer_request.php
     Purpose     : Prayer request controller
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 07/31/2019 15:24:52 by Scarlet Witch
-    Changes     : commented base64_to_image on create,updated the created - add fields
+    Updated     : 07/31/2019 17:09:20 by Scarlet Witch
+    Changes     : updated the created fields
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -84,9 +84,9 @@ class Prayer_request extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),
-            'module_id' => $this->post('5'),            
-            'sub_module_id' => $this->post('2'),
+            'branch_id' => $this->post('branch_id'),    
+            'module_id' => 5,
+            'sub_module_id' => 2,
             'prayer' => $this->post('prayer'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')

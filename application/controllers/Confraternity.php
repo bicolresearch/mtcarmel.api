@@ -5,8 +5,8 @@
     Location    : application/controllers/Confraternity.php
     Purpose     : Confraternity controller
     Created     : 07/30/2019 18:00:42 by Scarlet Witch
-    Updated     : 07/31/2019 16:57:51 by Scarlet Witch
-    Changes     : updated the created - add fields, commented base64_to_image
+    Updated     : 07/31/2019 17:09:20 by Scarlet Witch
+    Changes     : updated the created fields
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -84,9 +84,9 @@ class Confraternity extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),
-            'module_id' => $this->post('4'),            
-            'sub_module_id' => $this->post('1'),
+            'branch_id' => $this->post('branch_id'),         
+            'module_id' => 4,
+            'sub_module_id' => 1,
             'name' => $this->post('name'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
