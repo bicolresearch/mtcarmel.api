@@ -5,8 +5,8 @@
     Location    : application/controllers/Confraternity.php
     Purpose     : Confraternity controller
     Created     : 07/30/2019 18:00:42 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 07/31/2019 10:59:52 by Scarlet Witch
+    Changes     : added fields,updated put
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -85,6 +85,17 @@ class Confraternity extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),
+            'name' => $this->post('name'),
+            'address_1' => $this->post('address_1'),
+            'address_2' => $this->post('address_2'),
+            'barangay' => $this->post('barangay'),
+            'city' => $this->post('city'),
+            'province' => $this->post('province'),
+            'country' => $this->post('country'),
+            'dt_birth' => $this->post('dt_birth'),
+            'landline' => $this->post('landline'),
+            'mobile' => $this->post('mobile'),
+            'email' => $this->post('email'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -115,6 +126,17 @@ class Confraternity extends REST_Controller
     public function update_put()
     {
         $data = [
+            'name' => $this->put('name'),
+            'address_1' => $this->put('address_1'),
+            'address_2' => $this->put('address_2'),
+            'barangay' => $this->put('barangay'),
+            'city' => $this->put('city'),
+            'province' => $this->put('province'),
+            'country' => $this->put('country'),
+            'dt_birth' => $this->put('dt_birth'),
+            'landline' => $this->put('landline'),
+            'mobile' => $this->put('mobile'),
+            'email' => $this->put('email'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];

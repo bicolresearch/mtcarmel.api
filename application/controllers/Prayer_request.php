@@ -5,8 +5,8 @@
     Location    : application/controllers/Prayer_request.php
     Purpose     : Prayer request controller
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 07/31/2019 10:59:52 by Scarlet Witch
+    Changes     : removed/added fields,updated put
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -85,14 +85,7 @@ class Prayer_request extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),
-            'name' => $this->post('name'),
-            'description' => $this->post('description'),
-            'file_name' => $this->post('file_name'),
-            'file_type' => $this->post('file_type'),
-            'file_ext' => $this->post('file_ext'),
-            'file_size' => $this->post('file_size'),
-            'file_path' => $this->post('file_path'),
-            'full_path' => $this->post('full_path'),
+            'prayer' => $this->post('prayer'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -123,8 +116,7 @@ class Prayer_request extends REST_Controller
     public function update_put()
     {
         $data = [
-            'name' => $this->put('name'),
-            'description' => $this->put('description'),
+            'prayer' => $this->put('prayer'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
