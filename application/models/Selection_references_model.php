@@ -111,6 +111,26 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
+    // Mass Request - Purpose 
+    public function _get_all_purpose_mass()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .            
+            't1.module_id,' .            
+            't1.sub_module_id,' .
+            't1.name,' .             
+            't1.description')
+        ->from('purpose_type AS t1')                
+        ->where('t1.module_id', 5)
+        ->where('t1.sub_module_id', 3)
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
    
 
 

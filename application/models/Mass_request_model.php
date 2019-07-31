@@ -1,19 +1,19 @@
 <?php
 
 /*
-    Filename    : Prayer_request_model.php
-    Location    : application/models/Prayer_request_model.php
-    Purpose     : Prayer request model
-    Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 07/31/2019 13:46:27 by Scarlet Witch
-    Changes     : updated the created by/date
+    Filename    : Mass_request_model.php
+    Location    : application/models/Mass_request_model.php
+    Purpose     : Mass request model
+    Created     : 07/31/2019 13:45:59 by Scarlet Witch
+    Updated     : 
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Prayer_request_model extends CI_Model
+class Mass_request_model extends CI_Model
 {
 
     public function __construct()
@@ -26,7 +26,10 @@ class Prayer_request_model extends CI_Model
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.prayer,' .
+                't1.name,' .
+                't1.purpose_mass,' .
+                't1.dt_offered,' .
+                't1.time_offered,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
@@ -34,7 +37,7 @@ class Prayer_request_model extends CI_Model
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
             ->where('t1.module_id', 5)
-            ->where('t1.sub_module_id', 2)
+            ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0);
             
         
@@ -46,7 +49,10 @@ class Prayer_request_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.prayer,' .
+                't1.name,' .
+                't1.purpose_mass,' .
+                't1.dt_offered,' .
+                't1.time_offered,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
@@ -54,7 +60,7 @@ class Prayer_request_model extends CI_Model
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
             ->where('t1.module_id', 5)
-            ->where('t1.sub_module_id', 2)
+            ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
         $query = $this->db->get();

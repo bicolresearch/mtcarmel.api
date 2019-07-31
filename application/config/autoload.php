@@ -165,6 +165,7 @@ $autoload['model'] = array(
     'service_references_model',
     'selection_references_model',
     'prayer_request_model',
-    'confraternity_model'
+    'confraternity_model',
+    'mass_request_model'
     
 );
