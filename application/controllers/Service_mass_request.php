@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_mass_request.php
     Purpose     : Service mass request controller
     Created     : 07/29/2019 14:37:10 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:29:31 by Scarlet Witch
+    Changes     : renamed subtype
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_mass_request extends REST_Controller
     {
         // mass request from a data store e.g. database
         $service_mass_request = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(3),
+           'service_subtype' => $this->sub_modules_model->_get_by_id(3),
            'form_fields' => $this->service_references_model->_get_all_mass_request()     
         ];
 

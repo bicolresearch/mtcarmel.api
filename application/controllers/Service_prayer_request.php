@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_prayer_request.php
     Purpose     : Service_prayer_request controller
     Created     : 07/29/2019 14:19:42 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:29:03 by Scarlet Witch
+    Changes     : renamed subtype
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_prayer_request extends REST_Controller
     {
         // Service prayer request from a data store e.g. database
         $service_prayer_request = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(2),
+           'service_subtype' => $this->sub_modules_model->_get_by_id(2),
            'form_fields' => $this->service_references_model->_get_all_prayer_request()     
         ];
 
