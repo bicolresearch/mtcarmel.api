@@ -5,8 +5,8 @@
     Location    : application/controllers/Mass_request.php
     Purpose     : Mass request controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 10:57:52 by Scarlet Witch
+    Changes     : aupdated create/update fields and commented base64_to_image
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -84,8 +84,13 @@ class Mass_request extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),
-            'prayer' => $this->post('prayer'),
+            'branch_id' => $this->post('branch_id'),  
+            'module_id' => 5,
+            'sub_module_id' => 3,
+            'name' => $this->post('name'),
+            'purpose_mass' => $this->post('purpose_mass'),
+            'dt_offered' => $this->post('dt_offered'),
+            'time_offered' => $this->post('time_offered'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -100,7 +105,7 @@ class Mass_request extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Convert base64 string to an image file
-            $this->base64_to_image($this->post('base64'), $data['full_path']);
+            //$this->base64_to_image($this->post('base64'), $data['full_path']);
 
             // If data array does not contains NULL values, create new resource to database
             $this->mass_request_model->_create($data);
@@ -116,7 +121,10 @@ class Mass_request extends REST_Controller
     public function update_put()
     {
         $data = [
-            'prayer' => $this->put('prayer'),
+            'name' => $this->post('name'),
+            'purpose_mass' => $this->post('purpose_mass'),
+            'dt_offered' => $this->post('dt_offered'),
+            'time_offered' => $this->post('time_offered'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
