@@ -5,8 +5,8 @@
     Location    : application/models/Sub_modules_model.php
     Purpose     : Sub_modules_model model
     Created     : 2019-07-26 10:44:51 by Scarlet Witch 
-    Updated     : 07/26/2019 17:04:51 by Scarlet Witch
-    Changes     : changed the value of service to module id
+    Updated     : 08/01/2019 12:13:31 by Scarlet Witch
+    Changes     : added create-url field
 */
 
 if (!defined('BASEPATH')) {
@@ -31,6 +31,7 @@ class Sub_modules_model extends CI_Model
                 't1.description,' .
                 't1.acceptance_content,' .
                 't1.thank_you_content,' .
+                't1.create_url as url, ' .
                 't2.full_path as cover_photo')
             ->from('sub_modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
@@ -80,6 +81,7 @@ class Sub_modules_model extends CI_Model
                 't1.description,' .
                 't1.acceptance_content,' .
                 't1.thank_you_content,' .
+                't1.create_url as url, ' .
                 't2.full_path as cover_photo')
             ->from('sub_modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
