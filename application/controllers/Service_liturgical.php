@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_liturgical.php
     Purpose     : Service liturgical controller
     Created     : 07/29/2019 14:42:05 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:37:51 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_liturgical extends REST_Controller
     {
         // liturgical from a data store e.g. database
         $service_liturgical = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(4),
+           'sub_module' => $this->sub_modules_model->_get_by_id(4),
            'form_fields' => $this->service_references_model->_get_all_liturgical_service()     
         ];
 

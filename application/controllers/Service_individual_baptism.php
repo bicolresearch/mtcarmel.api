@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_individual_baptism.php
     Purpose     : Service individual baptism controller
     Created     : 07/29/2019 14:47:56 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:38:06 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_individual_baptism extends REST_Controller
     {
         // individual baptism from a data store e.g. database
         $service_individual_baptism = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(6),
+           'sub_module' => $this->sub_modules_model->_get_by_id(6),
            'form_fields' => $this->service_references_model->_get_all_individual_baptism()     
         ];
 

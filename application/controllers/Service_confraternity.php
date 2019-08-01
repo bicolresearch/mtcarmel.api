@@ -6,7 +6,7 @@
     Purpose     : Service confraternity controller
     Created     : 07/25/2019 19:05:13 by Scarlet Witch
     Updated     : 08/01/2019 12:28:23 by Scarlet Witch
-    Changes     : renamed subtype
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_confraternity extends REST_Controller
     {
         // Service confraternity from a data store e.g. database
         $service_confraternity = [
-        'service_subtype' => $this->sub_modules_model->_get_by_id(1),
+           'sub_module' => $this->sub_modules_model->_get_by_id(1),
            'form_fields' => $this->service_references_model->_get_all_confraternity()     
         ];
 

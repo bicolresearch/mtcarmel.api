@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_november_mass.php
     Purpose     : Service november mass controller
     Created     : 07/29/2019 15:40:14 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:36:35 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_november_mass extends REST_Controller
     {
         // november mass from a data store e.g. database
         $service_november_mass = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(16),
+           'sub_module' => $this->sub_modules_model->_get_by_id(16),
            'form_fields' => $this->service_references_model->_get_all_november_mass()     
         ];
 

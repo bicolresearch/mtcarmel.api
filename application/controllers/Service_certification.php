@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_certification.php
     Purpose     : Service certification controller
     Created     : 07/29/2019 14:45:24 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:40:22 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_certification extends REST_Controller
     {
         // liturgical from a data store e.g. database
         $Service_certification = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(5),
+           'sub_module' => $this->sub_modules_model->_get_by_id(5),
            'form_fields' => $this->service_references_model->_get_all_certification()     
         ];
 

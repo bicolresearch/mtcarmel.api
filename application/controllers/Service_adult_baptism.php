@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_adult_baptism.php
     Purpose     : Service adult baptism controller
     Created     : 07/29/2019 14:54:58 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:40:29 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_adult_baptism extends REST_Controller
     {
         // adult baptism from a data store e.g. database
         $service_adult_baptism = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(8),
+           'sub_module' => $this->sub_modules_model->_get_by_id(8),
            'form_fields' => $this->service_references_model->_get_all_adult_baptism()     
         ];
 

@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_first_communion.php
     Purpose     : Service first communion controller
     Created     : 07/29/2019 14:54:58 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:38:52 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_first_communion extends REST_Controller
     {
         // first communion from a data store e.g. database
         $service_first_communion = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(9),
+           'sub_module' => $this->sub_modules_model->_get_by_id(9),
            'form_fields' => $this->service_references_model->_get_all_first_communion()     
         ];
 

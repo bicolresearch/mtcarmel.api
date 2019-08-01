@@ -5,8 +5,8 @@
     Location    : application/models/Sub_modules_model.php
     Purpose     : Sub_modules_model model
     Created     : 2019-07-26 10:44:51 by Scarlet Witch 
-    Updated     : 08/01/2019 12:13:31 by Scarlet Witch
-    Changes     : added create-url field
+    Updated     : 08/01/2019 12:44:20 by Scarlet Witch
+    Changes     : renamed field service_id
 */
 
 if (!defined('BASEPATH')) {
@@ -25,7 +25,7 @@ class Sub_modules_model extends CI_Model
     {
         $this->db
             ->select(
-                't4.id as service_id,' .
+                't4.id as module_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .
@@ -75,7 +75,7 @@ class Sub_modules_model extends CI_Model
     {
         $this->db
             ->select(
-                't4.id as service_id,' .
+                't4.id as module_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .

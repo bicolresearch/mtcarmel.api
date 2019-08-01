@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_funeral_service.php
     Purpose     : Service Funeral Service controller
     Created     : 07/29/2019 14:54:58 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:38:23 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_funeral_service extends REST_Controller
     {
         // Funeral Service from a data store e.g. database
         $service_funeral_service = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(13),
+           'sub_module' => $this->sub_modules_model->_get_by_id(13),
            'form_fields' => $this->service_references_model->_get_all_funeral_service()     
         ];
 

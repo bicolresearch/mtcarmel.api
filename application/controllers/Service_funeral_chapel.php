@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_funeral_chapel.php
     Purpose     : Service funeral chapel controller
     Created     : 07/29/2019 15:28:27 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:38:36 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_funeral_chapel extends REST_Controller
     {
         // funeral chapel from a data store e.g. database
         $service_funeral_chapel = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(14),
+           'sub_module' => $this->sub_modules_model->_get_by_id(14),
            'form_fields' => $this->service_references_model->_get_all_funeral_chapel()     
         ];
 

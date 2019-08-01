@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_confirmation.php
     Purpose     : Service confirmation controller
     Created     : 07/29/2019 15:17:58 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:39:40 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_confirmation extends REST_Controller
     {
         // confirmation from a data store e.g. database
         $service_confirmation = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(11),
+           'sub_module' => $this->sub_modules_model->_get_by_id(11),
            'form_fields' => $this->service_references_model->_get_all_confirmation()     
         ];
 

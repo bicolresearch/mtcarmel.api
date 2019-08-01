@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_events_FMHH_venue.php
     Purpose     : ServiceFather Mark Horan Hall - Venue controller
     Created     : 07/29/2019 15:40:14 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:39:11 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_events_FMHH_venue extends REST_Controller
     {
         //Father Mark Horan Hall - Venue from a data store e.g. database
         $service_events_FMHH_venue = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(17),
+           'sub_module' => $this->sub_modules_model->_get_by_id(17),
            'form_fields' => $this->service_references_model->_get_all_events_fmhh_venue()     
         ];
 

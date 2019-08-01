@@ -5,8 +5,8 @@
     Location    : application/controllers/Service_crypt_lobby.php
     Purpose     : Service crypt lobby controller
     Created     : 07/29/2019 15:28:27 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 12:39:25 by Scarlet Witch
+    Changes     : renamed service_subtypes
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class Service_crypt_lobby extends REST_Controller
     {
         // crypt lobby from a data store e.g. database
         $service_crypt_lobby = [
-           'service_subtypes' => $this->sub_modules_model->_get_by_id(15),
+           'sub_module' => $this->sub_modules_model->_get_by_id(15),
            'form_fields' => $this->service_references_model->_get_all_crypt_lobby()     
         ];
 
