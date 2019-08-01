@@ -5,8 +5,8 @@
     Location    : application/models/Confraternity_model.php
     Purpose     : Confraternity model
     Created     : 07/22/2019 15:50:41 by Spiderman
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 15:24:52 by Scarlet Witch
+    Changes     : added status
 */
 
 if (!defined('BASEPATH')) {
@@ -37,12 +37,14 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                  
+            ->join('status AS t4', 't4.id = t1.status', 'left')               
             ->where('t1.module_id', 4)
             ->where('t1.sub_module_id', 1)
             ->where('t1.is_deleted', 0);
@@ -67,12 +69,14 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                           
+            ->join('status AS t4', 't4.id = t1.status', 'left')                 
             ->where('t1.module_id', 4)
             ->where('t1.sub_module_id', 1)
             ->where('t1.is_deleted', 0)
