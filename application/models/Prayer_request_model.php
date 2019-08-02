@@ -5,8 +5,8 @@
     Location    : application/models/Prayer_request_model.php
     Purpose     : Prayer request model
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 07/31/2019 13:46:27 by Scarlet Witch
-    Changes     : updated the created by/date
+    Updated     : 08/01/2019 18:06:05 by Scarlet Witch
+    Changes     : added status
 */
 
 if (!defined('BASEPATH')) {
@@ -27,12 +27,14 @@ class Prayer_request_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.prayer,' .
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
+            ->join('status AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 2)
             ->where('t1.is_deleted', 0);
@@ -47,12 +49,14 @@ class Prayer_request_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.prayer,' .
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
+            ->join('status AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 2)
             ->where('t1.is_deleted', 0)

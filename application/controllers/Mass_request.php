@@ -6,7 +6,7 @@
     Purpose     : Mass request controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
     Updated     : 08/01/2019 10:57:52 by Scarlet Witch
-    Changes     : aupdated create/update fields and commented base64_to_image
+    Changes     : aupdated create/update fields, commented base64_to_image, updated function update, add status on create
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -87,6 +87,7 @@ class Mass_request extends REST_Controller
             'branch_id' => $this->post('branch_id'),  
             'module_id' => 5,
             'sub_module_id' => 3,
+            'status' => 1,
             'name' => $this->post('name'),
             'purpose_mass' => $this->post('purpose_mass'),
             'dt_offered' => $this->post('dt_offered'),
@@ -121,10 +122,11 @@ class Mass_request extends REST_Controller
     public function update_put()
     {
         $data = [
-            'name' => $this->post('name'),
-            'purpose_mass' => $this->post('purpose_mass'),
-            'dt_offered' => $this->post('dt_offered'),
-            'time_offered' => $this->post('time_offered'),
+            'status' => $this->put('status'),
+            'name' => $this->put('name'),
+            'purpose_mass' => $this->put('purpose_mass'),
+            'dt_offered' => $this->put('dt_offered'),
+            'time_offered' => $this->put('time_offered'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];

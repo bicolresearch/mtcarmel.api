@@ -5,8 +5,8 @@
     Location    : application/models/Mass_request_model.php
     Purpose     : Mass request model
     Created     : 07/31/2019 13:45:59 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/01/2019 19:23:16 by Scarlet Witch
+    Changes     : added status
 */
 
 if (!defined('BASEPATH')) {
@@ -29,13 +29,15 @@ class Mass_request_model extends CI_Model
                 't1.name,' .
                 't1.purpose_mass,' .
                 't1.dt_offered,' .
-                't1.time_offered,' .
+                't1.time_offered,' .                
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
+            ->join('status AS t4', 't4.id = t1.status', 'left')                    
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0);
@@ -52,13 +54,15 @@ class Mass_request_model extends CI_Model
                 't1.name,' .
                 't1.purpose_mass,' .
                 't1.dt_offered,' .
-                't1.time_offered,' .
+                't1.time_offered,' .                
+                't4.name as status,' .
                 't1.dt_created as posted_on,' .
                 't1.dt_updated as updated_on,' .                
                 't3.username as author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                  
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
+            ->join('status AS t4', 't4.id = t1.status', 'left')                
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0)
