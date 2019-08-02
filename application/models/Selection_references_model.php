@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/02/2019 10:18:51 by Scarlet Witch
+    Changes     : added dropdown for status
 */
 
 if (!defined('BASEPATH')) {
@@ -131,8 +131,20 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
-   
+    // Status
+    public function _get_all_status()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name')
+        ->from('status AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
 
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
 
 
 }
