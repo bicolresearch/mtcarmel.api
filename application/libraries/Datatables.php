@@ -1,19 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * Ignited Datatables
- *
- * This is a wrapper class/library based on the native Datatables server-side implementation by Allan Jardine
- * found at http://datatables.net/examples/data_sources/server_side.html for CodeIgniter
- *
- * @package    CodeIgniter
- * @subpackage libraries
- * @category   library
- * @version    2.0 <beta>
- * @author     Vincent Bambico <metal.conspiracy@gmail.com>
- *             Yusuf Ozdemir <yusuf@ozdemir.be>
- * @link       http://ellislab.com/forums/viewthread/160896/
- */
+/*
+    Filename    : Datatables.php
+    Location    : application/libraries/Datatables.php
+    Purpose     : Ignited datatables
+    Created     : 08/04/2019 17:37:23 by Spiderman
+    Updated     : 08/04/2019 17:37:23 by Spiderman
+    Changes     : Add order_by
+*/
+
 class Datatables
 {
     /**
@@ -24,6 +19,7 @@ class Datatables
     private $table;
     private $distinct;
     private $group_by = array();
+    private $order_by = array();
     private $select = array();
     private $joins = array();
     private $columns = array();
@@ -97,6 +93,20 @@ class Datatables
     {
         $this->group_by[] = $val;
         $this->ci->db->group_by($val);
+        return $this;
+    }
+
+    /**
+     * Generates a custom ORDER BY portion of the query
+     *
+     * @param string $field
+     * @param string $order
+     * @return mixed
+     */
+    public function order_by($field, $order)
+    {
+        $this->order_by = array($field, $order);
+        $this->ci->db->order_by($field, $order);
         return $this;
     }
 
@@ -282,7 +292,6 @@ class Datatables
     {
 
         $Data = $this->ci->input->post('columns');
-
 
         if ($this->ci->input->post('order'))
             foreach ($this->ci->input->post('order') as $key)

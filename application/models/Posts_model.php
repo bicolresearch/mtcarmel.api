@@ -4,9 +4,9 @@
     Filename    : Posts_model.php
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 07/04/2019 15:35:23 by Spiderman
-    Changes     : Implement datatables 
+    Created     : 06/27/2019 15:35:23 by Scarlet Witch
+    Updated     : 08/05/2019 00:33:15 by Spiderman
+    Changes     : Add order_by
 */
 
 if (!defined('BASEPATH')) {
@@ -29,15 +29,16 @@ class Posts_model extends CI_Model
                 't1.branch_id,' .
                 't1.title,' .
                 't1.content,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
-                't4.username as author,' .
-                't2.full_path as cover_photo')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .
+                't4.username AS author,' .
+                't2.full_path AS cover_photo')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->join('users AS t4', 't4.id = t1.created_by', 'left')
-            ->where('t1.is_deleted', 0);
+            ->where('t1.is_deleted', 0)
+            ->order_by('t1.id', 'DESC');
 
         return json_decode($this->datatables->generate());
     }
@@ -50,10 +51,10 @@ class Posts_model extends CI_Model
                 't1.branch_id,' .
                 't1.title,' .
                 't1.content,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .
-                't4.username as author,' .
-                't2.full_path as cover_photo')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .
+                't4.username AS author,' .
+                't2.full_path AS cover_photo')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')

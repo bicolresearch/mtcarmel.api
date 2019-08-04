@@ -4,9 +4,9 @@
     Filename    : Ads_model.php
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
-    Created     : 06/27/2019 16:15:38 by Scarlet Witch
-    Updated     : 07/25/2019 16:15:29 by Spiderman
-    Changes     : 
+    Created     : 06/27/2019 15:35:23 by Scarlet Witch
+    Updated     : 08/05/2019 00:33:29 by Spiderman
+    Changes     : Add order_by
 */
 
 if (!defined('BASEPATH')) {
@@ -36,7 +36,8 @@ class Ads_model extends CI_Model
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->where('t1.is_deleted', 0);
+            ->where('t1.is_deleted', 0)
+            ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
     }
