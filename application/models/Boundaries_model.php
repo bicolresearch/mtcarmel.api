@@ -5,8 +5,8 @@
     Location    : application/models/Boundaries_model.php
     Purpose     : Boundaries model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 2019-07-23 15:22:50 by Scarlet Witch 
-    Changes     : update the script for datatables
+    Updated     : 08/05/2019 19:36:49 by Scarlet Witch
+    Changes     : added order_by to _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -29,13 +29,14 @@ class Boundaries_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .          
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .                
-                't4.username as author,')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .                
+                't4.username AS author,')
             ->from('boundaries AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
             ->join('users AS t4', 't4.id = t1.created_by', 'left')
-            ->where('t1.is_deleted', 0);
+            ->where('t1.is_deleted', 0)            
+            ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
     }
@@ -48,9 +49,9 @@ class Boundaries_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .          
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on,' .                
-                't4.username as author,')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .                
+                't4.username AS author,')
             ->from('boundaries AS t1')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
             ->join('users AS t4', 't4.id = t1.created_by', 'left')

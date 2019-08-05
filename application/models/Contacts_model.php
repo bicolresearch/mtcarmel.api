@@ -5,8 +5,8 @@
     Location    : application/models/Contacts_model.php
     Purpose     : Contacts model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 07/23/2019 12:57:01 by Scarlet Witch
-    Changes     : update the script for datatables
+    Updated     : 08/05/2019 19:38:48 by Scarlet Witch
+    Changes     : added order_by to _get_all
 */
 
     if (!defined('BASEPATH')) {
@@ -37,15 +37,16 @@
                     't1.landline,' .
                     't1.mobile,' .
                     't1.email,' .
-                    't1.dt_created as posted_on,' .
-                    't1.dt_updated as updated_on,' .                        
-                    't4.username as author,' .
-                    't3.description as social_media')
+                    't1.dt_created AS posted_on,' .
+                    't1.dt_updated AS updated_on,' .                        
+                    't4.username AS author,' .
+                    't3.description AS social_media')
                 ->from('contacts AS t1')
                 ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
                 ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')                        
                 ->join('users AS t4', 't4.id = t1.created_by', 'left')
-                ->where('t1.is_deleted', 0);
+                ->where('t1.is_deleted', 0)       
+                ->order_by('t1.id', 'DESC');
             
             return json_decode($this->datatables->generate());
         }
@@ -66,10 +67,10 @@
                     't1.landline,' .
                     't1.mobile,' .
                     't1.email,' .
-                    't1.dt_created as posted_on,' .
-                    't1.dt_updated as updated_on,' .                            
-                    't4.username as author,' .
-                    't3.description as social_media')
+                    't1.dt_created AS posted_on,' .
+                    't1.dt_updated AS updated_on,' .                            
+                    't4.username AS author,' .
+                    't3.description AS social_media')
                 ->from('contacts AS t1')
                 ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
                 ->join('social_media AS t3', 't3.id = t1.social_media_id', 'left')                        

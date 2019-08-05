@@ -5,8 +5,8 @@
     Location    : application/models/Media_model.php
     Purpose     : Media model
     Created     : 07/22/2019 15:50:41 by Spiderman
-    Updated     : 
-    Changes     : 
+    Updated     : 08/05/2019 19:42:26 by Scarlet Witch
+    Changes     : added order_by to _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -27,7 +27,8 @@ class Media_model extends CI_Model
             ->select('t1.*')
             ->from('media AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->where('t1.is_deleted', 0);
+            ->where('t1.is_deleted', 0)       
+            ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
     }

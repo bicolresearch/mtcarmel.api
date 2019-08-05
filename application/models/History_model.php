@@ -5,8 +5,8 @@
     Location    : application/models/History_model.php
     Purpose     : History model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 07/22/2019 11:57:14 by Scarlet Witch
-    Changes     : update the script for datatables
+    Updated     : 08/05/2019 19:40:12 by Scarlet Witch
+    Changes     : added order_by to _get_all
 */
 
 
@@ -33,13 +33,14 @@
                         't1.date_of_establishment,' .
                         't1.feast_day,' .
                         't1.content,' .                
-                        't1.dt_created as posted_on,' .
-                        't1.dt_updated as updated_on,' .
-                        't4.username as author,')
+                        't1.dt_created AS posted_on,' .
+                        't1.dt_updated AS updated_on,' .
+                        't4.username AS author,')
                     ->from('history AS t1')
                     ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
                     ->join('users AS t4', 't4.id = t1.created_by', 'left')
-                    ->where('t1.is_deleted', 0);
+                    ->where('t1.is_deleted', 0)       
+                    ->order_by('t1.id', 'DESC');
                 
                 return json_decode($this->datatables->generate());
             }
@@ -55,9 +56,9 @@
                         't1.date_of_establishment,' .
                         't1.feast_day,' .
                         't1.content,' .                
-                        't1.dt_created as posted_on,' .
-                        't1.dt_updated as updated_on,' .
-                        't4.username as author,')
+                        't1.dt_created AS posted_on,' .
+                        't1.dt_updated AS updated_on,' .
+                        't4.username AS author,')
                     ->from('history AS t1')
                     ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
                     ->join('users AS t4', 't4.id = t1.created_by', 'left')

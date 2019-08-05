@@ -5,8 +5,8 @@
     Location    : application/models/Live_streaming_model.php
     Purpose     : Live streaming model
     Created     : 07/19/2019 22:12:58 by Spiderman
-    Updated     : 
-    Changes     : 
+    Updated     : 08/05/2019 19:41:02 by Scarlet Witch
+    Changes     : added order_by to _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -30,11 +30,12 @@ class Live_streaming_model extends CI_Model
                 't1.title,' .
                 't1.description,' .
                 't1.video_url,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on')
             ->from('live_streaming AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->where('t1.is_deleted', 0);
+            ->where('t1.is_deleted', 0)       
+            ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
     }
@@ -48,8 +49,8 @@ class Live_streaming_model extends CI_Model
                 't1.title,' .
                 't1.description,' .
                 't1.video_url,' .
-                't1.dt_created as posted_on,' .
-                't1.dt_updated as updated_on')
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on')
             ->from('live_streaming AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
             ->where('t1.is_deleted', 0)
