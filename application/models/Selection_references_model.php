@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/02/2019 10:18:51 by Scarlet Witch
-    Changes     : added dropdown for status
+    Updated     : 08/05/2019 11:55:28 by Scarlet Witch
+    Changes     : added city by provinceid
 */
 
 if (!defined('BASEPATH')) {
@@ -58,6 +58,27 @@ class Selection_references_model extends CI_Model
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
+
+        // City
+        public function _get_all_city_by_provinceid($id)
+        {
+            $this->db
+            ->select(           
+                't1.id,' .
+                't1.psgc_code,' .
+                't1.description,' .                
+                't1.region_code,' .    
+                't1.province_code,' .
+                't1.city_code')
+            ->from('city AS t1')
+            ->where('t1.is_deleted', 0)
+            ->where('t1.province_code', $id);
+                
+            $query = $this->db->get();
+    
+            return ($query->num_rows() > 0) ? $query->result_array() : false;
+        }
+    
 
     // Province
     public function _get_all_province()
