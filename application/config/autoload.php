@@ -167,6 +167,10 @@ $autoload['model'] = array(
     'confraternity_model',
     'mass_request_model',
     'communion_of_the_sick_model',
-    'events_fmhh_venue_model'
+    'events_fmhh_venue_model',
+    'funeral_service_model',
+    'funeral_chapel_model',
+    'crypt_lobby_model',
+    'november_mass_model'
     
 );
