@@ -171,6 +171,10 @@ $autoload['model'] = array(
     'funeral_service_model',
     'funeral_chapel_model',
     'crypt_lobby_model',
-    'november_mass_model'
+    'november_mass_model',
+    'liturgical_model',
+    'certification_model',
+    'first_communion_model',
+    'confirmation_model'
     
 );
