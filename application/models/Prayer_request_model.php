@@ -5,8 +5,8 @@
     Location    : application/models/Prayer_request_model.php
     Purpose     : Prayer request model
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 08/05/2019 19:43:49 by Scarlet Witch
-    Changes     : added order_by to _get_all
+    Updated     : 08/06/2019 11:37:26 by Scarlet Witch
+    Changes     : added order_by status at _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -37,8 +37,9 @@ class Prayer_request_model extends CI_Model
             ->join('status AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 2)
-            ->where('t1.is_deleted', 0)       
-            ->order_by('t1.id', 'DESC');            
+            ->where('t1.is_deleted', 0)                        
+            ->order_by('t1.status', 'ASC')                    
+            ->order_by('t1.id', 'DESC');             
         
         return json_decode($this->datatables->generate());
     }
