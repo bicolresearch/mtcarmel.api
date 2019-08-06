@@ -5,8 +5,8 @@
     Location    : application/models/Service_references_model.php
     Purpose     : Service references model
     Created     : 07/25/2019 18:42:23 by Scarlet Witch
-    Updated     : 07/29/2019 13:49:52 by Scarlet Witch
-    Changes     : renamed, add other services
+    Updated     : 08/06/2019 14:13:55 by Scarlet Witch
+    Changes     : added where is_active = 0, on select - maxLines, order by rank
 */
 
 if (!defined('BASEPATH')) {
@@ -35,14 +35,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')        
         ->where('t1.module_id', 4)
         ->where('t1.Sub_module_id', 1)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -63,14 +66,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 5)
         ->where('t1.Sub_module_id', 2)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -91,14 +97,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .       
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 5)
         ->where('t1.Sub_module_id', 3)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -119,14 +128,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .      
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 5)
         ->where('t1.Sub_module_id', 4)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -147,14 +159,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .           
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 5)
         ->where('t1.Sub_module_id', 5)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -175,14 +190,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .        
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 6)
         ->where('t1.Sub_module_id', 6)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -203,14 +221,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .       
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 6)
         ->where('t1.Sub_module_id', 7)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -231,14 +252,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .        
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 6)
         ->where('t1.Sub_module_id', 8)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -259,14 +283,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .              
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 7)
         ->where('t1.Sub_module_id', 9)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -287,14 +314,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 7)
         ->where('t1.Sub_module_id', 10)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -315,14 +345,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 8)
         ->where('t1.Sub_module_id', 11)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -343,14 +376,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .        
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 9)
         ->where('t1.Sub_module_id', 12)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -371,14 +407,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 10)
         ->where('t1.Sub_module_id', 13)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -399,14 +438,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .    
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 10)
         ->where('t1.Sub_module_id', 14)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -427,13 +469,15 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .        
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 10)
         ->where('t1.Sub_module_id', 15)
+        ->where('t1.is_active', 0)
         ->where('t1.is_deleted', 0);
 
         $query = $this->db->get();
@@ -455,14 +499,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .         
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 10)
         ->where('t1.Sub_module_id', 16)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
@@ -483,14 +530,17 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
+            't1.error_text,' .           
+            't1.selections,' .           
+            't1.maxLines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
         ->where('t1.module_id', 11)
         ->where('t1.Sub_module_id', 17)
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_active', 0)
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.rank', "ASC");
 
         $query = $this->db->get();
 
