@@ -160,12 +160,13 @@ $autoload['model'] = array(
     'media_model',
     'history_details_model',
     'contact_details_model',
-    //'naming_schedules_model',
     'sub_modules_model',
     'service_references_model',
     'selection_references_model',
     'prayer_request_model',
     'confraternity_model',
-    'mass_request_model'
+    'mass_request_model',
+    'communion_of_the_sick_model',
+    'events_fmhh_venue_model'
     
 );
