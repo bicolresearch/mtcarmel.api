@@ -175,6 +175,9 @@ $autoload['model'] = array(
     'liturgical_model',
     'certification_model',
     'first_communion_model',
-    'confirmation_model'
+    'confirmation_model',
+    'individual_model',
+    'community_model',
+    'adult_model'
     
 );
