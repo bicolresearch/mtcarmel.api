@@ -178,6 +178,7 @@ $autoload['model'] = array(
     'confirmation_model',
     'individual_model',
     'community_model',
-    'adult_model'
+    'adult_model',
+    'marriage_model'
     
 );
