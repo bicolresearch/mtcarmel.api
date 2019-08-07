@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/05/2019 12:33:00 by Scarlet Witch
-    Changes     : added barangay by cityid
+    Updated     : 08/07/2019 11:30:49 by Scarlet Witch
+    Changes     : added province by country id, country_code
 */
 
 if (!defined('BASEPATH')) {
@@ -31,7 +31,8 @@ class Selection_references_model extends CI_Model
             't1.description,' .                
             't1.region_code,' .    
             't1.province_code,' .
-            't1.city_code')
+            't1.city_code,' .
+            't1.country_code')
         ->from('barangay AS t1')
         ->where('t1.is_deleted', 0);
         
@@ -50,7 +51,8 @@ class Selection_references_model extends CI_Model
             't1.description,' .                
             't1.region_code,' .    
             't1.province_code,' .
-            't1.city_code')
+            't1.city_code,' .            
+            't1.country_code')
         ->from('barangay AS t1')
         ->where('t1.is_deleted', 0)
         ->where('t1.city_code', $id);
@@ -70,7 +72,8 @@ class Selection_references_model extends CI_Model
             't1.description,' .                
             't1.region_code,' .    
             't1.province_code,' .
-            't1.city_code')
+            't1.city_code,' .
+            't1.country_code')
         ->from('city AS t1')
         ->where('t1.is_deleted', 0);
 
@@ -89,7 +92,8 @@ class Selection_references_model extends CI_Model
                 't1.description,' .                
                 't1.region_code,' .    
                 't1.province_code,' .
-                't1.city_code')
+                't1.city_code,' .
+                't1.country_code')
             ->from('city AS t1')
             ->where('t1.is_deleted', 0)
             ->where('t1.province_code', $id);
@@ -109,9 +113,30 @@ class Selection_references_model extends CI_Model
             't1.psgc_code,' .
             't1.description,' .                
             't1.region_code,' .    
-            't1.province_code')
+            't1.province_code,' .
+            't1.country_code')
         ->from('province AS t1')
         ->where('t1.is_deleted', 0);
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Province
+    public function _get_all_province_by_countryid($id)
+    {
+        $this->db
+        ->select(           
+            't1.id,' .
+            't1.psgc_code,' .
+            't1.description,' .                
+            't1.region_code,' .    
+            't1.province_code,' .
+            't1.country_code')
+        ->from('province AS t1')
+        ->where('t1.is_deleted', 0)
+        ->where('t1.country_code', $id);
 
         $query = $this->db->get();
 
@@ -126,7 +151,8 @@ class Selection_references_model extends CI_Model
             't1.id,' .
             't1.psgc_code,' .
             't1.description,' .                
-            't1.region_code')
+            't1.region_code,' .
+            't1.country_code')
         ->from('region AS t1')
         ->where('t1.is_deleted', 0);
 
@@ -143,6 +169,7 @@ class Selection_references_model extends CI_Model
             't1.id,' .
             't1.name,' .
             't1.code,' . 
+            't1.country_code,' . 
             't1.landline_format,' .               
             't1.mobile_format')
         ->from('country AS t1')
