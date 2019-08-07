@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/07/2019 11:30:49 by Scarlet Witch
-    Changes     : added province by country id, country_code
+    Updated     : 08/07/2019 14:23:40 by Scarlet Witch
+    Changes     : Updated country order by code asc
 */
 
 if (!defined('BASEPATH')) {
@@ -173,7 +173,8 @@ class Selection_references_model extends CI_Model
             't1.landline_format,' .               
             't1.mobile_format')
         ->from('country AS t1')
-        ->where('t1.is_deleted', 0);
+        ->where('t1.is_deleted', 0)
+        ->order_by('t1.code', 'ASC');
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
