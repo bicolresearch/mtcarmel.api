@@ -49,6 +49,7 @@ class Posts_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
+                't1.media_id,' .
                 't1.title,' .
                 't1.content,' .
                 't1.dt_created AS posted_on,' .
