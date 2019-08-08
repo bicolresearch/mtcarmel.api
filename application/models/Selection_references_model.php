@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/08/2019 11:21:46 by Scarlet Witch
-    Changes     : Added religion, nationality, civil_status, funeral_location, service, chapel and package
+    Updated     : 08/08/2019 12:04:49 by Scarlet Witch
+    Changes     : Added occasion
 */
 
 if (!defined('BASEPATH')) {
@@ -209,6 +209,22 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name')
         ->from('status AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Liturgical - Occasion 
+    public function _get_all_occasion()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .  
+            't1.name,' .             
+            't1.description')
+        ->from('occasion AS t1')   
         ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
