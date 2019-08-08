@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/07/2019 17:53:17 by Scarlet Witch
-    Changes     : Added certificate and purpose_certificate
+    Updated     : 08/08/2019 11:21:46 by Scarlet Witch
+    Changes     : Added religion, nationality, civil_status, funeral_location, service, chapel and package
 */
 
 if (!defined('BASEPATH')) {
@@ -251,5 +251,128 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
+    // Marriage - Religion
+    public function _get_all_religion()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('religion AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Marriage - Nationality
+    public function _get_all_nationality()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('nationality AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Funeral Service - Civil Status
+    public function _get_all_civil_status()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('civil_status AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Funeral Service - Funeral Location
+    public function _get_all_funeral_location()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('chapel AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Funeral Service - Service
+    public function _get_all_service()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('service_type AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Funeral Chapel - Chapel
+    public function _get_all_chapel()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description,' .
+            't1.amenities,' .
+            't1.additional_amenities,' .
+            't1.amount,' .
+            't1.amt_per,' .
+            't1.other_charges,' .
+            't1.other_charges_per')
+        ->from('chapel AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Events - Package
+    public function _get_all_package()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description,' .
+            't1.amenities,' .
+            't1.additional_amenities,' .
+            't1.amount,' .
+            't1.amt_per,' .
+            't1.other_charges,' .
+            't1.other_charges_per')
+        ->from('package AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
 
 }
