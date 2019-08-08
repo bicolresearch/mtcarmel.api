@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/07/2019 17:11:52 by Scarlet Witch
-    Changes     : Updated country order by name asc
+    Updated     : 08/07/2019 17:53:17 by Scarlet Witch
+    Changes     : Added certificate and purpose_certificate
 */
 
 if (!defined('BASEPATH')) {
@@ -209,6 +209,42 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name')
         ->from('status AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Certification - Certificate 
+    public function _get_all_certificate()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .             
+            't1.description')
+        ->from('certificate_type AS t1')
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Certification - Purpose 
+    public function _get_all_purpose_certificate()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .            
+            't1.module_id,' .            
+            't1.sub_module_id,' .
+            't1.name,' .             
+            't1.description')
+        ->from('purpose_type AS t1')                
+        ->where('t1.module_id', 5)
+        ->where('t1.sub_module_id', 5)
         ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
