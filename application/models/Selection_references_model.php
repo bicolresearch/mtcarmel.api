@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/08/2019 12:04:49 by Scarlet Witch
-    Changes     : Added occasion
+    Updated     : 08/08/2019 19:08:25 by Scarlet Witch
+    Changes     : Added events
 */
 
 if (!defined('BASEPATH')) {
@@ -363,6 +363,22 @@ class Selection_references_model extends CI_Model
             't1.other_charges,' .
             't1.other_charges_per')
         ->from('chapel AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Events - Events
+    public function _get_all_events()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('event_type AS t1')  
         ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
