@@ -5,8 +5,8 @@
     Location    : application/models/Service_references_model.php
     Purpose     : Service references model
     Created     : 07/25/2019 18:42:23 by Scarlet Witch
-    Updated     : 08/06/2019 14:13:55 by Scarlet Witch
-    Changes     : added where is_active = 0, on select - maxLines, order by rank
+    Updated     : 08/09/2019 09:22:14 by Scarlet Witch
+    Changes     : updated select from max_lines to max_lines
 */
 
 if (!defined('BASEPATH')) {
@@ -37,7 +37,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')        
@@ -68,7 +68,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -99,7 +99,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .       
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -130,7 +130,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .      
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -161,7 +161,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .           
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -192,7 +192,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .        
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -223,7 +223,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .       
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -254,7 +254,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .        
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -285,7 +285,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .              
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -316,7 +316,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -347,7 +347,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -378,7 +378,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .        
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -409,7 +409,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -440,7 +440,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .    
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -471,7 +471,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .        
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -501,7 +501,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .         
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
@@ -532,7 +532,7 @@ class Service_references_model extends CI_Model
             't1.validator_max_value,' .
             't1.error_text,' .           
             't1.selections,' .           
-            't1.maxLines')
+            't1.max_lines')
         ->from('service_references AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
