@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/08/2019 19:08:25 by Scarlet Witch
-    Changes     : Added events
+    Updated     : 08/09/2019 13:19:30 by Scarlet Witch
+    Changes     : Updated select - description as name for province, city and barangay
 */
 
 if (!defined('BASEPATH')) {
@@ -28,7 +28,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.brgy_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .
@@ -48,7 +48,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.brgy_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .            
@@ -69,7 +69,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.psgc_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .
@@ -89,7 +89,7 @@ class Selection_references_model extends CI_Model
             ->select(           
                 't1.id,' .
                 't1.psgc_code,' .
-                't1.description,' .                
+                't1.description as name,' .                
                 't1.region_code,' .    
                 't1.province_code,' .
                 't1.city_code,' .
@@ -103,7 +103,6 @@ class Selection_references_model extends CI_Model
             return ($query->num_rows() > 0) ? $query->result_array() : false;
         }
     
-
     // Province
     public function _get_all_province()
     {
@@ -111,7 +110,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.psgc_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.country_code')
@@ -130,7 +129,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.psgc_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.country_code')
@@ -150,7 +149,7 @@ class Selection_references_model extends CI_Model
         ->select(           
             't1.id,' .
             't1.psgc_code,' .
-            't1.description,' .                
+            't1.description as name,' .                
             't1.region_code,' .
             't1.country_code')
         ->from('region AS t1')
