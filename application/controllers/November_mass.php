@@ -5,8 +5,8 @@
     Location    : application/controllers/November_mass.php
     Purpose     : November mass controller
     Created     : 08/06/2019 18:24:27 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 13:15:52 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -93,10 +93,10 @@ class November_mass extends REST_Controller
             'mobile_contact_person' => $this->post('mobile_contact_person'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
-            'barangay' => $this->post('barangay'),
-            'city' => $this->post('city'),
-            'province' => $this->post('province'),
-            'country' => $this->post('country'),            
+            'barangay' => $this->post('barangay_code'),
+            'city' => $this->post('city_code'),
+            'province' => $this->post('province_code'),
+            'country' => $this->post('country_code'),      
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -133,10 +133,10 @@ class November_mass extends REST_Controller
             'mobile_contact_person' => $this->put('mobile_contact_person'),
             'address_1' => $this->put('address_1'),
             'address_2' => $this->put('address_2'),
-            'barangay' => $this->put('barangay'),
-            'city' => $this->put('city'),
-            'province' => $this->put('province'),
-            'country' => $this->put('country'),
+            'barangay' => $this->put('barangay_code'),
+            'city' => $this->put('city_code'),
+            'province' => $this->put('province_code'),
+            'country' => $this->put('country_code'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];

@@ -5,8 +5,8 @@
     Location    : application/controllers/Marriage.php
     Purpose     : Marriage controller
     Created     : 08/07/2019 16:08:36 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 13:08:55 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -104,11 +104,11 @@ class Marriage extends REST_Controller
             'mobile_groom' => $this->post('mobile_groom'),
             'email_groom' => $this->post('email_groom'),
             'address_1_groom' => $this->post('address_1_groom'),
-            'address_2_groom' => $this->post('address_2_groom'),
-            'barangay_groom' => $this->post('barangay_groom'),
-            'city_groom' => $this->post('city_groom'),
-            'nprovince_groomame' => $this->post('province_groom'),
-            'country_groom' => $this->post('country_groom'),
+            'address_2_groom' => $this->post('address_2_groom'),            
+            'barangay_groom' => $this->post('barangay_code_groom'),
+            'city_groom' => $this->post('city_code_groom'),
+            'province_groom' => $this->post('province_code_groom'),
+            'country_groom' => $this->post('country_code_groom'),
             'name_parish_groom' => $this->post('name_parish_groom'),
             'address_parish_groom' => $this->post('address_parish_groom'),
             'address_provincial_groom' => $this->post('address_provincial_groom'),
@@ -128,11 +128,11 @@ class Marriage extends REST_Controller
             'mobile_bride' => $this->post('mobile_bride'),
             'email_bride' => $this->post('email_bride'),
             'address_1_bride' => $this->post('address_1_bride'),
-            'address_2_bride' => $this->post('address_2_bride'),
-            'barangay_bride' => $this->post('barangay_bride'),
-            'city_bride' => $this->post('city_bride'),
-            'province_bride' => $this->post('province_bride'),
-            'country_bride' => $this->post('country_bride'),
+            'address_2_bride' => $this->post('address_2_bride'),            
+            'barangay_bride' => $this->post('barangay_code_bride'),
+            'city_bride' => $this->post('city_code_bride'),
+            'province_bride' => $this->post('province_code_bride'),
+            'country_bride' => $this->post('country_code_bride'),
             'name_parish_bride' => $this->post('name_parish_bride'),
             'address_parish_bride' => $this->post('address_parish_bride'),
             'address_provincial_bride' => $this->post('address_provincial_bride'),
@@ -191,10 +191,10 @@ class Marriage extends REST_Controller
             'email_groom' => $this->put('email_groom'),
             'address_1_groom' => $this->put('address_1_groom'),
             'address_2_groom' => $this->put('address_2_groom'),
-            'barangay_groom' => $this->put('barangay_groom'),
-            'city_groom' => $this->put('city_groom'),
-            'nprovince_groomame' => $this->put('province_groom'),
-            'country_groom' => $this->put('country_groom'),
+            'barangay_groom' => $this->put('barangay_code_groom'),
+            'city_groom' => $this->put('city_code_groom'),
+            'province_groom' => $this->put('province_code_groom'),
+            'country_groom' => $this->put('country_code_groom'),
             'name_parish_groom' => $this->put('name_parish_groom'),
             'address_parish_groom' => $this->put('address_parish_groom'),
             'address_provincial_groom' => $this->put('address_provincial_groom'),
@@ -215,10 +215,10 @@ class Marriage extends REST_Controller
             'email_bride' => $this->put('email_bride'),
             'address_1_bride' => $this->put('address_1_bride'),
             'address_2_bride' => $this->put('address_2_bride'),
-            'barangay_bride' => $this->put('barangay_bride'),
-            'city_bride' => $this->put('city_bride'),
-            'province_bride' => $this->put('province_bride'),
-            'country_bride' => $this->put('country_bride'),
+            'barangay_bride' => $this->put('barangay_code_bride'),
+            'city_bride' => $this->put('city_code_bride'),
+            'province_bride' => $this->put('province_code_bride'),
+            'country_bride' => $this->put('country_code_bride'),
             'name_parish_bride' => $this->put('name_parish_bride'),
             'address_parish_bride' => $this->put('address_parish_bride'),
             'address_provincial_bride' => $this->put('address_provincial_bride'),

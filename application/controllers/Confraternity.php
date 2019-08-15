@@ -5,8 +5,8 @@
     Location    : application/controllers/Confraternity.php
     Purpose     : Confraternity controller
     Created     : 07/30/2019 18:00:42 by Scarlet Witch
-    Updated     : 08/14/2019 17:12:14 by Spiderman
-    Changes     : 
+    Updated     : 08/15/2019 11:04:31 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -90,10 +90,10 @@ class Confraternity extends REST_Controller
             'name' => $this->post('name'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
-            'barangay' => $this->post('barangay'),
-            'city' => $this->post('city'),
-            'province' => $this->post('province'),
-            'country' => $this->post('country'),
+            'barangay' => $this->post('barangay_code'),
+            'city' => $this->post('city_code'),
+            'province' => $this->post('province_code'),
+            'country' => $this->post('country_code'),
             'dt_birth' => $this->post('dt_birth'),
             'landline' => $this->post('landline'),
             'mobile' => $this->post('mobile'),
@@ -131,10 +131,10 @@ class Confraternity extends REST_Controller
             'name' => $this->put('name'),
             'address_1' => $this->put('address_1'),
             'address_2' => $this->put('address_2'),
-            'barangay' => $this->put('barangay'),
-            'city' => $this->put('city'),
-            'province' => $this->put('province'),
-            'country' => $this->put('country'),
+            'barangay' => $this->put('barangay_code'),
+            'city' => $this->put('city_code'),
+            'province' => $this->put('province_code'),
+            'country' => $this->put('country_code'),            
             'dt_birth' => $this->put('dt_birth'),
             'landline' => $this->put('landline'),
             'mobile' => $this->put('mobile'),
