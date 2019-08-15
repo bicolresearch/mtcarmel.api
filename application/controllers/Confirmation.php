@@ -5,8 +5,8 @@
     Location    : application/controllers/Confirmation.php
     Purpose     : Confirmation controller
     Created     : 08/06/2019 20:14:31 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 13:04:19 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -91,9 +91,10 @@ class Confirmation extends REST_Controller
             'dt_birth' => $this->post('dt_birth'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
-            'city' => $this->post('city'),
-            'province' => $this->post('province'),
-            'country' => $this->post('country'),
+            'barangay' => $this->post('barangay_code'),
+            'city' => $this->post('city_code'),
+            'province' => $this->post('province_code'),
+            'country' => $this->post('country_code'),            
             'dt_baptism' => $this->post('dt_baptism'),
             'church_of_baptism' => $this->post('church_of_baptism'),
             'name_father' => $this->post('name_father'),
@@ -138,9 +139,10 @@ class Confirmation extends REST_Controller
             'dt_birth' => $this->put('dt_birth'),
             'address_1' => $this->put('address_1'),
             'address_2' => $this->put('address_2'),
-            'city' => $this->put('city'),
-            'province' => $this->put('province'),
-            'country' => $this->put('country'),
+            'barangay' => $this->put('barangay_code'),
+            'city' => $this->put('city_code'),
+            'province' => $this->put('province_code'),
+            'country' => $this->put('country_code'),
             'dt_baptism' => $this->put('dt_baptism'),
             'church_of_baptism' => $this->put('church_of_baptism'),
             'name_father' => $this->put('name_father'),

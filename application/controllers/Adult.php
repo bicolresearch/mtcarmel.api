@@ -5,8 +5,8 @@
     Location    : application/controllers/Adult.php
     Purpose     : Adult baptism controller
     Created     : 08/07/2019 12:38:27 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 13:01:12 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -100,9 +100,10 @@ class Adult extends REST_Controller
             'birth_place_mother' => $this->post('birth_place_mother'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
-            'city' => $this->post('city'),
-            'province' => $this->post('province'),
-            'country' => $this->post('country'),
+            'barangay' => $this->post('barangay_code'),
+            'city' => $this->post('city_code'),
+            'province' => $this->post('province_code'),
+            'country' => $this->post('country_code'),
             'marriage' => $this->post('marriage'),
             'place_marriage' => $this->post('place_marriage'),
             'name_contact_person' => $this->post('name_contact_person'),
@@ -152,10 +153,11 @@ class Adult extends REST_Controller
             'dt_birth_mother' => $this->put('dt_birth_mother'),
             'birth_place_mother' => $this->put('birth_place_mother'),
             'address_1' => $this->put('address_1'),
-            'address_2' => $this->put('address_2'),
-            'city' => $this->put('city'),
-            'province' => $this->put('province'),
-            'country' => $this->put('country'),
+            'address_2' => $this->put('address_2'),            
+            'barangay' => $this->put('barangay_code'),
+            'city' => $this->put('city_code'),
+            'province' => $this->put('province_code'),
+            'country' => $this->put('country_code'),
             'marriage' => $this->put('marriage'),
             'place_marriage' => $this->put('place_marriage'),
             'name_contact_person' => $this->put('name_contact_person'),

@@ -5,8 +5,8 @@
     Location    : application/controllers/Events_fmhh_venue.php
     Purpose     : Events Father Mark Horan Hall venue controller
     Created     : 08/06/2019 16:45:22 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 13:05:30 by Scarlet Witch
+    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -90,10 +90,10 @@ class Events_fmhh_venue extends REST_Controller
             'name' => $this->post('name'),
             'address_1' => $this->post('address_1'),
             'address_2' => $this->post('address_2'),
-            'barangay' => $this->post('barangay'),
-            'city' => $this->post('city'),
-            'province' => $this->post('province'),
-            'country' => $this->post('country'),
+            'barangay' => $this->post('barangay_code'),
+            'city' => $this->post('city_code'),
+            'province' => $this->post('province_code'),
+            'country' => $this->post('country_code'),            
             'event' => $this->post('event'),
             'name_contact_person' => $this->post('name_contact_person'),
             'landline_contact_person' => $this->post('landline_contact_person'),
@@ -135,10 +135,10 @@ class Events_fmhh_venue extends REST_Controller
             'name' => $this->put('name'),
             'address_1' => $this->put('address_1'),
             'address_2' => $this->put('address_2'),
-            'barangay' => $this->put('barangay'),
-            'city' => $this->put('city'),
-            'province' => $this->put('province'),
-            'country' => $this->put('country'),
+            'barangay' => $this->put('barangay_code'),
+            'city' => $this->put('city_code'),
+            'province' => $this->put('province_code'),
+            'country' => $this->put('country_code'),            
             'event' => $this->put('event'),
             'name_contact_person' => $this->put('name_contact_person'),
             'landline_contact_person' => $this->put('landline_contact_person'),
