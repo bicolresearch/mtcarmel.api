@@ -5,8 +5,8 @@
     Location    : application/models/Media_model.php
     Purpose     : Media model
     Created     : 07/22/2019 15:50:41 by Spiderman
-    Updated     : 08/05/2019 19:42:26 by Scarlet Witch
-    Changes     : added order_by to _get_all
+    Updated     : 08/14/2019 23:08:46 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {

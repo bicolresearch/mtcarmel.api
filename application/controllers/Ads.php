@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 07/25/2019 16:14:41 by Spiderman
+    Updated     : 08/14/2019 18:49:20 by Spiderman
     Changes     : 
 */
 
@@ -88,6 +88,7 @@ class Ads extends REST_Controller
             'name' => $this->post('name'),
             'description' => $this->post('description'),
             'media_id' => $this->post('media_id'),
+            'type_id' => $this->post('type_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
@@ -117,6 +118,7 @@ class Ads extends REST_Controller
             'name' => $this->put('name'),
             'description' => $this->put('description'),
             'media_id' => $this->put('media_id'),
+            'type_id' => $this->put('type_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];

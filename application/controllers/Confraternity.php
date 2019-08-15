@@ -5,8 +5,8 @@
     Location    : application/controllers/Confraternity.php
     Purpose     : Confraternity controller
     Created     : 07/30/2019 18:00:42 by Scarlet Witch
-    Updated     : 07/31/2019 17:09:20 by Scarlet Witch
-    Changes     : updated the created fields
+    Updated     : 08/14/2019 17:12:14 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -54,7 +54,7 @@ class Confraternity extends REST_Controller
         }
     }
 
-    public function medium_get()
+    public function confraternity_get()
     {
         // Get the id parameter
         $id = (int)$this->get('id');

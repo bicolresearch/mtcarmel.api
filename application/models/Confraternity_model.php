@@ -4,9 +4,9 @@
     Filename    : Confraternity_model.php
     Location    : application/models/Confraternity_model.php
     Purpose     : Confraternity model
-    Created     : 07/22/2019 15:50:41 by Spiderman
-    Updated     : 08/06/2019 11:38:14 by Scarlet Witch
-    Changes     : added order_by status at _get_all
+    Created     : 07/22/2019 15:50:41 by Scarlet Witch
+    Updated     : 08/14/2019 17:13:26 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {

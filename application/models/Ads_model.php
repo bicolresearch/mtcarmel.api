@@ -5,8 +5,8 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/05/2019 00:33:29 by Spiderman
-    Changes     : Add order_by
+    Updated     : 08/14/2019 18:19:49 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -28,15 +28,24 @@ class Ads_model extends CI_Model
                 't1.id,' .
                 't1.branch_id,' .
                 't1.media_id,' .
+                't1.type_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .
-                't2.full_path')
+                'CONCAT(t5.first_name, " ", t5.last_name) AS author,' .
+                't2.full_path AS media_path')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->where('t1.is_deleted', 0)
+            ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1
+                ]
+            )
             ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
@@ -49,17 +58,22 @@ class Ads_model extends CI_Model
                 't1.id,' .
                 't1.branch_id,' .
                 't1.media_id,' .
+                't1.type_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .
-                't2.full_path')
+                'CONCAT(t5.first_name, " ", t5.last_name) AS author,' .
+                't2.full_path AS media_path')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
+            ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
                     't1.id' => $id
                 ]
             );
