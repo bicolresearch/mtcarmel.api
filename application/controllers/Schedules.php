@@ -4,9 +4,9 @@
     Filename    : Schedules.php
     Location    : application/controllers/Schedules.php
     Purpose     : Schedules controller
-    Created     : 6/24/2019 by Spiderman
-    Updated     : 07/23/2019 20:00:56 by Scarlet Witch
-    Changes     : update the script for datatables
+    Created     : 06/24/2019 12:39:19 by Spiderman
+    Updated     : 08/15/2019 12:39:30 by Spiderman
+    Changes     : 
 */
 
 
@@ -14,9 +14,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Schedules extends REST_Controller
@@ -34,7 +32,7 @@ class Schedules extends REST_Controller
 
         $id = $this->get('id');
 
-        // If the id parameter doesn't exists return all the Schedules
+        // Validate id
         if (empty($id)) {
             // Check if the Schedules data store contains Schedules (in case the database result returns NULL)
             if (empty($schedules)) {
