@@ -5,8 +5,8 @@
     Location    : application/controllers/Individual.php
     Purpose     : Individual baptism controller
     Created     : 08/07/2019 12:29:37 by Scarlet Witch
-    Updated     : 08/15/2019 13:07:55 by Scarlet Witch
-    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
+    Updated     : 08/15/2019 17:04:07 by Scarlet Witch
+    Changes     : commenting officiating priest
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -109,7 +109,7 @@ class Individual extends REST_Controller
             'name_contact_person' => $this->post('name_contact_person'),
             'landline_contact_person' => $this->post('landline_contact_person'),
             'mobile_contact_person' => $this->post('mobile_contact_person'),
-            'officiating_priest' => $this->post('officiating_priest'),
+            //'officiating_priest' => $this->post('officiating_priest'),
             'dt_baptism' => $this->post('dt_baptism'),
             'time_baptism' => $this->post('time_baptism'),
             'created_by' => $this->post('user_id'),
@@ -164,7 +164,7 @@ class Individual extends REST_Controller
             'name_contact_person' => $this->put('name_contact_person'),
             'landline_contact_person' => $this->put('landline_contact_person'),
             'mobile_contact_person' => $this->put('mobile_contact_person'),
-            'officiating_priest' => $this->put('officiating_priest'),
+            //'officiating_priest' => $this->put('officiating_priest'),
             'dt_baptism' => $this->put('dt_baptism'),
             'time_baptism' => $this->put('time_baptism'),
             'updated_by' => $this->put('user_id'),

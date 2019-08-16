@@ -5,8 +5,8 @@
     Location    : application/controllers/Liturgical.php
     Purpose     : Liturgical controller
     Created     : 08/06/2019 19:11:15 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/15/2019 16:44:44 by Scarlet Witch
+    Changes     : commenting officiating priest
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -93,10 +93,11 @@ class Liturgical extends REST_Controller
             'occasion' => $this->post('occasion'),
             'name_contact_person' => $this->post('name_contact_person'),
             'landline_contact_person' => $this->post('landline_contact_person'),
-            'mobile_contact_person' => $this->post('mobile_contact_person'),
-            'officiating_priest' => $this->post('officiating_priest'),
+            'mobile_contact_person' => $this->post('mobile_contact_person'),            
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
+
+            //'officiating_priest' => $this->post('officiating_priest'),
         ];
 
         // Validate data array if it contains NULL values
@@ -132,7 +133,7 @@ class Liturgical extends REST_Controller
             'name_contact_person' => $this->put('name_contact_person'),
             'landline_contact_person' => $this->put('landline_contact_person'),
             'mobile_contact_person' => $this->put('mobile_contact_person'),
-            'officiating_priest' => $this->put('officiating_priest'),
+            //'officiating_priest' => $this->put('officiating_priest'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
