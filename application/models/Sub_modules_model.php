@@ -5,8 +5,8 @@
     Location    : application/models/Sub_modules_model.php
     Purpose     : Sub_modules_model model
     Created     : 2019-07-26 10:44:51 by Scarlet Witch 
-    Updated     : 08/01/2019 12:44:20 by Scarlet Witch
-    Changes     : renamed field service_id
+    Updated     : 08/16/2019 15:56:01 by Scarlet Witch
+    Changes     : removed where('t1.id', 1) in getall, and on select add t1.id for sub_module_id (get_all and get_by_id)
 */
 
 if (!defined('BASEPATH')) {
@@ -26,6 +26,7 @@ class Sub_modules_model extends CI_Model
         $this->db
             ->select(
                 't4.id as module_id,' .
+                't1.id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .
@@ -38,7 +39,6 @@ class Sub_modules_model extends CI_Model
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
             ->join('modules AS t4', 't4.id = t1.module_id', 'left')
             ->where('t1.program_id', 3)
-            ->where('t1.id', 1)
             ->where('t1.is_deleted', 0);
             
         $query = $this->db->get();
@@ -76,6 +76,7 @@ class Sub_modules_model extends CI_Model
         $this->db
             ->select(
                 't4.id as module_id,' .
+                't1.id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.description,' .
