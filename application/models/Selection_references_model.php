@@ -5,8 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/09/2019 13:19:30 by Scarlet Witch
-    Changes     : Updated select - description as name for province, city and barangay
+    Updated     : 08/16/2019 11:57:39 by Scarlet Witch
+    Changes     : Added marriage_type (baptism)
 */
 
 if (!defined('BASEPATH')) {
@@ -400,6 +400,22 @@ class Selection_references_model extends CI_Model
             't1.other_charges,' .
             't1.other_charges_per')
         ->from('package AS t1')  
+        ->where('t1.is_deleted', 0);
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    // Baptism - Marriage Type
+    public function _get_all_marriage_type()
+    {
+        $this->db
+        ->select(    
+            't1.id,' .
+            't1.branch_id,' .
+            't1.name,' .
+            't1.description')
+        ->from('marriage_type AS t1')  
         ->where('t1.is_deleted', 0);
         $query = $this->db->get();
 
