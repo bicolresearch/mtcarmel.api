@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 08/14/2019 18:49:20 by Spiderman
+    Updated     : 08/15/2019 14:17:29 by Spiderman
     Changes     : 
 */
 
@@ -26,14 +26,14 @@ class Ads extends REST_Controller
 
     public function index_get()
     {
-        // Ads from a data store e.g. database
+        // Get the data from a model
         $ads = $this->ads_model->_get_all();
 
-        $id = $this->get('id');
+        // Get the type_id parameter
+        $type_id = (int)$this->get('type_id');
 
-        // If the id parameter doesn't exists return all the ads
-        if (empty($id)) {
-            // Check if the ads data store contains ads (in case the database result returns NULL)
+        if(empty($type_id)) {
+            // Check if data returns empty or null
             if (empty($ads)) {
                 // Set the response and exit
                 $this->response([
@@ -44,34 +44,43 @@ class Ads extends REST_Controller
                 // Set the response and exit
                 $this->response($ads, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit.
+        }
+
+        // Get the data by type_id from a model
+        $ads = $this->ads_model->_get_by_type($type_id);
+
+        // Check if data is empty or null
+        if (empty($ads)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            $this->response($ads, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
-    public function ads_get()
+    public function ad_get()
     {
-        // Find and return a single record for a particular ads.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
+        // Check if id parameter is empty or null
         if (empty($id)) {
-            // Invalid id, set the response and exit.
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ads from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
+        // Get the data by id from a model
         $ads = $this->ads_model->_get_by_id($id);
 
+        // Check if data is empty or null
         if (empty($ads)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
@@ -93,7 +102,7 @@ class Ads extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s'),
         ];
 
-        // Validate data array if it contains NULL values
+        // Check the data array if it contains NULL values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -123,20 +132,19 @@ class Ads extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular ad.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
+        // Check if id parameter is empty or null
         if (empty($id)) {
-            // Invalid id, set the response and exit.
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ads from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
+        // Get the data by id from a model
         $ads = $this->ads_model->_get_by_id($id);
 
         if (empty($ads)) {
@@ -146,7 +154,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check the data array if it contains NULL values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -156,7 +164,7 @@ class Ads extends REST_Controller
         } else {
             // If data array does not contains NULL values, update the resource
             $this->ads_model->_update($id, $data);
-
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -172,20 +180,19 @@ class Ads extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular ad.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
+        // Check if id parameter is empty or null
         if (empty($id)) {
-            // Invalid id, set the response and exit.
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ads from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
+        // Get the data by id from a model
         $ads = $this->ads_model->_get_by_id($id);
 
         if (empty($ads)) {
@@ -195,7 +202,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check the data array if it contains NULL values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -205,7 +212,7 @@ class Ads extends REST_Controller
         } else {
             // If data array does not contains NULL values, update the resource
             $this->ads_model->_update($id, $data);
-
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -215,20 +222,19 @@ class Ads extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular ad.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
+        // Check if id parameter is empty or null
         if (empty($id)) {
-            // Invalid id, set the response and exit.
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the ads from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
+        // Get the data by id from a model
         $ads = $this->ads_model->_get_by_id($id);
 
         if (empty($ads)) {
@@ -238,7 +244,7 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check the data array if it contains NULL values
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -248,7 +254,6 @@ class Ads extends REST_Controller
         } else {
             // Delete the resource
             $this->ads_model->_hard_delete($id);
-
             // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
