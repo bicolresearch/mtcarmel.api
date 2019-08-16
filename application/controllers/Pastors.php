@@ -5,8 +5,8 @@
     Location    : application/controllers/Pastors.php
     Purpose     : Pastors controller
     Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 2019-07-23 13:25:05 by Scarlet Witch 
-    Changes     : update the script for datatables
+    Updated     : 08/17/2019 06:54:15 by Scarlet Witch
+    Changes     : added type of ministers on create
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -87,6 +87,7 @@ class Pastors extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),
+            'type' => 2,
             'name' => $this->post('name'),
             'position' => $this->post('position'),
             'rank' => $this->post('rank'),

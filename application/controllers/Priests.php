@@ -5,8 +5,8 @@
     Location    : application/controllers/Priests.php
     Purpose     : Priests controller
     Created     : 6/24/2019 by Spiderman
-    Updated     : 07/23/2019 12:57:25 by Scarlet Witch
-    Changes     : update the script for datatables
+    Updated     : 08/17/2019 07:09:46 by Scarlet Witch
+    Changes     : added type of ministers on create
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -86,7 +86,8 @@ class Priests extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),
+            'branch_id' => $this->post('branch_id'),            
+            'type' => 1,
             'name' => $this->post('name'),
             'position' => $this->post('position'),
             'rank' => $this->post('rank'),
