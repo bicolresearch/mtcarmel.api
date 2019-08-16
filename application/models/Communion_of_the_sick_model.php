@@ -9,6 +9,7 @@
     Changes     : 
 */
 
+
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -58,8 +59,8 @@ class Communion_of_the_sick_model extends CI_Model
             ->where('t1.sub_module_id', 10)
             ->where('t1.is_deleted', 0)                        
             ->order_by('t1.status', 'ASC')                    
-            ->order_by('t1.id', 'DESC');             
-
+            ->order_by('t1.id', 'DESC');       
+        
         return json_decode($this->datatables->generate());
     }
 
@@ -100,6 +101,7 @@ class Communion_of_the_sick_model extends CI_Model
             ->where('t1.sub_module_id', 10)
             ->where('t1.is_deleted', 0)  
             ->where('t1.id', $id);
+            
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

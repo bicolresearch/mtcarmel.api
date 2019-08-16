@@ -84,9 +84,10 @@ class Communion_of_the_sick extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),    
+            'branch_id' => $this->post('branch_id'),  
             'module_id' => 7,
             'sub_module_id' => 10,
+            'status' => 1,
             'name' => $this->post('name'),
             'dt_birth' => $this->post('dt_birth'),
             'name_spouse' => $this->post('name_spouse'),
@@ -103,7 +104,7 @@ class Communion_of_the_sick extends REST_Controller
             'dt_last_confession' => $this->post('dt_last_confession'),
             'time_preferred_visit' => $this->post('time_preferred_visit'),
             'day_preferred_visit' => $this->post('day_preferred_visit'),
-            'household' => $this->post('household'),
+            //'household' => $this->post('household'),
             'name_contact_person' => $this->post('name_contact_person'),
             'landline_contact_person' => $this->post('landline_contact_person'),
             'mobile_contact_person' => $this->post('mobile_contact_person'),
@@ -137,6 +138,7 @@ class Communion_of_the_sick extends REST_Controller
     public function update_put()
     {
         $data = [
+            'status' => $this->put('status'),
             'name' => $this->put('name'),
             'dt_birth' => $this->put('dt_birth'),
             'name_spouse' => $this->put('name_spouse'),
@@ -153,7 +155,7 @@ class Communion_of_the_sick extends REST_Controller
             'dt_last_confession' => $this->put('dt_last_confession'),
             'time_preferred_visit' => $this->put('time_preferred_visit'),
             'day_preferred_visit' => $this->put('day_preferred_visit'),
-            'household' => $this->put('household'),
+            //'household' => $this->put('household'),
             'name_contact_person' => $this->put('name_contact_person'),
             'landline_contact_person' => $this->put('landline_contact_person'),
             'mobile_contact_person' => $this->put('mobile_contact_person'),
