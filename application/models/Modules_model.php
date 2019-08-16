@@ -5,8 +5,8 @@
     Location    : application/models/Modules_model.php
     Purpose     : Modules model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 08/16/2019 16:23:41 by Scarlet Witch
+    Changes     : added sub_modules (url) on get_all and get_by_id
 */
 
 if (!defined('BASEPATH')) {
@@ -29,7 +29,8 @@ class Modules_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .
-                't2.full_path as cover_photo')
+                't2.full_path as cover_photo,' .
+                't1.sub_module_url as sub_modules' )
             ->from('modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
@@ -48,7 +49,8 @@ class Modules_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .
-                't2.full_path as cover_photo')
+                't2.full_path as cover_photo,' .
+                't1.sub_module_url as sub_modules' )
             ->from('modules AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
