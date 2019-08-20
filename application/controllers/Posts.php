@@ -5,8 +5,8 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 06/20/2019 11:48:09 by Spiderman
-    Updated     : 07/05/2019 11:48:01 by Spiderman
-    Changes     : Change commenting format
+    Updated     : 08/19/2019 13:32:30 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -29,7 +29,7 @@ class Posts extends REST_Controller
         // Posts from a data store e.g. database
         $posts = $this->posts_model->_get_all();
 
-        $id = $this->get('id');
+        $id = (int)$this->get('id');
 
         // If the id parameter doesn't exists return all the posts
         if (empty($id)) {

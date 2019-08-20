@@ -11,7 +11,7 @@
  Target Server Version : 100139
  File Encoding         : 65001
 
- Date: 15/08/2019 08:48:40
+ Date: 20/08/2019 09:44:34
 */
 
 SET NAMES utf8mb4;
@@ -119,6 +119,7 @@ CREATE TABLE `ads`  (
   `branch_id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `media_id` int(11) NOT NULL,
   `type_id` int(11) NULL DEFAULT NULL,
   `expiration` datetime(0) NOT NULL,
@@ -128,15 +129,18 @@ CREATE TABLE `ads`  (
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ads
 -- ----------------------------
-INSERT INTO `ads` VALUES (1, 1, 'Advertisement 1', 'Advertisement 1', 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:17', 1, '2019-08-08 22:55:09', b'0');
-INSERT INTO `ads` VALUES (2, 1, 'Advertisement 2', 'Advertisement 2', 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:31', 1, '2019-08-08 22:55:05', b'0');
-INSERT INTO `ads` VALUES (3, 1, 'Advertisement 3', 'Advertisement 3', 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:47', 1, '2019-08-08 22:55:01', b'0');
-INSERT INTO `ads` VALUES (4, 1, 'Advertisement 4', 'Advertisement 4', 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:56', 1, '2019-08-09 15:20:35', b'0');
+INSERT INTO `ads` VALUES (1, 1, 'Advertisement 1', 'Advertisement 1', NULL, 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:17', 1, '2019-08-08 22:55:09', b'0');
+INSERT INTO `ads` VALUES (2, 1, 'Advertisement 2', 'Advertisement 2', NULL, 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:31', 1, '2019-08-08 22:55:05', b'0');
+INSERT INTO `ads` VALUES (3, 1, 'Advertisement 3', 'Advertisement 3', NULL, 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:47', 1, '2019-08-08 22:55:01', b'0');
+INSERT INTO `ads` VALUES (4, 1, 'Advertisement 4', 'Advertisement 4', NULL, 23, 1, '2020-06-30 00:00:00', 1, '2019-06-24 14:30:56', 1, '2019-08-09 15:20:35', b'0');
+INSERT INTO `ads` VALUES (5, 1, 'Splash Ad 1', 'Splash Ad 1', NULL, 12, 2, '0000-00-00 00:00:00', 1, '2019-08-16 23:13:43', NULL, NULL, b'0');
+INSERT INTO `ads` VALUES (6, 1, 'Splash Ad 2', 'Splash Ad 2', 'https://play.google.com/store/apps', 14, 2, '2020-08-19 00:00:00', 1, '2019-08-16 23:14:10', 1, '2019-08-19 20:56:52', b'0');
+INSERT INTO `ads` VALUES (7, 1, 'Splash Ad 3', 'Splash Ad 3', NULL, 13, 2, '0000-00-00 00:00:00', 1, '2019-08-16 23:14:45', NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for audit_trail
@@ -168,7 +172,7 @@ CREATE TABLE `boundaries`  (
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of boundaries
@@ -176,7 +180,8 @@ CREATE TABLE `boundaries`  (
 INSERT INTO `boundaries` VALUES (1, 1, 'North', 'E. Rodriguez Avenue (formerly España Extension)', 1, '2019-06-19 16:46:24', 1, '2019-08-14 23:50:35', b'0');
 INSERT INTO `boundaries` VALUES (2, 1, 'South', 'Ermitaño Creek', 1, '2019-06-19 16:46:53', 1, '2019-08-14 23:50:30', b'0');
 INSERT INTO `boundaries` VALUES (3, 1, 'West', 'San Juan River', 1, '2019-06-19 16:47:19', 1, '2019-08-14 23:50:26', b'0');
-INSERT INTO `boundaries` VALUES (4, 1, 'East', 'Balete Drive through N. Domingo and Horseshoe Drive until Ermitaño Creek', 1, '2019-06-19 16:47:43', 1, '2019-08-14 23:50:23', b'0');
+INSERT INTO `boundaries` VALUES (4, 1, 'East', 'Balete Drive through N. Domingo and Horseshoe Drive until Ermitaño Creek', 1, '2019-06-19 16:47:43', 1, '2019-08-16 16:22:55', b'0');
+INSERT INTO `boundaries` VALUES (5, 1, 'Sample', 'Sample', 1, '2019-08-16 16:36:49', 1, '2019-08-16 16:38:50', b'1');
 
 -- ----------------------------
 -- Table structure for branch
@@ -619,7 +624,7 @@ CREATE TABLE `history`  (
 -- ----------------------------
 -- Records of history
 -- ----------------------------
-INSERT INTO `history` VALUES (1, 1, '17 February 1975', '16 July', 'Our Lady of Mt. Carmel', 'Cubao', '<p style=\"text-align: justify\">The Quezon City district of New Manila is a haven for various Catholic orders, with many chapels and convents scattered around the area; from the American colonial period (1898-1946) Convent of Carmel of Thérèse of Lisieux, the Sisters of St. Paul of Chartres Novitiate and Provincial House (established 1931), Franciscan St. Joseph’s Academy and Convent (established 1932), and the Society of the Divine Word’s Christ the King Mission Seminary (established 1933), to the post-war Congregation of the Religious of the Virgin Mary Compound (established 1950), the Pink Sister’s St. Joseph Convent of Perpetual Adoration (established 1965), the Congregatio Immaculati Cordis Mariae’s Maryhill School Of The Theology (1979),the Local Superior of The Society of Monfort Missionaries(established 1984), and the Foundation for Carmelite Scholastics(established 1987). However, the center of most Catholic activities is the Minor Basilica of the National Shrine of Our Lady of Mount Carmel, located on Broadway Avenue, taking most of the block between 4th and 5th street.</p><p>\r\n\r\n</p><p style=\"text-align: justify\">The Mount Carmel Parish is part of the third wave of Discalced Carmelites missions to the Philippines, which started in 1923, with the arrival of four French nuns from Hue, Vietnam, to the shores of Jaro, Iloilo. In this first wave, the Convent Carmel of Thérèse of Lisieux was founded in 1926, along Gilmore Avenue, in New Manila. The second wave also began in Infanta, Quezon Province, in 1946; and this time the Discalced Carmelite friars were now leading the wave. Part of the third wave that started in Jaro, Iloilo, the Anglo-Irish Carmelite friars established a foundation in 1954, in New Manila, Quezon City, and on December 30 of the same year, the cornerstone was laid for the new church.</p><p>\r\n\r\n</p><p style=\"text-align: justify\">The new church was dedicated as a shrine to Our Lady of Mount Carmel, a title of the Blessed Virgin Mary, which the first Carmelites named in the construction of their first monastery on Mount Karmel (Har HaKarmel) in the northern territories of Israel, during the 12th Century. The order of Carmelite started with Christian hermits living in Har HaKarmel, during the Crusades, who chose the mountain where the prophet Elijah had lived and challenged the priests of the god Baal, as a reflection of their faith against the Muslims who have taken over the holy city of Jerusalem. </p>', NULL, 1, '2019-06-19 14:27:04', 1, '2019-08-12 23:42:34', b'0');
+INSERT INTO `history` VALUES (1, 1, '17 February 1975', '16 July', 'Our Lady of Mt. Carmel', 'Cubao', '<p style=\"text-align: justify\">The Quezon City district of New Manila is a haven for various Catholic orders, with many chapels and convents scattered around the area; from the American colonial period (1898-1946) Convent of Carmel of Thérèse of Lisieux, the Sisters of St. Paul of Chartres Novitiate and Provincial House (established 1931), Franciscan St. Joseph’s Academy and Convent (established 1932), and the Society of the Divine Word’s Christ the King Mission Seminary (established 1933), to the post-war Congregation of the Religious of the Virgin Mary Compound (established 1950), the Pink Sister’s St. Joseph Convent of Perpetual Adoration (established 1965), the Congregatio Immaculati Cordis Mariae’s Maryhill School Of The Theology (1979),the Local Superior of The Society of Monfort Missionaries(established 1984), and the Foundation for Carmelite Scholastics(established 1987). However, the center of most Catholic activities is the Minor Basilica of the National Shrine of Our Lady of Mount Carmel, located on Broadway Avenue, taking most of the block between 4th and 5th street.</p><p>\r\n</p><p style=\"text-align: justify\">The Mount Carmel Parish is part of the third wave of Discalced Carmelites missions to the Philippines, which started in 1923, with the arrival of four French nuns from Hue, Vietnam, to the shores of Jaro, Iloilo. In this first wave, the Convent Carmel of Thérèse of Lisieux was founded in 1926, along Gilmore Avenue, in New Manila. The second wave also began in Infanta, Quezon Province, in 1946; and this time the Discalced Carmelite friars were now leading the wave. Part of the third wave that started in Jaro, Iloilo, the Anglo-Irish Carmelite friars established a foundation in 1954, in New Manila, Quezon City, and on December 30 of the same year, the cornerstone was laid for the new church.</p><p>\r\n</p><p style=\"text-align: justify\">The new church was dedicated as a shrine to Our Lady of Mount Carmel, a title of the Blessed Virgin Mary, which the first Carmelites named in the construction of their first monastery on Mount Karmel (Har HaKarmel) in the northern territories of Israel, during the 12th Century. The order of Carmelite started with Christian hermits living in Har HaKarmel, during the Crusades, who chose the mountain where the prophet Elijah had lived and challenged the priests of the god Baal, as a reflection of their faith against the Muslims who have taken over the holy city of Jerusalem. </p>', NULL, 1, '2019-06-19 14:27:04', 1, '2019-08-16 00:06:52', b'0');
 
 -- ----------------------------
 -- Table structure for household
@@ -775,7 +780,7 @@ CREATE TABLE `logs`  (
   `authorized` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `response_code` smallint(3) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 383 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1081 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for main
@@ -1769,7 +1774,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-08-14 16:44:43', b'0');
+INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-08-19 20:52:46', b'0');
 INSERT INTO `users` VALUES (2, 1, 2, 'john@appleseed.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:37:34', 2, '2019-07-19 03:03:21', b'0');
 INSERT INTO `users` VALUES (3, 1, 2, 'jane@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-16 12:48:05', 3, '2019-07-23 07:23:10', b'0');
 INSERT INTO `users` VALUES (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-07-18 19:56:14', b'0');

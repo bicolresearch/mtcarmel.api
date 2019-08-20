@@ -5,7 +5,7 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/15/2019 14:57:37 by Spiderman
+    Updated     : 08/19/2019 20:55:01 by Spiderman
     Changes     : 
 */
 
@@ -30,6 +30,8 @@ class Ads_model extends CI_Model
                 't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
+                't1.url,' .
+                't1.expiration,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .
                 't2.full_path AS media_path,' .
@@ -61,6 +63,8 @@ class Ads_model extends CI_Model
                 't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
+                't1.url,' .
+                't1.expiration,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .
                 't2.full_path AS media_path,' .
@@ -93,6 +97,8 @@ class Ads_model extends CI_Model
                 't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
+                't1.url,' .
+                't1.expiration,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .
                 't2.full_path AS media_path,' .
