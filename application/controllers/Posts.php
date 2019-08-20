@@ -26,30 +26,19 @@ class Posts extends REST_Controller
 
     public function index_get()
     {
-        // Posts from a data store e.g. database
+        // Get the data from a model
         $posts = $this->posts_model->_get_all();
 
-        $id = (int)$this->get('id');
-
-        // If the id parameter doesn't exists return all the posts
-        if (empty($id)) {
-            // Check if the posts data store contains posts (in case the database result returns NULL)
-            if (empty($posts)) {
-                // Set the response and exit
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Not Found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-        } else {
-            // Set the response and exit.
+        // Check if data returns empty or null
+        if (empty($posts)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+               // Set the response and exit
+            $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 

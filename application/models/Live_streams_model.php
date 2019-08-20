@@ -1,19 +1,19 @@
 <?php
 
 /*
-    Filename    : Live_streaming_model.php
-    Location    : application/models/Live_streaming_model.php
-    Purpose     : Live streaming model
+    Filename    : Live_streams_model.php
+    Location    : application/models/Live_streams_model.php
+    Purpose     : Live streams model
     Created     : 07/19/2019 22:12:58 by Spiderman
-    Updated     : 08/05/2019 19:41:02 by Scarlet Witch
-    Changes     : added order_by to _get_all
+    Updated     : 08/20/2019 19:20:35 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Live_streaming_model extends CI_Model
+class Live_streams_model extends CI_Model
 {
 
     public function __construct()
@@ -29,11 +29,13 @@ class Live_streaming_model extends CI_Model
                 't1.branch_id,' .
                 't1.title,' .
                 't1.description,' .
-                't1.video_url,' .
+                't1.video_id,' .
                 't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on')
-            ->from('live_streaming AS t1')
+                't1.dt_updated AS updated_on,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+            ->from('live_streams AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)       
             ->order_by('t1.id', 'DESC');
         
@@ -48,13 +50,38 @@ class Live_streaming_model extends CI_Model
                 't1.branch_id,' .
                 't1.title,' .
                 't1.description,' .
-                't1.video_url,' .
+                't1.video_id,' .
                 't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on')
-            ->from('live_streaming AS t1')
+                't1.dt_updated AS updated_on,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+            ->from('live_streams AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->row() : false;
+    }
+
+    public function _get_by_branch_id($branch_id)
+    {
+        $this->db
+            ->select(
+                't1.id,' .
+                't1.branch_id,' .
+                't1.title,' .
+                't1.description,' .
+                't1.video_id,' .
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+            ->from('live_streams AS t1')
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
+            ->where('t1.is_deleted', 0)
+            ->where('t1.branch_id', $branch_id);
 
         $query = $this->db->get();
 
@@ -65,7 +92,7 @@ class Live_streaming_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db->insert('live_streaming', $data);
+        $this->db->insert('live_streams', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -76,7 +103,7 @@ class Live_streaming_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('live_streaming', $data);
+            ->update('live_streams', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -87,7 +114,7 @@ class Live_streaming_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('live_streaming', $data);
+            ->update('live_streams', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -98,7 +125,7 @@ class Live_streaming_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->delete('live_streaming');
+            ->delete('live_streams');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

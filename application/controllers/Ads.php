@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 08/19/2019 16:27:23 by Spiderman
+    Updated     : 08/20/2019 15:01:16 by Spiderman
     Changes     : 
 */
 
@@ -32,6 +32,7 @@ class Ads extends REST_Controller
         // Get the type_id parameter
         $type_id = (int)$this->get('type_id');
 
+        // Check if type_id is empty or null
         if(empty($type_id)) {
             // Check if data returns empty or null
             if (empty($get_all)) {
@@ -49,7 +50,7 @@ class Ads extends REST_Controller
         // Get the data by type_id from a model
         $get_by_id = $this->ads_model->_get_by_type($type_id);
 
-        // Check if data is empty or null
+        // Check if data returns empty or null
         if (empty($get_by_id)) {
             // Set the response and exit
             $this->response([
@@ -57,6 +58,7 @@ class Ads extends REST_Controller
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
+            // Set the response and exit
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
@@ -78,7 +80,7 @@ class Ads extends REST_Controller
         // Get the data by id from a model
         $get_by_id = $this->ads_model->_get_by_id($id);
 
-        // Check if data is empty or null
+        // Check if data returns empty or null
         if (empty($get_by_id)) {
             // Set the response and exit
             $this->response([
@@ -86,6 +88,7 @@ class Ads extends REST_Controller
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
+            // Set the response and exit
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
@@ -104,7 +107,7 @@ class Ads extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Check the data array if it contains NULL values
+        // Check the data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -112,7 +115,7 @@ class Ads extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
+            // If data array does not contains null values, create new resource to database
             $this->ads_model->_create($data);
             // Set the response and exit
             $this->response([
@@ -151,14 +154,16 @@ class Ads extends REST_Controller
         // Get the data by id from a model
         $get_by_id = $this->ads_model->_get_by_id($id);
 
+        // Check if data returns empty or null
         if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Check the data array if it contains NULL values
+        // Check the data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -166,7 +171,7 @@ class Ads extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
+            // If data array does not contains null values, update the resource
             $this->ads_model->_update($id, $data);
             // Set the response and exit
             $this->response([
@@ -199,14 +204,16 @@ class Ads extends REST_Controller
         // Get the data by id from a model
         $get_by_id = $this->ads_model->_get_by_id($id);
 
+        // Check if data returns empty or null
         if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Check the data array if it contains NULL values
+        // Check the data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -214,7 +221,7 @@ class Ads extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
+            // If data array does not contains null values, update the resource
             $this->ads_model->_update($id, $data);
             // Set the response and exit
             $this->response([
@@ -241,14 +248,16 @@ class Ads extends REST_Controller
         // Get the data by id from a model
         $get_by_id = $this->ads_model->_get_by_id($id);
 
+        // Check if data returns empty or null
         if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Check the data array if it contains NULL values
+        // Check the data array if it contains null values
         if (empty($id)) {
             // Set the response and exit
             $this->response([

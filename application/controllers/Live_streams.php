@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Live_streaming.php
-    Location    : application/controllers/Live_streaming.php
-    Purpose     : Live streaming controller
+    Filename    : Live_streams.php
+    Location    : application/controllers/08/20/2019 19:06:09 by Spiderman
+    Purpose     : Live streams controller
     Created     : 07/19/2019 21:32:12 by Spiderman
-    Updated     : 
+    Updated     : 08/20/2019 19:06:19 by Spiderman
     Changes     : 
 */
 
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Live_streaming extends REST_Controller
+class Live_streams extends REST_Controller
 {
     function __construct()
     {
@@ -26,16 +26,16 @@ class Live_streaming extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->live_streaming_model->_get_all();
+        // Get the data from a model
+        $get_all = $this->live_streams_model->_get_all();
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
+        // Get the type_id parameter
+        $branch_id = (int)$this->get('branch_id');
 
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
+        // Check if type_id is empty or null
+        if(empty($branch_id)) {
+            // Check if data returns empty or null
+            if (empty($get_all)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -43,14 +43,23 @@ class Live_streaming extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
+        }
+
+        // Get the data by type_id from a model
+        $get_by_id = $this->live_streams_model->_get_by_branch_id($branch_id);
+
+        // Check if data returns empty or null
+        if (empty($get_by_id)) {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            // Set the response and exit
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -59,7 +68,7 @@ class Live_streaming extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
+        // Check if id is empty or null
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -68,16 +77,19 @@ class Live_streaming extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->live_streaming_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->live_streams_model->_get_by_id($id);
 
-        if (empty($getById)) {
+        // Check if data returns empty or null
+        if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            // Set the response and exit
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -87,12 +99,12 @@ class Live_streaming extends REST_Controller
             'branch_id' => $this->post('branch_id'),
             'title' => $this->post('title'),
             'description' => $this->post('description'),
-            'video_url' => $this->post('video_url'),
+            'video_id' => $this->post('video_id'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s'),
         ];
 
-        // Validate data array if it contains NULL values
+        // Check data array if it contains null valuess
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -100,8 +112,8 @@ class Live_streaming extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
-            $this->live_streaming_model->_create($data);
+            // If data array does not contains null values, create new resource to database
+            $this->live_streams_model->_create($data);
             // Set the response and exit
             $this->response([
                 'status' => TRUE,
@@ -116,7 +128,7 @@ class Live_streaming extends REST_Controller
             'branch_id' => $this->put('branch_id'),
             'title' => $this->put('title'),
             'description' => $this->put('description'),
-            'video_url' => $this->put('video_url'),
+            'video_id' => $this->put('video_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -124,7 +136,7 @@ class Live_streaming extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
+        // Check if id is empty or null
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -133,17 +145,18 @@ class Live_streaming extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->live_streaming_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->live_streams_model->_get_by_id($id);
 
-        if (empty($getById)) {
+        // Check if data returns empty or null
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -151,9 +164,9 @@ class Live_streaming extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
-            $this->live_streaming_model->_update($id, $data);
-
+            // If data array does not contains null values, update the resource
+            $this->live_streams_model->_update($id, $data);
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -172,7 +185,7 @@ class Live_streaming extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
+        // Check if id is empty or null
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -181,17 +194,19 @@ class Live_streaming extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->live_streaming_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->live_streams_model->_get_by_id($id);
 
-        if (empty($getById)) {
+        // Check if data returns empty or null
+        if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -199,9 +214,9 @@ class Live_streaming extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
-            $this->live_streaming_model->_update($id, $data);
-
+            // If data array does not contains null values, update the resource
+            $this->live_streams_model->_update($id, $data);
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -214,7 +229,7 @@ class Live_streaming extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
+        // Check if id is empty or null
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -223,17 +238,19 @@ class Live_streaming extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval.
-        $getById = $this->live_streaming_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->live_streams_model->_get_by_id($id);
 
-        if (empty($getById)) {
+        // Check if data returns empty or null
+        if (empty($get_by_id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check data array if it contains null values
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -242,8 +259,7 @@ class Live_streaming extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->live_streaming_model->_hard_delete($id);
-
+            $this->live_streams_model->_hard_delete($id);
             // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
