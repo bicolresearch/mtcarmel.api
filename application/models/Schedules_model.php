@@ -5,8 +5,8 @@
     Location    : application/models/Schedules_model.php
     Purpose     : Schedules model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 08/05/2019 19:44:48 by Scarlet Witch
-    Changes     : added order_by to _get_all
+    Updated     : 08/20/2019 14:17:27 by Scarlet Witch
+    Changes     : changed table for all dropdown type into 1 table (dropdown_references) - from language to dropdown_references
 */
 
 if (!defined('BASEPATH')) {
@@ -37,7 +37,7 @@ class Schedules_model extends CI_Model
                 't1.dt_updated AS updated_on,' .                
                 't4.username AS author,')
             ->from('schedules AS t1')
-            ->join('language AS t2', 't2.id = t1.language_id', 'left')
+            ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)       
@@ -62,7 +62,7 @@ class Schedules_model extends CI_Model
                 't1.dt_updated AS updated_on,' .                
                 't4.username AS author,')
             ->from('schedules AS t1')
-            ->join('language AS t2', 't2.id = t1.language_id', 'left')
+            ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('users AS t4', 't4.id = t1.created_by', 'left')
             ->where('t1.is_deleted', 0)
