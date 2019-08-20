@@ -5,8 +5,10 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/16/2019 11:57:39 by Scarlet Witch
-    Changes     : Added marriage_type (baptism)
+    Updated     : 08/17/2019 17:00:25 by Scarlet Witch
+    Changes     : changed table for all dropdown type into 1 table (dropdown_references) - certificate_type,
+                  civil_status, event_type, marriage_type, nationality, occasion, 
+                  purpose_type (liturgical and certification), religion, service_type, status
 */
 
 if (!defined('BASEPATH')) {
@@ -190,10 +192,11 @@ class Selection_references_model extends CI_Model
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('purpose_type AS t1')                
+        ->from('dropdown_references AS t1')                
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 3)
         ->where('t1.is_deleted', 0);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -223,8 +226,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .  
             't1.name,' .             
             't1.description')
-        ->from('occasion AS t1')   
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')   
+        ->where('t1.is_deleted', 0)        
+        ->where('t1.type', 8);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -239,8 +244,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .             
             't1.description')
-        ->from('certificate_type AS t1')
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')
+        ->where('t1.is_deleted', 0)
+        ->where('t1.type', 1);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -257,10 +264,11 @@ class Selection_references_model extends CI_Model
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('purpose_type AS t1')                
+        ->from('dropdown_references AS t1')                
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 5)
         ->where('t1.is_deleted', 0);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -275,8 +283,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('religion AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)     
+        ->where('t1.type', 11);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -291,8 +301,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('nationality AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)        
+        ->where('t1.type', 7);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -307,8 +319,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('civil_status AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)
+        ->where('t1.type', 2);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -339,8 +353,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('service_type AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)      
+        ->where('t1.type', 13);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -368,7 +384,7 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
-    // Events - Events
+    // Events - Events Type
     public function _get_all_events()
     {
         $this->db
@@ -377,8 +393,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('event_type AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)
+        ->where('t1.type', 4);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -415,8 +433,10 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('marriage_type AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('dropdown_references AS t1')  
+        ->where('t1.is_deleted', 0)        
+        ->where('t1.type', 6);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
