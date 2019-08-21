@@ -4,9 +4,9 @@
     Filename    : Schedules_model.php
     Location    : application/models/Schedules_model.php
     Purpose     : Schedules model
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 08/20/2019 14:17:27 by Scarlet Witch
-    Changes     : changed table for all dropdown type into 1 table (dropdown_references) - from language to dropdown_references
+    Created     : 06/27/2019 22:18:36 by Spiderman
+    Updated     : 08/21/2019 22:18:25 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -33,13 +33,15 @@ class Schedules_model extends CI_Model
                 't2.name AS language,' .
                 't1.time_from,' .
                 't1.time_to,' .                
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't4.username AS author,')
+                't1.dt_created,' .
+                't1.dt_updated,' .                
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
             ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
-            ->join('users AS t4', 't4.id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)       
             ->order_by('t1.id', 'DESC');
         
@@ -58,13 +60,15 @@ class Schedules_model extends CI_Model
                 't2.name AS language,' .
                 't1.time_from,' .
                 't1.time_to,' .                
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't4.username AS author,')
+                't1.dt_created,' .
+                't1.dt_updated,' .                
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
             ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
-            ->join('users AS t4', 't4.id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
 

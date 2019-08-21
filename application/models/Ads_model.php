@@ -5,7 +5,7 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/19/2019 20:55:01 by Spiderman
+    Updated     : 08/21/2019 20:50:14 by Spiderman
     Changes     : 
 */
 
@@ -32,17 +32,19 @@ class Ads_model extends CI_Model
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .
                 't2.full_path AS media_path,' .
-                't4.name AS type_name,' .
                 't4.id AS type_id,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS author')
+                't4.name AS type_name,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
+                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
@@ -65,17 +67,19 @@ class Ads_model extends CI_Model
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .
                 't2.full_path AS media_path,' .
-                't4.name AS type_name,' .
                 't4.id AS type_id,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS author')
+                't4.name AS type_name,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
+                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
@@ -99,17 +103,19 @@ class Ads_model extends CI_Model
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .
                 't2.full_path AS media_path,' .
-                't4.name AS type_name,' .
                 't4.id AS type_id,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS author')
+                't4.name AS type_name,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
+                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
             ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
+            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,

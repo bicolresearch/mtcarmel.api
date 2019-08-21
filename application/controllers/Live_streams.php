@@ -5,7 +5,7 @@
     Location    : application/controllers/08/20/2019 19:06:09 by Spiderman
     Purpose     : Live streams controller
     Created     : 07/19/2019 21:32:12 by Spiderman
-    Updated     : 08/20/2019 19:06:19 by Spiderman
+    Updated     : 08/21/2019 02:58:41 by Spiderman
     Changes     : 
 */
 
@@ -101,7 +101,7 @@ class Live_streams extends REST_Controller
             'description' => $this->post('description'),
             'video_id' => $this->post('video_id'),
             'created_by' => $this->post('user_id'),
-            'dt_created' => date('Y-m-d H:i:s'),
+            'dt_created' => date('Y-m-d H:i:s')
         ];
 
         // Check data array if it contains null valuess

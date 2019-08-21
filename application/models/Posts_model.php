@@ -5,7 +5,7 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 06/27/2019 15:35:23 by Spiderman
-    Updated     : 08/14/2019 18:19:37 by Spiderman
+    Updated     : 08/21/2019 21:08:55 by Spiderman
     Changes     : 
 */
 
@@ -27,16 +27,17 @@ class Posts_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
+                't1.media_id,' .
                 't1.title,' .
                 't1.content,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS author,' .
-                't2.full_path AS cover_photo')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by,' .
+                't2.full_path AS media_path')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)
             ->order_by('t1.id', 'DESC');
 
@@ -52,14 +53,14 @@ class Posts_model extends CI_Model
                 't1.media_id,' .
                 't1.title,' .
                 't1.content,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS author,' .
-                't2.full_path AS cover_photo')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by,' .
+                't2.full_path AS media_path')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
         $query = $this->db->get();

@@ -5,7 +5,7 @@
     Location    : application/models/Ad_type_model.php
     Purpose     : Ad type model
     Created     : 08/19/2019 14:10:53 by Spiderman
-    Updated     : 
+    Updated     : 08/21/2019 20:09:13 by Spiderman
     Changes     : 
 */
 
@@ -28,13 +28,16 @@ class Ad_type_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
             ->from('ad_type AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where('t1.is_deleted', 0)
             ->order_by('t1.id', 'DESC');
-        
+
         return json_decode($this->datatables->generate());
     }
 
@@ -45,10 +48,13 @@ class Ad_type_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
             ->from('ad_type AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,

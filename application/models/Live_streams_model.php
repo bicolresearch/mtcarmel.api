@@ -5,7 +5,7 @@
     Location    : application/models/Live_streams_model.php
     Purpose     : Live streams model
     Created     : 07/19/2019 22:12:58 by Spiderman
-    Updated     : 08/20/2019 19:20:35 by Spiderman
+    Updated     : 08/21/2019 22:34:44 by Spiderman
     Changes     : 
 */
 
@@ -30,8 +30,8 @@ class Live_streams_model extends CI_Model
                 't1.title,' .
                 't1.description,' .
                 't1.video_id,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
             ->from('live_streams AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
