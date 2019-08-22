@@ -5,7 +5,7 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/21/2019 20:50:14 by Spiderman
+    Updated     : 08/22/2019 14:58:40 by Spiderman
     Changes     : 
 */
 

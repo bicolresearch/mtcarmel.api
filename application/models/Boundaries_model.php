@@ -4,9 +4,9 @@
     Filename    : Boundaries_model.php
     Location    : application/models/Boundaries_model.php
     Purpose     : Boundaries model
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 08/05/2019 19:36:49 by Scarlet Witch
-    Changes     : added order_by to _get_all
+    Created     : 06/27/2019 15:28:42 by Scarlet Witch
+    Updated     : 08/22/2019 15:28:36 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -29,13 +29,20 @@ class Boundaries_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .          
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't4.username AS author,')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('boundaries AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
-            ->join('users AS t4', 't4.id = t1.created_by', 'left')
-            ->where('t1.is_deleted', 0)            
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')                                 
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1
+                ]
+            )     
             ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
@@ -49,15 +56,21 @@ class Boundaries_model extends CI_Model
                 't1.branch_id,' .
                 't1.name,' .
                 't1.description,' .          
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't4.username AS author,')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('boundaries AS t1')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                                 
-            ->join('users AS t4', 't4.id = t1.created_by', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
-
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')                                 
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.id' => $id
+                ]
+            );
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
