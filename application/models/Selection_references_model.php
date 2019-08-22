@@ -5,10 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/17/2019 17:00:25 by Scarlet Witch
-    Changes     : changed table for all dropdown type into 1 table (dropdown_references) - certificate_type,
-                  civil_status, event_type, marriage_type, nationality, occasion, 
-                  purpose_type (liturgical and certification), religion, service_type, status
+    Updated     : 08/22/2019 11:35:46 by Scarlet Witch
+    Changes     : changed table dropdown_references to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -192,7 +190,7 @@ class Selection_references_model extends CI_Model
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('dropdown_references AS t1')                
+        ->from('global_reference_value AS t1')                
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 3)
         ->where('t1.is_deleted', 0);
@@ -226,7 +224,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .  
             't1.name,' .             
             't1.description')
-        ->from('dropdown_references AS t1')   
+        ->from('global_reference_value AS t1')   
         ->where('t1.is_deleted', 0)        
         ->where('t1.type', 8);
 
@@ -244,7 +242,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .             
             't1.description')
-        ->from('dropdown_references AS t1')
+        ->from('global_reference_value AS t1')
         ->where('t1.is_deleted', 0)
         ->where('t1.type', 1);
 
@@ -264,7 +262,7 @@ class Selection_references_model extends CI_Model
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('dropdown_references AS t1')                
+        ->from('global_reference_value AS t1')                
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 5)
         ->where('t1.is_deleted', 0);
@@ -283,7 +281,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)     
         ->where('t1.type', 11);
 
@@ -301,7 +299,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)        
         ->where('t1.type', 7);
 
@@ -319,7 +317,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)
         ->where('t1.type', 2);
 
@@ -353,7 +351,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)      
         ->where('t1.type', 13);
 
@@ -393,7 +391,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)
         ->where('t1.type', 4);
 
@@ -433,7 +431,7 @@ class Selection_references_model extends CI_Model
             't1.branch_id,' .
             't1.name,' .
             't1.description')
-        ->from('dropdown_references AS t1')  
+        ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)        
         ->where('t1.type', 6);
 

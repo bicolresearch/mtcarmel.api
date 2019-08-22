@@ -5,8 +5,8 @@
     Location    : application/models/Schedules_model.php
     Purpose     : Schedules model
     Created     : 06/27/2019 22:18:36 by Spiderman
-    Updated     : 08/21/2019 22:18:25 by Spiderman
-    Changes     : 
+    Updated     : 08/22/2019 11:34:52 by Scarlet Witch
+    Changes     : changed table dropdown_references to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -38,7 +38,7 @@ class Schedules_model extends CI_Model
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
-            ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
+            ->join('global_reference_value AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
@@ -65,7 +65,7 @@ class Schedules_model extends CI_Model
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
-            ->join('dropdown_references AS t2', 't2.id = t1.language_id', 'left')
+            ->join('global_reference_value AS t2', 't2.id = t1.language_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
