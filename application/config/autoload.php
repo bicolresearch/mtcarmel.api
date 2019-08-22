@@ -159,8 +159,6 @@ $autoload['model'] = array(
     'users_model',
     'live_streams_model',
     'media_model',
-    'history_details_model',
-    'contact_details_model',
     'sub_modules_model',
     'service_references_model',
     'selection_references_model',

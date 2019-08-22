@@ -4,18 +4,16 @@
     Filename    : Contacts.php
     Location    : application/controllers/Contacts.php
     Purpose     : Contacts controller
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 07/23/2019 12:57:01 by Scarlet Witch
-    Changes     : update the script for datatables
+    Created     : 06/27/2019 22:16:38 by Scarlet Witch
+    Updated     : 08/22/2019 22:16:30 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Contacts extends REST_Controller
@@ -28,26 +26,20 @@ class Contacts extends REST_Controller
 
     public function index_get()
     {
-        // Contacts from a data store e.g. database
-        $contacts = $this->contacts_model->_get_all();
+        $get_all = $this->contacts_model->_get_all();
 
-        $id = $this->get('id');
+        $id = (int)$this->get('id');
 
-        // If the id parameter doesn't exists return all the Contacts
         if (empty($id)) {
-            // Check if the Contacts data store contains Contacts (in case the database result returns NULL)
-            if (empty($contacts)) {
-                // Set the response and exit
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                // Set the response and exit
-                $this->response($contacts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
-            // Set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
@@ -55,31 +47,26 @@ class Contacts extends REST_Controller
         }
     }
 
-    public function contacts_get()
+    public function contact_get()
     {
-        // Find and return a single record for a particular contacts.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Contacts from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $contacts = $this->contacts_model->_get_by_id($id);
+        $get_by_id = $this->contacts_model->_get_by_id($id);
 
-        if (empty($contacts)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($contacts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -101,17 +88,13 @@ class Contacts extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s'),
         ];
 
-        // Validate data array if it contains NULL values
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
             $this->contacts_model->_create($data);
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -138,40 +121,31 @@ class Contacts extends REST_Controller
 
         ];
 
-        // Find and return a single record for a particular contact.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Contacts from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $contacts = $this->contacts_model->_get_by_id($id);
+        $get_by_id = $this->contacts_model->_get_by_id($id);
 
-        if (empty($contacts)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->contacts_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -187,40 +161,31 @@ class Contacts extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular contact.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Contacts from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $contacts = $this->contacts_model->_get_by_id($id);
+        $get_by_id = $this->contacts_model->_get_by_id($id);
 
-        if (empty($contacts)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->contacts_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -230,41 +195,31 @@ class Contacts extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular contact.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Contacts from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $contacts = $this->contacts_model->_get_by_id($id);
+        $get_by_id = $this->contacts_model->_get_by_id($id);
 
-        if (empty($contacts)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (empty($id)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // Delete the resource
             $this->contacts_model->_hard_delete($id);
-
-            // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

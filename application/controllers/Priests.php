@@ -4,18 +4,16 @@
     Filename    : Priests.php
     Location    : application/controllers/Priests.php
     Purpose     : Priests controller
-    Created     : 6/24/2019 by Spiderman
-    Updated     : 08/17/2019 07:09:46 by Scarlet Witch
-    Changes     : added type of ministers on create
+    Created     : 06/24/2019 23:33:07 by Spiderman
+    Updated     : 08/22/2019 23:33:00 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Priests extends REST_Controller
@@ -28,26 +26,20 @@ class Priests extends REST_Controller
 
     public function index_get()
     {
-        // Priests from a data store e.g. database
-        $priests = $this->priests_model->_get_all();
+        $get_all = $this->priests_model->_get_all();
 
-        $id = $this->get('id');
+        $id = (int)$this->get('id');
 
-        // If the id parameter doesn't exists return all the Priests
         if (empty($id)) {
-            // Check if the Priests data store contains Priests (in case the database result returns NULL)
-            if (empty($priests)) {
-                // Set the response and exit
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                // Set the response and exit
-                $this->response($priests, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         } else {
-            // Set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
@@ -55,31 +47,26 @@ class Priests extends REST_Controller
         }
     }
 
-    public function priests_get()
+    public function priest_get()
     {
-        // Find and return a single record for a particular priests.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Priests from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $priests = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->priests_model->_get_by_id($id);
 
-        if (empty($priests)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($priests, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -92,20 +79,16 @@ class Priests extends REST_Controller
             'position' => $this->post('position'),
             'rank' => $this->post('rank'),
             'created_by' => $this->post('user_id'),
-            'dt_created' => date('Y-m-d H:i:s'),
+            'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Validate data array if it contains NULL values
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
             $this->priests_model->_create($data);
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -124,21 +107,16 @@ class Priests extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular priest.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Priests from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $priests = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->priests_model->_get_by_id($id);
 
         if (empty($priests)) {
             $this->response([
@@ -147,17 +125,13 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->priests_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -173,40 +147,31 @@ class Priests extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular priest.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Priests from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $priests = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->priests_model->_get_by_id($id);
 
-        if (empty($priests)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->priests_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -216,41 +181,31 @@ class Priests extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular priest.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the Priests from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $priests = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->priests_model->_get_by_id($id);
 
-        if (empty($priests)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
         if (empty($id)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // Delete the resource
             $this->priests_model->_hard_delete($id);
-
-            // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

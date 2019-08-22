@@ -5,7 +5,7 @@
     Location    : application/controllers/08/20/2019 19:06:09 by Spiderman
     Purpose     : Live streams controller
     Created     : 07/19/2019 21:32:12 by Spiderman
-    Updated     : 08/21/2019 02:58:41 by Spiderman
+    Updated     : 08/22/2019 21:07:16 by Spiderman
     Changes     : 
 */
 
@@ -29,12 +29,12 @@ class Live_streams extends REST_Controller
         // Get the data from a model
         $get_all = $this->live_streams_model->_get_all();
 
-        // Get the type_id parameter
-        $branch_id = (int)$this->get('branch_id');
+        // Get the id parameter
+        $id = (int)$this->get('id');
 
-        // Check if type_id is empty or null
-        if(empty($branch_id)) {
-            // Check if data returns empty or null
+        // Check if id parameter is empty or null
+        if (empty($id)) {
+            // Check if data is empty or null
             if (empty($get_all)) {
                 // Set the response and exit
                 $this->response([
@@ -45,21 +45,12 @@ class Live_streams extends REST_Controller
                 // Set the response and exit
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        }
-
-        // Get the data by type_id from a model
-        $get_by_id = $this->live_streams_model->_get_by_branch_id($branch_id);
-
-        // Check if data returns empty or null
-        if (empty($get_by_id)) {
-            // Set the response and exit
+        } else {
+            // Set the response and exit.
             $this->response([
                 'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        } else {
-            // Set the response and exit
-            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 

@@ -42,7 +42,12 @@ class Schedules_model extends CI_Model
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)       
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1
+                ]
+            )     
             ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
@@ -69,10 +74,14 @@ class Schedules_model extends CI_Model
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')                       
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
-
-        $query = $this->db->get();
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.id' => $id
+                ]
+            );
+            $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
     }

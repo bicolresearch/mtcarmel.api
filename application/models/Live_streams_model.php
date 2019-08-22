@@ -32,11 +32,18 @@ class Live_streams_model extends CI_Model
                 't1.video_id,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('live_streams AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)       
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1
+                ]
+            )     
             ->order_by('t1.id', 'DESC');
         
         return json_decode($this->datatables->generate());
@@ -51,37 +58,21 @@ class Live_streams_model extends CI_Model
                 't1.title,' .
                 't1.description,' .
                 't1.video_id,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
-                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+                't1.dt_created,' .
+                't1.dt_updated,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('live_streams AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
-
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->row() : false;
-    }
-
-    public function _get_by_branch_id($branch_id)
-    {
-        $this->db
-            ->select(
-                't1.id,' .
-                't1.branch_id,' .
-                't1.title,' .
-                't1.description,' .
-                't1.video_id,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .
-                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('live_streams AS t1')
-            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.branch_id', $branch_id);
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.id' => $id
+                ]
+            );
 
         $query = $this->db->get();
 
