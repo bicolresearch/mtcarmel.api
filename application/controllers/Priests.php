@@ -118,7 +118,7 @@ class Priests extends REST_Controller
 
         $get_by_id = $this->priests_model->_get_by_id($id);
 
-        if (empty($priests)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
