@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Priests.php
-    Location    : application/controllers/Priests.php
-    Purpose     : Priests controller
-    Created     : 06/24/2019 23:33:07 by Spiderman
-    Updated     : 08/25/2019 14:17:37 by Spiderman
+    Filename    : Clergy_type.php
+    Location    : application/controllers/Clergy_type.php
+    Purpose     : Clergy type controller
+    Created     : 08/25/2019 23:09:32 by Spiderman
+    Updated     : 
     Changes     : 
 */
 
@@ -16,17 +16,21 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Priests extends REST_Controller
+class Clergy_type extends REST_Controller
 {
+
+    private $group_id;
+
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
+        $this->group_id = 17;
     }
 
     public function index_get()
     {
-        $get_all = $this->priests_model->_get_all();
+        $get_all = $this->global_reference_model->_get_all($this->group_id);
 
         $id = (int)$this->get('id');
 
@@ -47,7 +51,7 @@ class Priests extends REST_Controller
         }
     }
 
-    public function priest_get()
+    public function type_get()
     {
         $id = (int)$this->get('id');
 
@@ -58,7 +62,7 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -73,13 +77,8 @@ class Priests extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),            
-            'type_id' => $this->post('type_id'),
-            'media_id' => $this->post('media_id'),
             'name' => $this->post('name'),
-            'position' => $this->post('position'),
-            'congregation' => $this->post('congregation'),
-            'rank' => $this->post('rank'),
+            'description' => $this->post('description'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -90,7 +89,7 @@ class Priests extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_create($data);
+            $this->global_reference_model->_create($data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -101,13 +100,8 @@ class Priests extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
-            'type_id' => $this->put('type_id'),
-            'media_id' => $this->put('media_id'),
             'name' => $this->put('name'),
-            'position' => $this->put('position'),
-            'congregation' => $this->put('congregation'),
-            'rank' => $this->put('rank'),
+            'description' => $this->put('description'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -121,7 +115,7 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -136,7 +130,7 @@ class Priests extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_update($id, $data);
+            $this->global_reference_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -161,7 +155,7 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -176,7 +170,7 @@ class Priests extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_update($id, $data);
+            $this->global_reference_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -195,7 +189,7 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -210,7 +204,7 @@ class Priests extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_hard_delete($id);
+            $this->global_reference_model->_hard_delete($id);
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

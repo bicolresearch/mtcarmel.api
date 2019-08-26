@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Ad_type_model.php
-    Location    : application/models/Ad_type_model.php
-    Purpose     : Ad type model
+    Filename    : Global_reference_model.php
+    Location    : application/models/Global_reference_model.php
+    Purpose     : Global reference model
     Created     : 08/19/2019 14:10:53 by Spiderman
-    Updated     : 08/21/2019 20:09:13 by Spiderman
+    Updated     : 08/25/2019 23:04:09 by Spiderman
     Changes     : 
 */
 
@@ -13,7 +13,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Ad_type_model extends CI_Model
+class Global_reference_model extends CI_Model
 {
 
     public function __construct()
@@ -21,7 +21,7 @@ class Ad_type_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($group_id)
     {
         $this->datatables
             ->select(
@@ -29,19 +29,24 @@ class Ad_type_model extends CI_Model
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created,' .
-                't1.dt_updated,' .
+                't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('ad_type AS t1')
+            ->from('global_reference_value AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
+            ->where(
+                [
+                    't1.is_deleted' => 0,
+                    't1.group_id' => $group_id
+                ]
+            )
             ->order_by('t1.id', 'DESC');
 
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($id, $group_id)
     {
         $this->db
             ->select(
@@ -49,15 +54,16 @@ class Ad_type_model extends CI_Model
                 't1.name,' .
                 't1.description,' .
                 't1.dt_created,' .
-                't1.dt_updated,' .
+                't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('ad_type AS t1')
+            ->from('global_reference_value AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
+                    't1.group_id' => $group_id,
                     't1.id' => $id
                 ]
             );
@@ -70,7 +76,7 @@ class Ad_type_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db->insert('ad_type', $data);
+        $this->db->insert('global_reference_value', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -81,7 +87,7 @@ class Ad_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('ad_type', $data);
+            ->update('global_reference_value', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -92,7 +98,7 @@ class Ad_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('ad_type', $data);
+            ->update('global_reference_value', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -103,7 +109,7 @@ class Ad_type_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->delete('ad_type');
+            ->delete('global_reference_value');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

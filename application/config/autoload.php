@@ -144,7 +144,7 @@ $autoload['language'] = array();
 $autoload['model'] = array(
     'posts_model',
     'ads_model',
-    'ad_type_model',
+    'global_reference_model',
     'donations_model',
     'modules_model',
     'schedules_model',

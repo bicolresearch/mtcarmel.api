@@ -5,7 +5,7 @@
     Location    : application/controllers/Auth.php
     Purpose     : Auth controller
     Created     : 07/09/2019 09:52:03 by Spiderman
-    Updated     : 08/17/2019 01:18:08 by Spiderman
+    Updated     : 08/25/2019 13:35:07 by Spiderman
     Changes     : 
 */
 
@@ -47,7 +47,7 @@ class Auth extends REST_Controller
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Not Found'
+                'message' => 'User not found. Please double check your username and password.'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
             $this->response($user, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
