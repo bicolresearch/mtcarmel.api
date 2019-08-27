@@ -5,8 +5,8 @@
     Location    : application/models/Donations_model.php
     Purpose     : Donations model
     Created     : 06/27/2019 18:30:18 by Spiderman
-    Updated     : 08/27/2019 16:30:41 by Spiderman
-    Changes     : 
+    Updated     : 08/27/2019 19:29:27 by Scarlet Witch
+    Changes     : updated table from donation_type to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -37,7 +37,7 @@ class Donations_model extends CI_Model
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('donations AS t1')
-            ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
+            ->join('global_reference_value AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')   
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
@@ -50,6 +50,7 @@ class Donations_model extends CI_Model
             )
             ->order_by('t1.id', 'DESC')
             ->limit(30);
+            
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -62,7 +63,7 @@ class Donations_model extends CI_Model
                 't1.id,' .
                 't1.branch_id,' .
                 't1.amount,' .
-                't2.name as donation_type,' .
+                't1.donation_type_id as donation_type,' .
                 't4.first_name,' .
                 't4.last_name,' .
                 't6.full_path as media_path,' .
@@ -71,7 +72,7 @@ class Donations_model extends CI_Model
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('donations AS t1')
-            ->join('donation_type AS t2', 't2.id = t1.donation_type_id', 'left')
+            ->join('global_reference_value AS t2', 't2.id = t1.donation_type_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')   
             ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
@@ -85,6 +86,7 @@ class Donations_model extends CI_Model
             )
             ->order_by('t1.id', 'DESC')
             ->limit(30);
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
