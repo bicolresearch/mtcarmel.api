@@ -154,7 +154,6 @@ $autoload['model'] = array(
     'history_model',
     'boundaries_model',
     'locations_model',
-    'donation_type_model',
     'users_model',
     'live_streams_model',
     'media_model',

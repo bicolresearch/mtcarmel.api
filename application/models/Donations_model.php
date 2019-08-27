@@ -23,7 +23,7 @@ class Donations_model extends CI_Model
 
     public function _get_all()
     {
-        $this->db
+        $this->datatables
             ->select(
                 't1.id,' .
                 't1.branch_id,' .
@@ -48,12 +48,9 @@ class Donations_model extends CI_Model
                     't1.branch_id' => 1
                 ]
             )
-            ->order_by('t1.id', 'DESC')
-            ->limit(30);
-            
-        $query = $this->db->get();
+            ->order_by('t1.id', 'DESC');
 
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
+        return json_decode($this->datatables->generate()); 
     }
 
     public function _get_by_id($id)

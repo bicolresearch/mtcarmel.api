@@ -5,7 +5,7 @@
     Location    : application/controllers/Clergy_type.php
     Purpose     : Clergy type controller
     Created     : 08/25/2019 23:09:32 by Spiderman
-    Updated     : 
+    Updated     : 08/28/2019 00:31:56 by Spiderman
     Changes     : 
 */
 
@@ -25,7 +25,7 @@ class Clergy_type extends REST_Controller
     {
         // Construct the parent class
         parent::__construct();
-        $this->group_id = 17;
+        $this->group_id = 19;
     }
 
     public function index_get()

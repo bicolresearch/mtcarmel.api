@@ -5,7 +5,7 @@
     Location    : application/controllers/Ad_type.php
     Purpose     : Ads type controller
     Created     : 08/19/2019 13:29:13 by Spiderman
-    Updated     : 08/26/2019 22:43:51 by Spiderman
+    Updated     : 08/28/2019 00:31:21 by Spiderman
     Changes     : 
 */
 
@@ -25,7 +25,7 @@ class Ad_type extends REST_Controller
     {
         // Construct the parent class
         parent::__construct();
-        $this->group_id = 18;
+        $this->group_id = 20;
     }
 
     public function index_get()
