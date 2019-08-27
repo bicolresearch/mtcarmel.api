@@ -5,8 +5,8 @@
     Location    : application/models/Prayer_request_model.php
     Purpose     : Prayer request model
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 08/06/2019 11:37:26 by Scarlet Witch
-    Changes     : added order_by status at _get_all
+    Updated     : 08/27/2019 16:01:34 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -34,7 +34,7 @@ class Prayer_request_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 2)
             ->where('t1.is_deleted', 0)                        
@@ -50,14 +50,14 @@ class Prayer_request_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.prayer,' .
-                't4.name AS status,' .
+                't1.status,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .                
                 't3.username AS author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 2)
             ->where('t1.is_deleted', 0)

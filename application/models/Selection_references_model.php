@@ -5,8 +5,9 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/22/2019 11:35:46 by Scarlet Witch
-    Changes     : changed table dropdown_references to global_reference_value
+    Updated     : 08/27/2019 10:32:04 by Scarlet Witch
+    Changes     : updated the status - one model one controller for all status - status of whole service transaction, 
+                  approval status by admin/office and approval status by priest/extraordinary ministers/choir
 */
 
 if (!defined('BASEPATH')) {
@@ -184,13 +185,13 @@ class Selection_references_model extends CI_Model
     {
         $this->db
         ->select(    
-            't1.id,' .
-            't1.branch_id,' .            
+            't1.id,' .        
             't1.module_id,' .            
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('global_reference_value AS t1')                
+        ->from('global_reference_value AS t1')  
+        ->where('t1.group_id', 14)             
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 3)
         ->where('t1.is_deleted', 0);
@@ -200,16 +201,23 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
-    // Status
+    // Status - for whole service transaction, 
+    //          for service transaction (approval by admin/office)
+    //          for service transaction (approval by priest/extraordinary minister/choir)
     public function _get_all_status()
     {
         $this->db
         ->select(    
-            't1.id,' .
-            't1.branch_id,' .
+            't1.id,' .            
+            't1.group_id,' .
+            't2.name as group_name,' .            
+            't2.description as group_description,' .
             't1.name')
-        ->from('status AS t1')  
-        ->where('t1.is_deleted', 0);
+        ->from('global_reference_value AS t1')          
+        ->join('global_reference_group AS t2', 't2.id = t1.group_id', 'left')
+        ->where('t1.is_deleted', 0)
+        ->where_in('t1.group_id', array(1,2,3)) ;
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
@@ -220,13 +228,12 @@ class Selection_references_model extends CI_Model
     {
         $this->db
         ->select(    
-            't1.id,' .
-            't1.branch_id,' .  
+            't1.id,' . 
             't1.name,' .             
             't1.description')
         ->from('global_reference_value AS t1')   
         ->where('t1.is_deleted', 0)        
-        ->where('t1.type', 8);
+        ->where('t1.group_id', 11);
 
         $query = $this->db->get();
 
@@ -239,12 +246,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .             
             't1.description')
         ->from('global_reference_value AS t1')
         ->where('t1.is_deleted', 0)
-        ->where('t1.type', 1);
+        ->where('t1.group_id', 4);
 
         $query = $this->db->get();
 
@@ -256,13 +262,13 @@ class Selection_references_model extends CI_Model
     {
         $this->db
         ->select(    
-            't1.id,' .
-            't1.branch_id,' .            
+            't1.id,' .           
             't1.module_id,' .            
             't1.sub_module_id,' .
             't1.name,' .             
             't1.description')
-        ->from('global_reference_value AS t1')                
+        ->from('global_reference_value AS t1') 
+        ->where('t1.group_id', 14)              
         ->where('t1.module_id', 5)
         ->where('t1.sub_module_id', 5)
         ->where('t1.is_deleted', 0);
@@ -278,12 +284,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)     
-        ->where('t1.type', 11);
+        ->where('t1.group_id', 15);
 
         $query = $this->db->get();
 
@@ -296,12 +301,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)        
-        ->where('t1.type', 7);
+        ->where('t1.group_id', 10);
 
         $query = $this->db->get();
 
@@ -314,12 +318,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)
-        ->where('t1.type', 2);
+        ->where('t1.group_id', 5);
 
         $query = $this->db->get();
 
@@ -348,12 +351,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)      
-        ->where('t1.type', 13);
+        ->where('t1.group_id', 17);
 
         $query = $this->db->get();
 
@@ -388,12 +390,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)
-        ->where('t1.type', 4);
+        ->where('t1.group_id', 7);
 
         $query = $this->db->get();
 
@@ -428,12 +429,11 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.branch_id,' .
             't1.name,' .
             't1.description')
         ->from('global_reference_value AS t1')  
         ->where('t1.is_deleted', 0)        
-        ->where('t1.type', 6);
+        ->where('t1.group_id', 9);
 
         $query = $this->db->get();
 

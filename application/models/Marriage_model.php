@@ -5,8 +5,8 @@
     Location    : application/models/Marriage_model.php
     Purpose     : Marriage model
     Created     : 08/07/2019 12:49:31 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/27/2019 15:19:20 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -89,7 +89,7 @@ class Marriage_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')         
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')         
             ->join('couple AS t5', 't5.id = t1.couple', 'left') 
             ->where('t1.module_id', 9)
             ->where('t1.sub_module_id', 12)
@@ -168,12 +168,13 @@ class Marriage_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')         
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')         
             ->join('couple AS t5', 't5.id = t1.couple', 'left') 
             ->where('t1.module_id', 9)
             ->where('t1.sub_module_id', 12)
             ->where('t1.is_deleted', 0)  
             ->where('t1.id', $id);
+            
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

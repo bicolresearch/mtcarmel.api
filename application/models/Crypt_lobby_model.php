@@ -5,8 +5,8 @@
     Location    : application/models/Crypt_lobby_model.php
     Purpose     : Crypt lobby model
     Created     : 08/06/2019 18:12:00 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/27/2019 14:55:58 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
 */
 
 if (!defined('BASEPATH')) {
@@ -40,7 +40,7 @@ class Crypt_lobby_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 10)
             ->where('t1.sub_module_id', 15)
             ->where('t1.is_deleted', 0)                        
@@ -69,7 +69,7 @@ class Crypt_lobby_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 10)
             ->where('t1.sub_module_id', 15)
             ->where('t1.is_deleted', 0)  

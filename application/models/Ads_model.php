@@ -5,8 +5,8 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/22/2019 14:58:40 by Spiderman
-    Changes     : 
+    Updated     : 08/27/2019 09:31:11 by Scarlet Witch
+    Changes     : update _get_all - changed  ad_type to global_reference_value
 */
 
 if (!defined('BASEPATH')) {

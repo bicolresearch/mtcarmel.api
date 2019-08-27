@@ -5,8 +5,8 @@
     Location    : application/models/Communion_of_the_sick_model.php
     Purpose     : Communion of the sick model
     Created     : 08/06/2019 16:24:12 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/27/2019 12:53:33 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
 */
 
 
@@ -54,7 +54,7 @@ class Communion_of_the_sick_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 7)
             ->where('t1.sub_module_id', 10)
             ->where('t1.is_deleted', 0)                        
@@ -96,7 +96,7 @@ class Communion_of_the_sick_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
             ->where('t1.module_id', 7)
             ->where('t1.sub_module_id', 10)
             ->where('t1.is_deleted', 0)  
