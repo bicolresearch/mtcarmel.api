@@ -81,7 +81,6 @@ class Donations_model extends CI_Model
                     't1.id' => $id
                 ]
             )
-            ->order_by('t1.id', 'DESC')
             ->limit(30);
 
         $query = $this->db->get();

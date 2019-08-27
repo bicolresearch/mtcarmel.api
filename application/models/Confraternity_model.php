@@ -5,10 +5,8 @@
     Location    : application/models/Confraternity_model.php
     Purpose     : Confraternity model
     Created     : 07/22/2019 15:50:41 by Scarlet Witch
-    Updated     : 08/27/2019 14:00:29 by Scarlet Witch
-    Changes     : changed table status to global_reference_value
-                  updated the _get_all  - description/name of values
-                  updated the _get_by_id - values of status
+    Updated     : 08/28/2019 00:55:38 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -39,19 +37,25 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
-                't4.name AS status,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't3.username AS author')
+                't1.dt_created' .
+                't1.dt_updated,' .        
+                't3.name AS status,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('service_transactions AS t1')
-            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                  
-            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                
-            ->where('t1.module_id', 4)
-            ->where('t1.sub_module_id', 1)
-            ->where('t1.is_deleted', 0)                        
-            ->order_by('t1.status', 'ASC')                    
-            ->order_by('t1.id', 'DESC');                
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')                                            
+            ->join('global_reference_value AS t3', 't3.id = t1.status', 'left')          
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')                                   
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.module_id' => 4,
+                    't1.sub_module_id' => 1
+                ]
+            )
+            ->order_by('t1.id', 'DESC');   
         
         return json_decode($this->datatables->generate());
     }
@@ -72,18 +76,26 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
-                't1.status,' .
-                't1.dt_created AS posted_on,' .
-                't1.dt_updated AS updated_on,' .                
-                't3.username AS author')
+                't1.dt_created' .
+                't1.dt_updated,' .        
+                't3.name AS status,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('service_transactions AS t1')
-            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
-            ->join('users AS t3', 't3.id = t1.created_by', 'left')                           
-            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                 
-            ->where('t1.module_id', 4)
-            ->where('t1.sub_module_id', 1)
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')                                            
+            ->join('global_reference_value AS t3', 't3.id = t1.status', 'left')          
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')                             
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.module_id' => 4,
+                    't1.sub_module_id' => 1,
+                    't1.id' => $id
+                ]
+            );
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
