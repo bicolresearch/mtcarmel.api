@@ -5,8 +5,8 @@
     Location    : application/controllers/Mass_request.php
     Purpose     : Mass request controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
-    Updated     : 08/01/2019 10:57:52 by Scarlet Witch
-    Changes     : aupdated create/update fields, commented base64_to_image, updated function update, add status on create
+    Updated     : 08/23/2019 16:29:00 by Scarlet Witch
+    Changes     : added role_id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -121,15 +121,70 @@ class Mass_request extends REST_Controller
 
     public function update_put()
     {
-        $data = [
-            'status' => $this->put('status'),
-            'name' => $this->put('name'),
-            'purpose_mass' => $this->put('purpose_mass'),
-            'dt_offered' => $this->put('dt_offered'),
-            'time_offered' => $this->put('time_offered'),
-            'updated_by' => $this->put('user_id'),
-            'dt_updated' => date('Y-m-d H:i:s')
-        ];
+        $role_id = (int)$this->get('role_id');
+        $status_id = (int)$this->get('status');
+
+        if ($role_id=1) {
+
+            if ($status_id=12) {
+                $data = [                                     
+                    'status' => 2,
+                    'status_admin' => $this->put('status'),
+                    'name' => $this->put('name'),
+                    'purpose_mass' => $this->put('purpose_mass'),
+                    'dt_offered' => $this->put('dt_offered'),
+                    'time_offered' => $this->put('time_offered'),
+                    'updated_by' => $this->put('user_id'),
+                    'dt_updated' => date('Y-m-d H:i:s')
+                ];
+            } else {
+                $data = [
+                    'status_admin' => $this->put('status'),
+                    'name' => $this->put('name'),
+                    'purpose_mass' => $this->put('purpose_mass'),
+                    'dt_offered' => $this->put('dt_offered'),
+                    'time_offered' => $this->put('time_offered'),
+                    'updated_by' => $this->put('user_id'),
+                    'dt_updated' => date('Y-m-d H:i:s')
+                ];
+            }
+            
+
+        } else if ($role_id=2) {
+            $data = [                
+                'name' => $this->put('name'),
+                'purpose_mass' => $this->put('purpose_mass'),
+                'dt_offered' => $this->put('dt_offered'),
+                'time_offered' => $this->put('time_offered'),
+                'updated_by' => $this->put('user_id'),
+                'dt_updated' => date('Y-m-d H:i:s')
+            ];
+            
+        } else if ($role_id=3) {
+            
+            if ($status_id=12) {
+                $data = [                    
+                    'status' => 2,
+                    'status_ministers' => $this->put('status'),
+                    'name' => $this->put('name'),
+                    'purpose_mass' => $this->put('purpose_mass'),
+                    'dt_offered' => $this->put('dt_offered'),
+                    'time_offered' => $this->put('time_offered'),
+                    'updated_by' => $this->put('user_id'),
+                    'dt_updated' => date('Y-m-d H:i:s')
+                ];
+            } else {
+                $data = [     
+                    'status_ministers' => $this->put('status'),
+                    'name' => $this->put('name'),
+                    'purpose_mass' => $this->put('purpose_mass'),
+                    'dt_offered' => $this->put('dt_offered'),
+                    'time_offered' => $this->put('time_offered'),
+                    'updated_by' => $this->put('user_id'),
+                    'dt_updated' => date('Y-m-d H:i:s')
+                ];
+            }
+        } 
 
         // Get the id parameter
         $id = (int)$this->get('id');

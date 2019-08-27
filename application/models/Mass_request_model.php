@@ -5,8 +5,10 @@
     Location    : application/models/Mass_request_model.php
     Purpose     : Mass request model
     Created     : 07/31/2019 13:45:59 by Scarlet Witch
-    Updated     : 08/06/2019 11:36:48 by Scarlet Witch
-    Changes     : added order_by status at _get_all
+    Updated     : 08/27/2019 15:41:17 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
+                  updated the _get_all  - description/name of values
+                  updated the _get_by_id - values of status
 */
 
 if (!defined('BASEPATH')) {
@@ -27,7 +29,7 @@ class Mass_request_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
-                't1.purpose_mass,' .
+                't5.name as purpose_mass,' .
                 't1.dt_offered,' .
                 't1.time_offered,' .                
                 't4.name AS status,' .
@@ -37,7 +39,8 @@ class Mass_request_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                    
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')     
+            ->join('global_reference_value AS t5', 't5.id = t1.purpose_mass', 'left')                 
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0)                       
@@ -56,18 +59,20 @@ class Mass_request_model extends CI_Model
                 't1.purpose_mass,' .
                 't1.dt_offered,' .
                 't1.time_offered,' .                
-                't4.name AS status,' .
+                't1.status,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .                
                 't3.username AS author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')    
+            ->join('global_reference_value AS t5', 't5.id = t1.purpose_mass', 'left')                
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 3)
             ->where('t1.is_deleted', 0)
             ->where('t1.id', $id);
+            
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

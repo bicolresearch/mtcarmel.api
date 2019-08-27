@@ -5,8 +5,10 @@
     Location    : application/models/Liturgical_model.php
     Purpose     : Liturgical model
     Created     : 08/06/2019 19:08:12 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 08/27/2019 15:01:22 by Scarlet Witch
+    Changes     : changed table status to global_reference_value
+                  updated the _get_all  - description/name of values
+                  updated the _get_by_id - values of status
 */
 
 if (!defined('BASEPATH')) {
@@ -29,7 +31,7 @@ class Liturgical_model extends CI_Model
                 't1.dt_of_service,' .  
                 't1.time_of_service,' .  
                 't1.address_venue,' .  
-                't1.occasion,' .  
+                't5.name as occasion,' .  
                 't1.name_contact_person,' .  
                 't1.landline_contact_person,' .  
                 't1.mobile_contact_person,' .  
@@ -41,7 +43,8 @@ class Liturgical_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left') 
+            ->join('global_reference_value AS t5', 't5.id = t1.occasion', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 4)
             ->where('t1.is_deleted', 0)                        
@@ -64,18 +67,22 @@ class Liturgical_model extends CI_Model
                 't1.landline_contact_person,' .  
                 't1.mobile_contact_person,' .  
                 't1.officiating_priest,' . 
-                't4.name AS status,' .
+                't1.status,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .                
                 't3.username AS author')
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('status AS t4', 't4.id = t1.status', 'left')                   
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left') 
+            ->join('global_reference_value AS t5', 't5.id = t1.occasion', 'left')                   
             ->where('t1.module_id', 5)
             ->where('t1.sub_module_id', 4)
-            ->where('t1.is_deleted', 0)  
-            ->where('t1.id', $id);
+            ->where('t1.is_deleted', 0)              
+            ->where('t1.id', $id)                      
+            ->order_by('t1.status', 'ASC')                    
+            ->order_by('t1.id', 'DESC');
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
