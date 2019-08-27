@@ -6,13 +6,8 @@
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
     Updated     : 08/27/2019 10:32:04 by Scarlet Witch
-    Changes     : 1. updated purpose_mass, occasion, certificate, purpose_certificate, religion, nationality, civil_status, service, events, marriage_type, status
-                  - because the branch_id was removed from table global_reference_value (REMOVED branch_id)
-                  2. updated occasion, certificate, religion, nationality, civil_status, service, events, marriage_type
-                  - because the type was removed from table global_reference_value (from type to group_id)
-                  3. changed the table for status - from status to global_reference_value
-                  4. add status_admin - status of service transaction created/approval by admin/office
-                  5. add status_ministers - status of service transaction created/approval by priest/extraordinary ministers/choir
+    Changes     : updated the status - one model one controller for all status - status of whole service transaction, 
+                  approval status by admin/office and approval status by priest/extraordinary ministers/choir
 */
 
 if (!defined('BASEPATH')) {
@@ -206,48 +201,22 @@ class Selection_references_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
-    // Status - for service transaction
+    // Status - for whole service transaction, 
+    //          for service transaction (approval by admin/office)
+    //          for service transaction (approval by priest/extraordinary minister/choir)
     public function _get_all_status()
     {
         $this->db
         ->select(    
-            't1.id,' .
+            't1.id,' .            
+            't1.group_id,' .
+            't2.name as group_name,' .            
+            't2.description as group_description,' .
             't1.name')
-        ->from('global_reference_value AS t1')  
+        ->from('global_reference_value AS t1')          
+        ->join('global_reference_group AS t2', 't2.id = t1.group_id', 'left')
         ->where('t1.is_deleted', 0)
-        ->where('t1.group_id', 1);
-
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
-    }
-
-    // Status - for service transaction (approval by admin/office)
-    public function _get_all_status_admin()
-    {
-        $this->db
-        ->select(    
-            't1.id,' .
-            't1.name')
-            ->from('global_reference_value AS t1')  
-            ->where('t1.is_deleted', 0)
-            ->where('t1.group_id', 2);
-
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
-    }
-
-    // Status - for service transaction (approval by priest/extraordinary minister/choir)
-    public function _get_all_status_ministers()
-    {
-        $this->db
-        ->select(    
-            't1.id,' .
-            't1.name')
-            ->from('global_reference_value AS t1')  
-            ->where('t1.is_deleted', 0)
-            ->where('t1.group_id', 3);
+        ->where_in('t1.group_id', array(1,2,3)) ;
 
         $query = $this->db->get();
 
