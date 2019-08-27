@@ -5,7 +5,7 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 06/27/2019 15:35:23 by Spiderman
-    Updated     : 08/21/2019 21:08:55 by Spiderman
+    Updated     : 08/27/2019 16:48:52 by Spiderman
     Changes     : 
 */
 
@@ -32,13 +32,20 @@ class Posts_model extends CI_Model
                 't1.content,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by,' .
-                't2.full_path AS media_path')
+                't2.full_path AS media_path,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1
+                ]
+            )
             ->order_by('t1.id', 'DESC');
 
         return json_decode($this->datatables->generate());
@@ -55,14 +62,22 @@ class Posts_model extends CI_Model
                 't1.content,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by,' .
-                't2.full_path AS media_path')
+                't2.full_path AS media_path,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
-            ->where('t1.is_deleted', 0)
-            ->where('t1.id', $id);
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => 1,
+                    't1.id' => $id
+                ]
+            )
+            ->order_by('t1.id', 'DESC');
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

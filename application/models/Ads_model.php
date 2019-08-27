@@ -42,13 +42,13 @@ class Ads_model extends CI_Model
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('ad_type AS t4', 't4.id = t1.type_id', 'left')
+            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
             ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
             ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => 1
                 ]
             )
             ->order_by('t1.id', 'DESC');
