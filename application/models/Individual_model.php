@@ -5,8 +5,8 @@
     Location    : application/models/Individual_model.php
     Purpose     : Individual baptism model
     Created     : 08/07/2019 12:23:43 by Scarlet Witch
-    Updated     : 08/27/2019 15:00:31 by Scarlet Witch
-    Changes     : changed table status to global_reference_value
+    Updated     : 08/28/2019 09:32:00 by Scarlet Witch
+    Changes     : updated column name officiating_priest to officiating_ministers (one column/field for chosen approver (priest/extraordinary minister/choir))
 */
 
 if (!defined('BASEPATH')) {
@@ -48,7 +48,7 @@ class Individual_model extends CI_Model
                 't1.name_contact_person,' .
                 't1.landline_contact_person,' .
                 't1.mobile_contact_person,' .
-                't1.officiating_priest,' .
+                't1.officiating_ministers as officiating_priest,' .
                 't1.dt_baptism,' .
                 't1.time_baptism,' .
                 't4.name AS status,' .
@@ -95,7 +95,7 @@ class Individual_model extends CI_Model
                 't1.name_contact_person,' .
                 't1.landline_contact_person,' .
                 't1.mobile_contact_person,' .
-                't1.officiating_priest,' .
+                't1.officiating_ministers as officiating_priest,' .
                 't1.dt_baptism,' .
                 't1.time_baptism,' .
                 't4.name AS status,' .
