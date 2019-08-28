@@ -95,7 +95,7 @@ class Live_streams extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Check data array if it contains null valuess
+        // Check data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([

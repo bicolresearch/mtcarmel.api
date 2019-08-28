@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 08/26/2019 23:19:53 by Spiderman
+    Updated     : 08/28/2019 14:48:56 by Spiderman
     Changes     : 
 */
 
@@ -72,7 +72,6 @@ class Ads extends REST_Controller
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            // Set the response and exit
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }

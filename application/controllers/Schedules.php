@@ -5,7 +5,7 @@
     Location    : application/controllers/Schedules.php
     Purpose     : Schedules controller
     Created     : 06/24/2019 12:39:19 by Spiderman
-    Updated     : 08/22/2019 21:37:19 by Spiderman
+    Updated     : 08/28/2019 14:50:07 by Spiderman
     Changes     : 
 */
 
@@ -80,7 +80,7 @@ class Schedules extends REST_Controller
             'time_to' => $this->post('time_to'),
             'day' => $this->post('day'),
             'created_by' => $this->post('user_id'),
-            'dt_created' => date('Y-m-d H:i:s'),
+            'dt_created' => date('Y-m-d H:i:s')
         ];
 
         if (in_array(null, $data, true)) {

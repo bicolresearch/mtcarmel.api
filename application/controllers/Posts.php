@@ -5,7 +5,7 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 06/20/2019 11:48:09 by Spiderman
-    Updated     : 08/19/2019 13:32:30 by Spiderman
+    Updated     : 08/28/2019 14:46:35 by Spiderman
     Changes     : 
 */
 
@@ -27,46 +27,52 @@ class Posts extends REST_Controller
     public function index_get()
     {
         // Get the data from a model
-        $posts = $this->posts_model->_get_all();
+        $get_all = $this->posts_model->_get_all();
 
-        // Check if data returns empty or null
-        if (empty($posts)) {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        } else {
-               // Set the response and exit
-            $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        // Get the id parameter
+        $id = (int)$this->get('id');
+
+        // Check if id paramater is empty or null
+        if(empty($id)) {
+            // Check if data returns empty or null
+            if (empty($get_all)) {
+                // Set the response and exit
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'Not Found'
+                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            } else {
+                // Set the response and exit
+                $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            }
         }
     }
 
     public function post_get()
     {
-        // Find and return a single record for a particular post.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
+        // Check if id paramater is empty or null
+        if(empty($id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->posts_model->_get_by_id($id);
 
-        if (empty($post)) {
+        // Check if data is empty or null
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($post, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -81,7 +87,7 @@ class Posts extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Validate data array if it contains NULL values
+        // Check the data array if it contains null values
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -89,7 +95,7 @@ class Posts extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
+            // If data array does not contains null values, create new resource to database
             $this->posts_model->_create($data);
             // Set the response and exit
             $this->response([
@@ -110,30 +116,30 @@ class Posts extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular post.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
+        // Check if id paramater is empty or null
+        if(empty($id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->posts_model->_get_by_id($id);
 
-        if (empty($post)) {
+        // Check if data is empty or null
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check the data array if it contains null value
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -141,9 +147,9 @@ class Posts extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
+            // If data array does not contains null values, update the resource
             $this->posts_model->_update($id, $data);
-
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -159,30 +165,30 @@ class Posts extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular post.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
+        // Check if id paramater is empty or null
+        if(empty($id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->posts_model->_get_by_id($id);
 
-        if (empty($post)) {
+        // Check if data is empty or null
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check the data array if it contains null value
         if (in_array(null, $data, true)) {
             // Set the response and exit
             $this->response([
@@ -190,9 +196,9 @@ class Posts extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
+            // If data array does not contains null values, update the resource
             $this->posts_model->_update($id, $data);
-
+            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -202,30 +208,30 @@ class Posts extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular post.
+        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id.
-        if (empty($id)) {
-            // Invalid id, set the response and exit.
+        // Check if id paramater is empty or null
+        if(empty($id)) {
+            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the post from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $post = $this->posts_model->_get_by_id($id);
+        // Get the data by id from a model
+        $get_by_id = $this->posts_model->_get_by_id($id);
 
-        if (empty($post)) {
+        // Check if data is empty or null
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
-        // Validate data array if it contains NULL value
+        // Check if id parameter is empty or null
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -235,7 +241,6 @@ class Posts extends REST_Controller
         } else {
             // Delete the resource
             $this->posts_model->_hard_delete($id);
-
             // Set the response and exit
             $this->set_response([
                 'status' => TRUE,

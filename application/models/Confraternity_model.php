@@ -37,7 +37,7 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
-                't1.dt_created' .
+                't1.dt_created,' .
                 't1.dt_updated,' .        
                 't3.name AS status,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
@@ -76,7 +76,7 @@ class Confraternity_model extends CI_Model
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
-                't1.dt_created' .
+                't1.dt_created,' .
                 't1.dt_updated,' .        
                 't3.name AS status,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
