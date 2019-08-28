@@ -5,10 +5,8 @@
     Location    : application/models/Liturgical_model.php
     Purpose     : Liturgical model
     Created     : 08/06/2019 19:08:12 by Scarlet Witch
-    Updated     : 08/27/2019 15:01:22 by Scarlet Witch
-    Changes     : changed table status to global_reference_value
-                  updated the _get_all  - description/name of values
-                  updated the _get_by_id - values of status
+    Updated     : 08/28/2019 11:06:08 by Scarlet Witch
+    Changes     : updated column name officiating_priest to officiating_ministers (one column/field for chosen approver (priest/extraordinary minister/choir))
 */
 
 if (!defined('BASEPATH')) {
@@ -35,7 +33,7 @@ class Liturgical_model extends CI_Model
                 't1.name_contact_person,' .  
                 't1.landline_contact_person,' .  
                 't1.mobile_contact_person,' .  
-                't1.officiating_priest,' . 
+                't1.officiating_ministers as officiating_priest,' .
                 't4.name AS status,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .                
@@ -66,7 +64,7 @@ class Liturgical_model extends CI_Model
                 't1.name_contact_person,' .  
                 't1.landline_contact_person,' .  
                 't1.mobile_contact_person,' .  
-                't1.officiating_priest,' . 
+                't1.officiating_ministers as officiating_priest,' .
                 't1.status,' .
                 't1.dt_created AS posted_on,' .
                 't1.dt_updated AS updated_on,' .                
