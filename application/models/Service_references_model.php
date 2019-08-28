@@ -5,8 +5,8 @@
     Location    : application/models/Service_references_model.php
     Purpose     : Service references model
     Created     : 07/25/2019 18:42:23 by Scarlet Witch
-    Updated     : 08/09/2019 09:22:14 by Scarlet Witch
-    Changes     : updated select from max_lines to max_lines
+    Updated     : 08/29/2019 06:42:48 by Scarlet Witch
+    Changes     : added fields/columns - validator_pattern, validator_min_date and validator_max_date
 */
 
 if (!defined('BASEPATH')) {
@@ -35,6 +35,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -66,6 +69,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -97,6 +103,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .       
             't1.selections,' .           
             't1.max_lines')
@@ -128,6 +137,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .      
             't1.selections,' .           
             't1.max_lines')
@@ -159,6 +171,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .           
             't1.selections,' .           
             't1.max_lines')
@@ -190,6 +205,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .        
             't1.selections,' .           
             't1.max_lines')
@@ -221,6 +239,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .       
             't1.selections,' .           
             't1.max_lines')
@@ -252,6 +273,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .        
             't1.selections,' .           
             't1.max_lines')
@@ -283,6 +307,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .              
             't1.selections,' .           
             't1.max_lines')
@@ -314,6 +341,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -345,6 +375,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -376,6 +409,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .        
             't1.selections,' .           
             't1.max_lines')
@@ -407,6 +443,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -438,6 +477,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .    
             't1.selections,' .           
             't1.max_lines')
@@ -469,6 +511,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .        
             't1.selections,' .           
             't1.max_lines')
@@ -499,6 +544,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .         
             't1.selections,' .           
             't1.max_lines')
@@ -530,6 +578,9 @@ class Service_references_model extends CI_Model
             't1.validator_is_numeric,' .
             't1.validator_min_value,' .
             't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
             't1.error_text,' .           
             't1.selections,' .           
             't1.max_lines')
