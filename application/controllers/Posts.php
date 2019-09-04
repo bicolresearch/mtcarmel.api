@@ -5,8 +5,8 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 06/20/2019 11:48:09 by Spiderman
-    Updated     : 08/28/2019 14:46:35 by Spiderman
-    Changes     : 
+    Updated     : 09/04/2019 19:04:12 by Spiderman
+    Changes     : Added branch_id parameters to get_all and get_by_id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -26,14 +26,20 @@ class Posts extends REST_Controller
 
     public function index_get()
     {
+        // Get the branch_id parameters
+        $branch_id = (string)$this->get('branch_id');
+
         // Get the data from a model
-        $get_all = $this->posts_model->_get_all();
+        $get_all = $this->posts_model->_get_all($branch_id);
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
-
-        // Check if id paramater is empty or null
-        if(empty($id)) {
+        // Check if branch_id paramater is empty or null
+        if(empty($branch_id)) {
+            // Set the response and exit
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             // Check if data returns empty or null
             if (empty($get_all)) {
                 // Set the response and exit
@@ -43,18 +49,19 @@ class Posts extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($posts, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         }
     }
 
     public function post_get()
     {
-        // Get the id parameter
+        // Get the parameters
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        // Check if id paramater is empty or null
-        if(empty($id)) {
+        // Check if paramaters is empty or null
+        if(empty($branch_id) && empty($id)) {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
@@ -62,8 +69,8 @@ class Posts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data by id from a model
-        $get_by_id = $this->posts_model->_get_by_id($id);
+        // Get the data by branch_id and id from a model
+        $get_by_id = $this->posts_model->_get_by_id($branch_id, $id);
 
         // Check if data is empty or null
         if (empty($get_by_id)) {
@@ -108,7 +115,6 @@ class Posts extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'title' => $this->put('title'),
             'content' => $this->put('content'),
             'media_id' => $this->put('media_id'),
@@ -119,24 +125,13 @@ class Posts extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Check if id paramater is empty or null
+        // Check if the id parameter is empty or null
         if(empty($id)) {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the data by id from a model
-        $get_by_id = $this->posts_model->_get_by_id($id);
-
-        // Check if data is empty or null
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         // Check the data array if it contains null value
@@ -168,24 +163,13 @@ class Posts extends REST_Controller
         // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Check if id paramater is empty or null
+        // Check if the id parameter is empty or null
         if(empty($id)) {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the data by id from a model
-        $get_by_id = $this->posts_model->_get_by_id($id);
-
-        // Check if data is empty or null
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         // Check the data array if it contains null value
@@ -208,28 +192,8 @@ class Posts extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Get the id parameter
+        // Get the parameters
         $id = (int)$this->get('id');
-
-        // Check if id paramater is empty or null
-        if(empty($id)) {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the data by id from a model
-        $get_by_id = $this->posts_model->_get_by_id($id);
-
-        // Check if data is empty or null
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
 
         // Check if id parameter is empty or null
         if (empty($id)) {

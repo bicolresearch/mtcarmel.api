@@ -41,7 +41,7 @@ class Global_reference_model extends CI_Model
                     't1.group_id' => $group_id
                 ]
             )
-            ->order_by('t1.id', 'DESC');
+            ->order_by('t1.sequence', 'ASC');
 
         return json_decode($this->datatables->generate());
     }

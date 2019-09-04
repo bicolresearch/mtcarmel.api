@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : History.php
-    Location    : application/controllers/History.php
-    Purpose     : History controller
-    Created     : 06/24/2019 22:30:50 by Spiderman
-    Updated     : 08/22/2019 22:30:44 by Spiderman
+    Filename    : Prayer_requests.php
+    Location    : application/controllers/Prayer_requests.php
+    Purpose     : Prayer requests controller
+    Created     : 07/30/2019 15:53:10 by Scarlet Witch
+    Updated     : 09/03/2019 04:15:16 by Spiderman
     Changes     : 
 */
 
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class History extends REST_Controller
+class Prayer_requests extends REST_Controller
 {
     function __construct()
     {
@@ -26,7 +26,7 @@ class History extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->history_model->_get_all();
+        $get_all = $this->prayer_requests_model->_get_all();
 
         $id = (int)$this->get('id');
 
@@ -47,7 +47,7 @@ class History extends REST_Controller
         }
     }
 
-    public function history_get()
+    public function prayer_request_get()
     {
         $id = (int)$this->get('id');
 
@@ -58,7 +58,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->history_model->_get_by_id($id);
+        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -73,12 +73,11 @@ class History extends REST_Controller
     public function create_post()
     {
         $data = [
-            'branch_id' => $this->post('branch_id'),
-            'titular' => $this->post('titular'),
-            'diocese' => $this->post('diocese'),
-            'date_of_establishment' => $this->post('date_of_establishment'),
-            'feast_day' => $this->post('feast_day'),
-            'content' => $this->post('content'),
+            'branch_id' => $this->post('branch_id'),    
+            'module_id' => $this->post('module_id'), //5
+            'sub_module_id' => $this->post('sub_module_id'), //2
+            'status_id' => $this->post('status_id'),
+            'prayer' => $this->post('prayer'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
         ];
@@ -86,10 +85,11 @@ class History extends REST_Controller
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
-                'message' => 'Bad Request'
+                'message' => 'Bad Request',
+                'data' => $data
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->history_model->_create($data);
+            $this->prayer_requests_model->_create($data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -100,12 +100,8 @@ class History extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
-            'titular' => $this->put('titular'),
-            'diocese' => $this->put('diocese'),
-            'date_of_establishment' => $this->put('date_of_establishment'),            
-            'feast_day' => $this->put('feast_day'),
-            'content' => $this->put('content'),
+            'status_id' => $this->put('status_id'),
+            'prayer' => $this->put('prayer'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -119,7 +115,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->history_model->_get_by_id($id);
+        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -134,7 +130,7 @@ class History extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->history_model->_update($id, $data);
+            $this->prayer_requests_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -159,7 +155,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->history_model->_get_by_id($id);
+        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -174,7 +170,7 @@ class History extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->history_model->_update($id, $data);
+            $this->prayer_requests_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -193,7 +189,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->history_model->_get_by_id($id);
+        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -208,7 +204,7 @@ class History extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->history_model->_hard_delete($id);
+            $this->prayer_requests_model->_hard_delete($id);
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

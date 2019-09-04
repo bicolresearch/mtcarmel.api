@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : History_model.php
-    Location    : application/models/History_model.php
-    Purpose     : History model
+    Filename    : Histories_model.php
+    Location    : application/models/Histories_model.php
+    Purpose     : Histories model
     Created     : 06/27/2019 20:44:50 by Spiderman
-    Updated     : 08/22/2019 22:33:55 by Spiderman
+    Updated     : 08/31/2019 00:06:04 by Spiderman
     Changes     : 
 */
 
@@ -13,7 +13,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class History_model extends CI_Model
+class Histories_model extends CI_Model
 {
 
     public function __construct()

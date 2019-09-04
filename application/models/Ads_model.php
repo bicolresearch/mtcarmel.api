@@ -21,34 +21,23 @@ class Ads_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
-                't1.media_id,' .
                 't1.name,' .
-                't1.description,' .
-                't1.url,' .
-                't1.expiration,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.full_path AS media_path,' .
-                't4.id AS type_id,' .
-                't4.name AS type_name,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
-                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
+                'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
+                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
             ->from('ads AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
-            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
+            ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1
+                    't1.branch_id' => $branch_id
                 ]
             )
             ->order_by('t1.id', 'DESC');
@@ -56,7 +45,7 @@ class Ads_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -83,16 +72,17 @@ class Ads_model extends CI_Model
             ->where(
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.id' => $id
                 ]
             );
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
     }
 
-    public function _get_by_type($type_id)
+    public function _get_by_type($branch_id, $type_id)
     {
         $this->db
             ->select(
@@ -119,14 +109,15 @@ class Ads_model extends CI_Model
             ->where(
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't4.id' => $type_id
                 ]
             )
             ->order_by('t1.id', 'DESC');
+
         $query = $this->db->get();
 
-        return ($query->num_rows() > 0) ? $query->result() : false;
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
     public function _create($data)

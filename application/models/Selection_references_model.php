@@ -5,9 +5,8 @@
     Location    : application/models/Selection_references_model.php
     Purpose     : Selection references model
     Created     : 07/30/2019 12:01:13 by Scarlet Witch
-    Updated     : 08/27/2019 10:32:04 by Scarlet Witch
-    Changes     : updated the status - one model one controller for all status - status of whole service transaction, 
-                  approval status by admin/office and approval status by priest/extraordinary ministers/choir
+    Updated     : 08/30/2019 23:59:17 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -28,8 +27,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.brgy_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .                
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .
@@ -48,8 +47,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.brgy_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .            
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .            
@@ -69,8 +68,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.psgc_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .              
             't1.region_code,' .    
             't1.province_code,' .
             't1.city_code,' .
@@ -89,8 +88,8 @@ class Selection_references_model extends CI_Model
             $this->db
             ->select(           
                 't1.id,' .
-                't1.psgc_code,' .
-                't1.description as name,' .                
+                't1.name,' .    
+                't1.description,' .           
                 't1.region_code,' .    
                 't1.province_code,' .
                 't1.city_code,' .
@@ -110,8 +109,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.psgc_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .             
             't1.region_code,' .    
             't1.province_code,' .
             't1.country_code')
@@ -129,8 +128,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.psgc_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .            
             't1.region_code,' .    
             't1.province_code,' .
             't1.country_code')
@@ -149,8 +148,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(           
             't1.id,' .
-            't1.psgc_code,' .
-            't1.description as name,' .                
+            't1.name,' .    
+            't1.description,' .              
             't1.region_code,' .
             't1.country_code')
         ->from('region AS t1')
@@ -167,7 +166,8 @@ class Selection_references_model extends CI_Model
         $this->db
         ->select(    
             't1.id,' .
-            't1.name,' .
+            't1.name,' .    
+            't1.description,' .   
             't1.code,' . 
             't1.country_code,' . 
             't1.landline_format,' .               

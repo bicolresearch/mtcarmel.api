@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Status.php
-    Location    : application/controllers/Status.php
-    Purpose     : Status controller
-    Created     : 08/30/2019 19:23:25 by Spiderman
-    Updated     : 09/03/2019 02:08:39 by Spiderman
+    Filename    : Provinces.php
+    Location    : application/controllers/Provinces.php
+    Purpose     : Provinces controller
+    Created     : 08/30/2019 23:45:44 by Spiderman
+    Updated     : 09/02/2019 20:38:10 by Spiderman
     Changes     : 
 */
 
@@ -16,25 +16,22 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Status extends REST_Controller
+class Provinces extends REST_Controller
 {
-
-    private $group_id;
 
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
-        $this->group_id = 1;
     }
 
     public function index_get()
     {
-        $get_all = $this->global_reference_model->_get_all($this->group_id);
+        $get_all = $this->provinces_model->_get_all();
 
-        $id = (int)$this->get('id');
+        $q = (string)$this->get('q');
 
-        if (empty($id)) {
+        if (empty($q)) {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -45,15 +42,15 @@ class Status extends REST_Controller
             }
         }
 
-        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id);
+        $get_by_name = $this->provinces_model->_get_by_name($q);
 
-        if (empty($get_by_id)) {
+        if (empty($get_by_name)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_name, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 }

@@ -5,21 +5,18 @@
     Location    : application/libraries/Datatables.php
     Purpose     : Ignited datatables
     Created     : 08/04/2019 17:37:23 by Spiderman
-    Updated     : 08/04/2019 17:37:23 by Spiderman
-    Changes     : Add order_by
+    Updated     : 09/04/2019 18:00:52 by Spiderman
+    Changes     : Add limit
 */
 
 class Datatables
 {
-    /**
-     * Global container variables for chained argument results
-     *
-     */
     private $ci;
     private $table;
     private $distinct;
     private $group_by = array();
     private $order_by = array();
+    private $limit;
     private $select = array();
     private $joins = array();
     private $columns = array();
@@ -32,31 +29,17 @@ class Datatables
     private $edit_columns = array();
     private $unset_columns = array();
 
-    /**
-     * Copies an instance of CI
-     */
     public function __construct()
     {
         $this->ci =& get_instance();
     }
 
-    /**
-     * If you establish multiple databases in config/database.php this will allow you to
-     * set the database (other than $active_group) - more info: http://ellislab.com/forums/viewthread/145901/#712942
-     */
     public function set_database($db_name)
     {
         $db_data = $this->ci->load->database($db_name, TRUE);
         $this->ci->db = $db_data;
     }
 
-    /**
-     * Generates the SELECT portion of the query
-     *
-     * @param string $columns
-     * @param bool $backtick_protect
-     * @return mixed
-     */
     public function select($columns, $backtick_protect = TRUE)
     {
         foreach ($this->explode(',', $columns) as $val) {
@@ -70,12 +53,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates the DISTINCT portion of the query
-     *
-     * @param string $column
-     * @return mixed
-     */
     public function distinct($column)
     {
         $this->distinct = $column;
@@ -83,12 +60,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates a custom GROUP BY portion of the query
-     *
-     * @param string $val
-     * @return mixed
-     */
     public function group_by($val)
     {
         $this->group_by[] = $val;
@@ -96,13 +67,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates a custom ORDER BY portion of the query
-     *
-     * @param string $field
-     * @param string $order
-     * @return mixed
-     */
     public function order_by($field, $order)
     {
         $this->order_by = array($field, $order);
@@ -110,26 +74,18 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates the FROM portion of the query
-     *
-     * @param string $table
-     * @return mixed
-     */
+    public function limit($num)
+    {
+        $this->ci->db->limit($num);
+        return $this;
+    }
+
     public function from($table)
     {
         $this->table = $table;
         return $this;
     }
 
-    /**
-     * Generates the JOIN portion of the query
-     *
-     * @param string $table
-     * @param string $fk
-     * @param string $type
-     * @return mixed
-     */
     public function join($table, $fk, $type = NULL)
     {
         $this->joins[] = array($table, $fk, $type);
@@ -137,14 +93,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates the WHERE portion of the query
-     *
-     * @param mixed $key_condition
-     * @param string $val
-     * @param bool $backtick_protect
-     * @return mixed
-     */
     public function where($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
         $this->where[] = array($key_condition, $val, $backtick_protect);
@@ -152,14 +100,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates the WHERE portion of the query
-     *
-     * @param mixed $key_condition
-     * @param string $val
-     * @param bool $backtick_protect
-     * @return mixed
-     */
     public function or_where($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
         $this->or_where[] = array($key_condition, $val, $backtick_protect);
@@ -167,14 +107,6 @@ class Datatables
         return $this;
     }
 
-    /**
-     * Generates the WHERE IN portion of the query
-     *
-     * @param mixed $key_condition
-     * @param string $val
-     * @param bool $backtick_protect
-     * @return mixed
-     */
     public function where_in($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
         $this->where_in[] = array($key_condition, $val, $backtick_protect);
@@ -604,5 +536,3 @@ class Datatables
         return $this->ci->db->last_query();
     }
 }
-/* End of file Datatables.php */
-/* Location: ./application/libraries/Datatables.php */

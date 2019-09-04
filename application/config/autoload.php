@@ -151,7 +151,7 @@ $autoload['model'] = array(
     'priests_model',
     'contacts_model',
     'maps_model',
-    'history_model',
+    'histories_model',
     'boundaries_model',
     'locations_model',
     'users_model',
@@ -160,9 +160,9 @@ $autoload['model'] = array(
     'sub_modules_model',
     'service_references_model',
     'selection_references_model',
-    'prayer_request_model',
-    'confraternity_model',
-    'mass_request_model',
+    'prayer_requests_model',
+    'confraternities_model',
+    'mass_requests_model',
     'communion_of_the_sick_model',
     'events_fmhh_venue_model',
     'funeral_service_model',
@@ -176,5 +176,7 @@ $autoload['model'] = array(
     'individual_model',
     'community_model',
     'adult_model',
-    'marriage_model'
+    'countries_model',
+    'provinces_model',
+    'cities_model'
 );

@@ -5,8 +5,8 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 06/27/2019 15:35:23 by Spiderman
-    Updated     : 08/27/2019 16:48:52 by Spiderman
-    Changes     : 
+    Updated     : 09/04/2019 19:05:10 by Spiderman
+    Changes     : Added branch_id parameters to get_all and get_by_id
 */
 
 if (!defined('BASEPATH')) {
@@ -21,7 +21,7 @@ class Posts_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
@@ -43,7 +43,7 @@ class Posts_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1
+                    't1.branch_id' => $branch_id
                 ]
             )
             ->order_by('t1.id', 'DESC');
@@ -51,7 +51,7 @@ class Posts_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
     
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -73,11 +73,11 @@ class Posts_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.id' => $id
                 ]
-            )
-            ->order_by('t1.id', 'DESC');
+            );
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

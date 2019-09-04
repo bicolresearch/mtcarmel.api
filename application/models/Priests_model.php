@@ -5,7 +5,7 @@
     Location    : application/models/Priests_model.php
     Purpose     : Priests model
     Created     : 06/27/2019 23:37:57 by Scarlet Witch
-    Updated     : 08/26/2019 15:12:01 by Spiderman
+    Updated     : 09/04/2019 03:52:51 by Spiderman
     Changes     : 
 */
 
@@ -32,7 +32,7 @@ class Priests_model extends CI_Model
                 't1.name,' .
                 't1.position,' .
                 't1.congregation,' .
-                't1.rank,' .        
+                't1.sequence,' .        
                 't1.dt_created,' .
                 't1.dt_updated,' .
                 't2.full_path AS media_path,' .   
@@ -67,7 +67,7 @@ class Priests_model extends CI_Model
                 't1.name,' .
                 't1.position,' .
                 't1.congregation,' .
-                't1.rank,' .        
+                't1.sequence,' .      
                 't1.dt_created,' .
                 't1.dt_updated,' .
                 't2.full_path AS media_path,' .   

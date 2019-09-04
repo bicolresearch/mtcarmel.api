@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 08/28/2019 14:48:56 by Spiderman
+    Updated     : 09/04/2019 22:15:08 by Spiderman
     Changes     : 
 */
 
@@ -26,22 +26,23 @@ class Ads extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->ads_model->_get_all();
-
+        $branch_id = (int)$this->get('branch_id');
         $type_id = (int)$this->get('type_id');
 
-        if(empty($type_id)) {
+        $get_all = $this->ads_model->_get_all($branch_id);
+
+        if(empty($branch_id) || empty($type_id)) {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
-                    'message' => 'Not Found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+                    'message' => 'Bad Request'
+                ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         }
 
-        $get_by_id = $this->ads_model->_get_by_type($type_id);
+        $get_by_id = $this->ads_model->_get_by_type($branch_id, $type_id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -55,16 +56,17 @@ class Ads extends REST_Controller
 
     public function ad_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if (empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->ads_model->_get_by_id($id);
+        $get_by_id = $this->ads_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -127,15 +129,6 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->ads_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -167,15 +160,6 @@ class Ads extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->ads_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -199,15 +183,6 @@ class Ads extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->ads_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         if (empty($id)) {
