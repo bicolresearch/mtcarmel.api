@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Priests.php
-    Location    : application/controllers/Priests.php
-    Purpose     : Priests controller
+    Filename    : Carmelites.php
+    Location    : application/controllers/Carmelites.php
+    Purpose     : Carmelites controller
     Created     : 06/24/2019 23:33:07 by Spiderman
-    Updated     : 09/04/2019 03:52:11 by Spiderman
+    Updated     : 09/06/2019 20:35:27 by Spiderman
     Changes     : 
 */
 
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Priests extends REST_Controller
+class Carmelites extends REST_Controller
 {
     function __construct()
     {
@@ -26,11 +26,16 @@ class Priests extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->priests_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->carmelites_model->_get_all($branch_id);
 
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -39,26 +44,22 @@ class Priests extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
-    public function priest_get()
+    public function carmelite_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
+        $get_by_id = $this->carmelites_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -90,7 +91,7 @@ class Priests extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_create($data);
+            $this->carmelites_model->_create($data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -101,7 +102,6 @@ class Priests extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'type_id' => $this->put('type_id'),
             'media_id' => $this->put('media_id'),
             'name' => $this->put('name'),
@@ -121,22 +121,13 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_update($id, $data);
+            $this->carmelites_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -161,22 +152,13 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_update($id, $data);
+            $this->carmelites_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -195,22 +177,13 @@ class Priests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->priests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->priests_model->_hard_delete($id);
+            $this->carmelites_model->_hard_delete($id);
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

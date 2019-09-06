@@ -5,7 +5,7 @@
     Location    : application/controllers/Boundaries.php
     Purpose     : Boundaries controller
     Created     : 06/27/2019 21:57:52 Scarlet Witch
-    Updated     : 08/22/2019 21:57:46 by Spiderman
+    Updated     : 09/06/2019 18:54:52 by Spiderman
     Changes     : 
 */
 
@@ -26,11 +26,16 @@ class Boundaries extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->boundaries_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->boundaries_model->_get_all($branch_id);
 
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -39,26 +44,22 @@ class Boundaries extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function boundary_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->boundaries_model->_get_by_id($id);
+        $get_by_id = $this->boundaries_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -97,7 +98,6 @@ class Boundaries extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'name' => $this->put('name'),
             'description' => $this->put('description'),
             'updated_by' => $this->put('user_id'),
@@ -111,15 +111,6 @@ class Boundaries extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->boundaries_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         if (in_array(null, $data, true)) {
@@ -151,15 +142,6 @@ class Boundaries extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->boundaries_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         if (in_array(null, $data, true)) {

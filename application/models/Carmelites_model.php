@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Priests_model.php
-    Location    : application/models/Priests_model.php
-    Purpose     : Priests model
+    Filename    : Carmelites_model.php
+    Location    : application/models/Carmelites_model.php
+    Purpose     : Carmelites model
     Created     : 06/27/2019 23:37:57 by Scarlet Witch
-    Updated     : 09/04/2019 03:52:51 by Spiderman
+    Updated     : 09/06/2019 20:32:48 by Spiderman
     Changes     : 
 */
 
@@ -13,7 +13,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Priests_model extends CI_Model
+class Carmelites_model extends CI_Model
 {
 
     public function __construct()
@@ -21,12 +21,11 @@ class Priests_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
                 't1.type_id,' .
                 't1.media_id,' .
                 't1.name,' .
@@ -36,19 +35,18 @@ class Priests_model extends CI_Model
                 't1.dt_created,' .
                 't1.dt_updated,' .
                 't2.full_path AS media_path,' .   
-                't4.name AS type_name,' .                   
-                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
-                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
+                't3.name AS type_name,' .                  
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ministers AS t1') 
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
-            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1
+                    't1.branch_id' => $branch_id
                 ]
             )     
             ->order_by('t1.id', 'DESC');
@@ -56,34 +54,32 @@ class Priests_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
                 't1.type_id,' .
                 't1.media_id,' .
                 't1.name,' .
                 't1.position,' .
                 't1.congregation,' .
-                't1.sequence,' .      
+                't1.sequence,' .        
                 't1.dt_created,' .
                 't1.dt_updated,' .
                 't2.full_path AS media_path,' .   
-                't4.name AS type_name,' .                   
-                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
-                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
+                't3.name AS type_name,' .                  
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ministers AS t1') 
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
-            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.id' => $id
                 ]
             );

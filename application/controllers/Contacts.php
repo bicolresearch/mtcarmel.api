@@ -5,7 +5,7 @@
     Location    : application/controllers/Contacts.php
     Purpose     : Contacts controller
     Created     : 06/27/2019 22:16:38 by Scarlet Witch
-    Updated     : 08/22/2019 22:16:30 by Spiderman
+    Updated     : 09/06/2019 22:45:31 by Spiderman
     Changes     : 
 */
 
@@ -26,11 +26,16 @@ class Contacts extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->contacts_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->contacts_model->_get_all($branch_id);
 
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -39,26 +44,22 @@ class Contacts extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function contact_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->contacts_model->_get_by_id($id);
+        $get_by_id = $this->contacts_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -105,7 +106,6 @@ class Contacts extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'name' => $this->put('name'),
             'description' => $this->put('description'),
             'address1' => $this->put('address1'),            
@@ -118,7 +118,6 @@ class Contacts extends REST_Controller
             'email' => $this->put('email'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
-
         ];
 
         $id = (int)$this->get('id');
@@ -128,15 +127,6 @@ class Contacts extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->contacts_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         if (in_array(null, $data, true)) {
@@ -170,15 +160,6 @@ class Contacts extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->contacts_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -202,15 +183,6 @@ class Contacts extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->contacts_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
 
         if (empty($id)) {

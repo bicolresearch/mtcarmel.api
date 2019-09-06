@@ -74,8 +74,7 @@ class Confraternities_model extends CI_Model
                 't6.name AS country_name,' .
                 'CONCAT(t7.first_name, " ", t7.last_name) AS created_by,' .
                 'CONCAT(t8.first_name, " ", t8.last_name) AS updated_by')
-            ->from('service_transactions AS t1')
-            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')                                            
+            ->from('service_transactions AS t1')                                        
             ->join('global_reference_value AS t3', 't3.id = t1.status_id', 'left')      
             ->join('city AS t4', 't4.city_code = t1.city', 'left')
             ->join('province AS t5', 't5.province_code = t1.province', 'left')

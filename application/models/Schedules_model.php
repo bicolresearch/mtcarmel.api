@@ -5,8 +5,8 @@
     Location    : application/models/Schedules_model.php
     Purpose     : Schedules model
     Created     : 06/27/2019 22:18:36 by Spiderman
-    Updated     : 08/22/2019 11:34:52 by Scarlet Witch
-    Changes     : changed table dropdown_references to global_reference_value
+    Updated     : 09/06/2019 16:02:47 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -21,7 +21,7 @@ class Schedules_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
@@ -45,7 +45,7 @@ class Schedules_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1
+                    't1.branch_id' => $branch_id
                 ]
             )     
             ->order_by('t1.id', 'DESC');
@@ -53,7 +53,7 @@ class Schedules_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -77,7 +77,7 @@ class Schedules_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.id' => $id
                 ]
             );
