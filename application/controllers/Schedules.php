@@ -30,19 +30,11 @@ class Schedules extends REST_Controller
 
         $get_all = $this->schedules_model->_get_all($branch_id);
 
-<<<<<<< HEAD
         if(empty($branch_id)) {
-=======
-        if (empty($branch_id)) {
->>>>>>> d1f30d111b1c0f2cfd6804cb13683c0fa3b856a1
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-<<<<<<< HEAD
-=======
-
->>>>>>> d1f30d111b1c0f2cfd6804cb13683c0fa3b856a1
         } else {
             if (empty($get_all)) {
                 $this->response([
@@ -60,11 +52,7 @@ class Schedules extends REST_Controller
         $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-<<<<<<< HEAD
-        if(empty($branch_id) && empty($id)) {
-=======
         if (empty($branch_id) && empty($id)) {
->>>>>>> d1f30d111b1c0f2cfd6804cb13683c0fa3b856a1
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
