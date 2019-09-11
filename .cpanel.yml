@@ -1,0 +1,14 @@
+#Filename    : .cpanel.yml
+#Location    : 
+#Purpose     : For cpanel deployment
+#Created     : 09/11/2019 13:13:02 by Spiderman
+#Updated     : 
+#Changes     : 
+
+---
+deployment:
+  tasks:
+    - export APPPATH=/home/mountcarmelph/public_html/
+    - export ASSETSPATH=/home/mountcarmelph/public_html/public/assets/
+    - /bin/cp -R application $APPPATH
+    - /bin/cp -R public/assets $ASSETSPATH
