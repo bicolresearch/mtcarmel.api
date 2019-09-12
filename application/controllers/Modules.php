@@ -5,8 +5,8 @@
     Location    : application/controllers/Modules.php
     Purpose     : Modules controller
     Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 09/11/2019 16:45:20 by Scarlet Witch
+    Changes     : Added branch_id on get all and get by id, removed branch_id on update  
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -28,15 +28,21 @@ class Modules extends REST_Controller
 
     public function index_get()
     {
-        // Modules from a data store e.g. database
-        $modules = $this->modules_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = $this->get('id');
+        // Modules from a data store e.g. database
+        $get_all = $this->modules_model->_get_all($branch_id);
 
         // If the id parameter doesn't exists return all the modules
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            // Set the response and exit
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             // Check if the modules data store contains modules (in case the database result returns NULL)
-            if (empty($modules)) {
+            if (empty($get_all)) {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -44,24 +50,21 @@ class Modules extends REST_Controller
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 // Set the response and exit
-                $this->response($modules, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit.
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
+                
     }
 
     public function module_get()
-    {
+    {        
+        $branch_id = (int)$this->get('branch_id');
+
         // Find and return a single record for a particular module.
         $id = (int)$this->get('id');
-
+        
         // Validate the id.
-        if (empty($id)) {
+        if (empty($branch_id) && empty($id)) {
             // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
@@ -71,16 +74,17 @@ class Modules extends REST_Controller
 
         // Get the module from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
-        $module = $this->modules_model->_get_by_id($id);
+        $get_by_id = $this->modules_model->_get_by_id($branch_id, $id);
 
-        if (empty($module)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($module, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
+
     }
 
     public function create_post()
@@ -115,7 +119,6 @@ class Modules extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'name' => $this->put('name'),
             'description' => $this->put('description'),
             'media_id' => $this->put('media_id'),
