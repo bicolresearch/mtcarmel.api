@@ -5,8 +5,8 @@
     Location    : application/controllers/Donation_Type.php
     Purpose     : Donation Type controller
     Created     : 2019-07-01 16:15:16 by Scarlet Witch 
-    Updated     : 08/28/2019 00:24:53 by Spiderman
-    Changes     : 
+    Updated     : 12/11/2019 16:13:38 by Scarlet Witch
+    Changes     : changed model - _get_all_donation_type
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -28,8 +28,8 @@ class Donation_type extends REST_Controller
     }
 
     public function index_get()
-    {
-        $get_all = $this->global_reference_model->_get_all($this->group_id);
+    {        
+        $get_all = $this->global_reference_model->_get_all_donation_type($this->group_id);
 
         $id = (int)$this->get('id');
 
