@@ -1,12 +1,15 @@
 <?php
 
 /*
-    Filename    : Liturgical.php
-    Location    : application/controllers/Liturgical.php
-    Purpose     : Liturgical controller
+    Filename    : Liturgicals.php
+    Location    : application/controllers/Liturgicals.php
+    Purpose     : Liturgicals controller
     Created     : 08/06/2019 19:11:15 by Scarlet Witch
-    Updated     : 08/15/2019 16:44:44 by Scarlet Witch
-    Changes     : commenting officiating priest
+    Updated     : 09/12/2019 09:29:21 by Scarlet Witch
+    Changes     : renamed controller name from liturgical to liturgicals,
+                  renamed model name from liturgical_model to liturgicals_model,
+                  renamed function name for get by id, 
+                  added branch_id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -16,7 +19,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Liturgical extends REST_Controller
+class Liturgicals extends REST_Controller
 {
     function __construct()
     {
@@ -26,58 +29,51 @@ class Liturgical extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->liturgical_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
+        $get_all = $this->liturgicals_model->_get_all($branch_id);
 
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            } 
+            else {
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
+
     }
 
-    public function medium_get()
+    public function liturgical_get()
     {
-        // Get the id parameter
+        $branch_id = (int)$this->get('branch_id');
+        
         $id = (int)$this->get('id');
 
-        // Validate the id
-        if (empty($id)) {
-            // Set the response and exit
+        if (empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->liturgical_model->_get_by_id($id);
+        $get_by_id = $this->liturgicals_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
