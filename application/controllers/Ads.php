@@ -5,7 +5,7 @@
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
     Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 09/04/2019 22:15:08 by Spiderman
+    Updated     : 09/16/2019 18:31:32 by Spiderman
     Changes     : 
 */
 
@@ -31,14 +31,21 @@ class Ads extends REST_Controller
 
         $get_all = $this->ads_model->_get_all($branch_id);
 
-        if(empty($branch_id) || empty($type_id)) {
-            if (empty($get_all)) {
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Bad Request'
-                ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-            } else {
-                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        if(empty($branch_id) && empty($type_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if(empty($type_id)) {
+                if (empty($get_all)) {
+                    $this->response([
+                        'status' => FALSE,
+                        'message' => 'Not Found'
+                    ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+                } else {
+                    $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                }
             }
         }
 

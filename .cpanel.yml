@@ -1,9 +1,9 @@
-#Filename    : .cpanel.yml
-#Location    : 
-#Purpose     : For cpanel deployment
-#Created     : 09/11/2019 13:13:02 by Spiderman
-#Updated     : 09/11/2019 13:14:53 by Spiderman
-#Changes     : 
+# Filename    : .cpanel.yml
+# Location    : 
+# Purpose     : For cpanel deployment
+# Created     : 09/11/2019 13:13:02 by Spiderman
+# Updated     : 09/16/2019 15:14:08 by Spiderman
+# Changes     : 
 
 ---
 deployment:

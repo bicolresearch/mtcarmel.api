@@ -5,7 +5,7 @@
     Location    : application/models/Contacts_model.php
     Purpose     : Contacts model
     Created     : 06/27/2019 16:12:13 by Spiderman
-    Updated     : 09/06/2019 22:51:13 by Spiderman
+    Updated     : 09/16/2019 20:27:48 by Spiderman
     Changes     : 
 */
 
@@ -54,17 +54,17 @@ class Contacts_model extends CI_Model
                 't1.description,' .    
                 't1.address1,' .
                 't1.address2,' .
-                't1.city AS city_code,' .
-                't1.province AS province_code,' .
-                't1.country AS country_code,' .
                 't1.landline,' .
                 't1.mobile,' .
                 't1.email,' .
+                't1.city AS city_code,' .
+                't2.name AS city_name,' .
+                't1.province AS province_code,' .
+                't3.name AS province_name,' .
+                't1.country AS country_code,' .
+                't4.name AS country_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.name AS city_name,' .
-                't3.name AS province_name,' .
-                't4.name AS country_name,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
                 'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
             ->from('contacts AS t1')

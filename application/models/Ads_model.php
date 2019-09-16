@@ -5,8 +5,8 @@
     Location    : application/models/Ads_model.php
     Purpose     : Ads model
     Created     : 06/27/2019 15:35:23 by Scarlet Witch
-    Updated     : 08/27/2019 09:31:11 by Scarlet Witch
-    Changes     : update _get_all - changed  ad_type to global_reference_value
+    Updated     : 09/16/2019 18:31:41 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -27,13 +27,22 @@ class Ads_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
+                't1.description,' .
+                't1.url,' .
+                't1.expiration,' .
+                't1.media_id,' .
+                't2.full_path AS media_path,' .
+                't3.id AS type_id,' .
+                't3.name AS type_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
-                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ads AS t1')
-            ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
+            ->join('media AS t2', 't2.id = t1.media_id', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
@@ -50,25 +59,23 @@ class Ads_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
-                't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
+                't1.media_id,' .
+                't2.full_path AS media_path,' .
+                't3.id AS type_id,' .
+                't3.name AS type_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.full_path AS media_path,' .
-                't4.id AS type_id,' .
-                't4.name AS type_name,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
-                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
-            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
@@ -87,30 +94,28 @@ class Ads_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
-                't1.media_id,' .
                 't1.name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
+                't1.media_id,' .
+                't2.full_path AS media_path,' .
+                't3.id AS type_id,' .
+                't3.name AS type_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.full_path AS media_path,' .
-                't4.id AS type_id,' .
-                't4.name AS type_name,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS created_by,' .
-                'CONCAT(t6.first_name, " ", t6.last_name) AS updated_by')
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('global_reference_value AS t4', 't4.id = t1.type_id', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.created_by', 'left')
-            ->join('user_info AS t6', 't6.user_id = t1.updated_by', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
                     't1.branch_id' => $branch_id,
-                    't4.id' => $type_id
+                    't3.id' => $type_id
                 ]
             )
             ->order_by('t1.id', 'DESC');

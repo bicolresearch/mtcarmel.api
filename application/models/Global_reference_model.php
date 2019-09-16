@@ -5,7 +5,7 @@
     Location    : application/models/Global_reference_model.php
     Purpose     : Global reference model
     Created     : 08/19/2019 14:10:53 by Spiderman
-    Updated     : 08/25/2019 23:04:09 by Spiderman
+    Updated     : 09/16/2019 23:27:21 by Spiderman
     Changes     : 
 */
 
@@ -21,7 +21,7 @@ class Global_reference_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all($group_id)
+    public function _get_all($group_id, $module_id, $sub_module_id)
     {
         $this->datatables
             ->select(
@@ -38,7 +38,9 @@ class Global_reference_model extends CI_Model
             ->where(
                 [
                     't1.is_deleted' => 0,
-                    't1.group_id' => $group_id
+                    't1.group_id' => $group_id,
+                    't1.module_id' => $module_id,
+                    't1.sub_module_id' => $sub_module_id
                 ]
             )
             ->order_by('t1.sequence', 'ASC');
@@ -46,7 +48,7 @@ class Global_reference_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id, $group_id)
+    public function _get_by_id($id, $group_id, $module_id, $sub_module_id)
     {
         $this->db
             ->select(
@@ -63,8 +65,10 @@ class Global_reference_model extends CI_Model
             ->where(
                 [
                     't1.is_deleted' => 0,
+                    't1.id' => $id,
                     't1.group_id' => $group_id,
-                    't1.id' => $id
+                    't1.module_id' => $module_id,
+                    't1.sub_module_id' => $sub_module_id
                 ]
             );
         $query = $this->db->get();

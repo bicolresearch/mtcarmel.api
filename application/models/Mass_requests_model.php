@@ -5,7 +5,7 @@
     Location    : application/models/Mass_requests_model.php
     Purpose     : Mass requests model
     Created     : 07/31/2019 13:45:59 by Scarlet Witch
-    Updated     : 09/03/2019 19:14:28 by Spiderman
+    Updated     : 09/16/2019 22:32:24 by Spiderman
     Changes     : 
 */
 
@@ -21,16 +21,16 @@ class Mass_requests_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
         ->select(
             't1.id,' .
             't1.name,' .
-            't1.dt_created,' .
-            't1.dt_updated,' .    
             't2.id AS status_id,' .
             't2.name AS status_name,' .
+            't1.dt_created,' .
+            't1.dt_updated,' .    
             'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
             'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
         ->from('service_transactions AS t1')                                          
@@ -40,17 +40,17 @@ class Mass_requests_model extends CI_Model
         ->where(                
             [
                 't1.is_deleted' => 0,
-                't1.branch_id' => 1,
+                't1.branch_id' => $branch_id,
                 't1.module_id' => 5,
                 't1.sub_module_id' => 3
             ]
         )
         ->order_by('t1.id', 'DESC');   
     
-    return json_decode($this->datatables->generate());
+        return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -58,11 +58,11 @@ class Mass_requests_model extends CI_Model
                 't1.name,' .
                 't1.purpose_id,' .
                 't1.dt_offered,' .       
-                't1.dt_created,' .
-                't1.dt_updated,' .    
                 't2.id AS status_id,' .
                 't2.name AS status_name,' .
                 't3.name AS purpose_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .    
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('service_transactions AS t1')       
@@ -73,7 +73,7 @@ class Mass_requests_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.module_id' => 5,
                     't1.sub_module_id' => 3,
                     't1.id' => $id

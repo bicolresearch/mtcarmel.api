@@ -5,7 +5,7 @@
     Location    : application/controllers/Status.php
     Purpose     : Status controller
     Created     : 08/30/2019 19:23:25 by Spiderman
-    Updated     : 09/03/2019 02:08:39 by Spiderman
+    Updated     : 09/16/2019 23:35:38 by Spiderman
     Changes     : 
 */
 
@@ -18,19 +18,22 @@ require APPPATH . 'libraries/Format.php';
 
 class Status extends REST_Controller
 {
-
     private $group_id;
+    private $module_id;
+    private $sub_module_id;
 
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
         $this->group_id = 1;
+        $this->module_id = null;
+        $this->sub_module_id = null;
     }
 
     public function index_get()
     {
-        $get_all = $this->global_reference_model->_get_all($this->group_id);
+        $get_all = $this->global_reference_model->_get_all($this->group_id, $this->module_id, $this->sub_module_id);
 
         $id = (int)$this->get('id');
 
@@ -45,7 +48,7 @@ class Status extends REST_Controller
             }
         }
 
-        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id, $this->module_id, $this->sub_module_id);
 
         if (empty($get_by_id)) {
             $this->response([

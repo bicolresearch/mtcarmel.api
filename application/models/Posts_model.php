@@ -5,8 +5,8 @@
     Location    : application/models/Posts_model.php
     Purpose     : Posts model
     Created     : 06/27/2019 15:35:23 by Spiderman
-    Updated     : 09/04/2019 19:05:10 by Spiderman
-    Changes     : Added branch_id parameters to get_all and get_by_id
+    Updated     : 09/16/2019 15:33:58 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -26,20 +26,18 @@ class Posts_model extends CI_Model
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
-                't1.media_id,' .
                 't1.title,' .
                 't1.content,' .
+                't1.media_id,' .
+                't2.full_path AS media_path,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.full_path AS media_path,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,
@@ -56,20 +54,18 @@ class Posts_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.branch_id,' .
-                't1.media_id,' .
                 't1.title,' .
                 't1.content,' .
+                't1.media_id,' .
+                't2.full_path AS media_path,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                't2.full_path AS media_path,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('posts AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')
             ->where(                
                 [
                     't1.is_deleted' => 0,

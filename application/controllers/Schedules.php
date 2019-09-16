@@ -5,7 +5,7 @@
     Location    : application/controllers/Schedules.php
     Purpose     : Schedules controller
     Created     : 06/24/2019 12:39:19 by Spiderman
-    Updated     : 09/06/2019 16:01:53 by Spiderman
+    Updated     : 09/16/2019 20:18:25 by Spiderman
     Changes     : 
 */
 
@@ -167,13 +167,6 @@ class Schedules extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

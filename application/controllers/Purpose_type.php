@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Donation_Type.php
-    Location    : application/controllers/Donation_Type.php
-    Purpose     : Donation Type controller
-    Created     : 07/01/2019 23:27:59 by Scarlet Witch 
-    Updated     : 09/16/2019 23:27:41 by Spiderman
+    Filename    : Purpose_type.php
+    Location    : application/controllers/Purpose_type.php
+    Purpose     : Purpose type controller
+    Created     : 09/16/2019 22:55:24 by Spiderman
+    Updated     : 
     Changes     : 
 */
 
@@ -16,8 +16,9 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Donation_type extends REST_Controller
+class Purpose_type extends REST_Controller
 {
+
     private $group_id;
     private $module_id;
     private $sub_module_id;
@@ -26,9 +27,9 @@ class Donation_type extends REST_Controller
     {
         // Construct the parent class
         parent::__construct();
-        $this->group_id = 21;
-        $this->module_id = null;
-        $this->sub_module_id = null;
+        $this->group_id = 14;
+        $this->module_id = 5;
+        $this->sub_module_id = 3;
     }
 
     public function index_get()

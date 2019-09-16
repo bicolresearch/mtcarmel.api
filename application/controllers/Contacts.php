@@ -5,7 +5,7 @@
     Location    : application/controllers/Contacts.php
     Purpose     : Contacts controller
     Created     : 06/27/2019 22:16:38 by Scarlet Witch
-    Updated     : 09/06/2019 22:45:31 by Spiderman
+    Updated     : 09/16/2019 20:26:24 by Spiderman
     Changes     : 
 */
 
@@ -177,13 +177,6 @@ class Contacts extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

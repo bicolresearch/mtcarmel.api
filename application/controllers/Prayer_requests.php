@@ -5,7 +5,7 @@
     Location    : application/controllers/Prayer_requests.php
     Purpose     : Prayer requests controller
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 09/03/2019 04:15:16 by Spiderman
+    Updated     : 09/16/2019 21:46:58 by Spiderman
     Changes     : 
 */
 
@@ -26,11 +26,16 @@ class Prayer_requests extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->prayer_requests_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->prayer_requests_model->_get_all($branch_id);
 
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -39,26 +44,22 @@ class Prayer_requests extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function prayer_request_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
+        $get_by_id = $this->prayer_requests_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -74,8 +75,8 @@ class Prayer_requests extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),    
-            'module_id' => $this->post('module_id'), //5
-            'sub_module_id' => $this->post('sub_module_id'), //2
+            'module_id' => $this->post('module_id'),
+            'sub_module_id' => $this->post('sub_module_id'),
             'status_id' => $this->post('status_id'),
             'prayer' => $this->post('prayer'),
             'created_by' => $this->post('user_id'),
@@ -115,15 +116,6 @@ class Prayer_requests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -155,15 +147,6 @@ class Prayer_requests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -181,22 +164,6 @@ class Prayer_requests extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->prayer_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

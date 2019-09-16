@@ -5,7 +5,7 @@
     Location    : application/controllers/Confraternities.php
     Purpose     : Confraternities controller
     Created     : 07/30/2019 18:00:42 by Scarlet Witch
-    Updated     : 08/30/2019 13:56:21 by Spiderman
+    Updated     : 09/16/2019 21:27:48 by Spiderman
     Changes     : 
 */
 
@@ -26,47 +26,48 @@ class Confraternities extends REST_Controller
 
     public function index_get()
     {
-        $getAll = $this->confraternities_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->confraternities_model->_get_all($branch_id);
 
-        if (empty($id)) {
-            if (empty($getAll)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function confraternity_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $getById = $this->confraternities_model->_get_by_id($id);
+        $get_by_id = $this->confraternities_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -133,15 +134,6 @@ class Confraternities extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $getById = $this->confraternities_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -173,15 +165,6 @@ class Confraternities extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $getById = $this->confraternities_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -199,22 +182,6 @@ class Confraternities extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $getById = $this->confraternities_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

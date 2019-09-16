@@ -5,7 +5,7 @@
     Location    : application/controllers/Mass_requests.php
     Purpose     : Mass requests controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
-    Updated     : 09/03/2019 19:40:24 by Spiderman
+    Updated     : 09/16/2019 22:30:01 by Spiderman
     Changes     : 
 */
 
@@ -26,11 +26,16 @@ class Mass_requests extends REST_Controller
 
     public function index_get()
     {
-        $get_all = $this->mass_requests_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->mass_requests_model->_get_all($branch_id);
 
-        if (empty($id)) {
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -39,26 +44,22 @@ class Mass_requests extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function mass_request_get()
     {
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        if (empty($id)) {
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->mass_requests_model->_get_by_id($id);
+        $get_by_id = $this->mass_requests_model->_get_by_id($branch_id, $id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -119,15 +120,6 @@ class Mass_requests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->mass_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -160,15 +152,6 @@ class Mass_requests extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->mass_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
         if (in_array(null, $data, true)) {
             $this->response([
                 'status' => FALSE,
@@ -186,22 +169,6 @@ class Mass_requests extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->mass_requests_model->_get_by_id($id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

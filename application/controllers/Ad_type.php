@@ -5,7 +5,7 @@
     Location    : application/controllers/Ad_type.php
     Purpose     : Ads type controller
     Created     : 08/19/2019 13:29:13 by Spiderman
-    Updated     : 09/03/2019 02:40:44 by Spiderman
+    Updated     : 09/16/2019 22:53:55 by Spiderman
     Changes     : 
 */
 
@@ -20,17 +20,21 @@ class Ad_type extends REST_Controller
 {
 
     private $group_id;
+    private $module_id;
+    private $sub_module_id;
 
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
         $this->group_id = 20;
+        $this->module_id = null;
+        $this->sub_module_id = null;
     }
 
     public function index_get()
     {
-        $get_all = $this->global_reference_model->_get_all($this->group_id);
+        $get_all = $this->global_reference_model->_get_all($this->group_id, $this->module_id, $this->sub_module_id);
 
         $id = (int)$this->get('id');
 
@@ -45,7 +49,7 @@ class Ad_type extends REST_Controller
             }
         }
 
-        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id);
+        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id, $this->module_id, $this->sub_module_id);
 
         if (empty($get_by_id)) {
             $this->response([

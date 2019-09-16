@@ -5,7 +5,7 @@
     Location    : application/models/Carmelites_model.php
     Purpose     : Carmelites model
     Created     : 06/27/2019 23:37:57 by Scarlet Witch
-    Updated     : 09/06/2019 20:32:48 by Spiderman
+    Updated     : 09/16/2019 20:27:56 by Spiderman
     Changes     : 
 */
 
@@ -26,16 +26,16 @@ class Carmelites_model extends CI_Model
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.type_id,' .
-                't1.media_id,' .
                 't1.name,' .
                 't1.position,' .
                 't1.congregation,' .
                 't1.sequence,' .        
+                't1.media_id,' .
+                't2.full_path AS media_path,' . 
+                't1.type_id,' .  
+                't3.name AS type_name,' .    
                 't1.dt_created,' .
-                't1.dt_updated,' .
-                't2.full_path AS media_path,' .   
-                't3.name AS type_name,' .                  
+                't1.dt_updated,' .              
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ministers AS t1') 
@@ -59,16 +59,16 @@ class Carmelites_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.type_id,' .
-                't1.media_id,' .
                 't1.name,' .
                 't1.position,' .
                 't1.congregation,' .
                 't1.sequence,' .        
+                't1.media_id,' .
+                't2.full_path AS media_path,' . 
+                't1.type_id,' .  
+                't3.name AS type_name,' .    
                 't1.dt_created,' .
-                't1.dt_updated,' .
-                't2.full_path AS media_path,' .   
-                't3.name AS type_name,' .                  
+                't1.dt_updated,' .              
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('ministers AS t1') 

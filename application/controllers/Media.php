@@ -5,7 +5,7 @@
     Location    : application/controllers/Media.php
     Purpose     : Media controller
     Created     : 07/22/2019 15:22:13 by Spiderman
-    Updated     : 
+    Updated     : 09/16/2019 18:37:14 by Spiderman
     Changes     : 
 */
 
@@ -26,58 +26,48 @@ class Media extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->media_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
+        $get_all = $this->media_model->_get_all($branch_id);
 
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function medium_get()
     {
-        // Get the id parameter
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        // Validate the id
-        if (empty($id)) {
-            // Set the response and exit
+        if(empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->media_model->_get_by_id($id);
+        $get_by_id = $this->media_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -97,9 +87,7 @@ class Media extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Validate data array if it contains NULL values
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request',
@@ -108,11 +96,7 @@ class Media extends REST_Controller
         } else {
             // Convert base64 string to an image file
             $this->base64_to_image($this->post('base64'), $data['full_path']);
-
-            // If data array does not contains NULL values, create new resource to database
             $this->media_model->_create($data);
-            
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -129,39 +113,22 @@ class Media extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
         if (empty($id)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->media_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->media_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -177,10 +144,8 @@ class Media extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
         if (empty($id)) {
             // Set the response and exit
             $this->response([
@@ -189,27 +154,13 @@ class Media extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->media_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->media_model->_update($id, $data);
-
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -219,40 +170,15 @@ class Media extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Get the id parameter
         $id = (int)$this->get('id');
 
-        // Validate the id
         if (empty($id)) {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the data from the array, using the id as key for retrieval.
-        $getById = $this->media_model->_get_by_id($id);
-
-        if (empty($getById)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
-        if (empty($id)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // Delete the resource
             $this->media_model->_hard_delete($id);
-
-            // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

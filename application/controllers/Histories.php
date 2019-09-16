@@ -5,7 +5,7 @@
     Location    : application/controllers/Histories.php
     Purpose     : Histories controller
     Created     : 06/24/2019 22:30:50 by Spiderman
-    Updated     : 09/07/2019 01:15:32 by Spiderman
+    Updated     : 09/16/2019 20:44:57 by Spiderman
     Changes     : 
 */
 
@@ -167,13 +167,6 @@ class Histories extends REST_Controller
     public function hard_delete_delete()
     {
         $id = (int)$this->get('id');
-
-        if (empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
 
         if (empty($id)) {
             $this->response([

@@ -5,7 +5,7 @@
     Location    : application/models/Confraternities_model.php
     Purpose     : Confraternities model
     Created     : 07/22/2019 15:50:41 by Scarlet Witch
-    Updated     : 08/30/2019 13:55:49 by Spiderman
+    Updated     : 09/16/2019 21:28:46 by Spiderman
     Changes     : 
 */
 
@@ -21,7 +21,7 @@ class Confraternities_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
@@ -40,7 +40,7 @@ class Confraternities_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.module_id' => 4,
                     't1.sub_module_id' => 1
                 ]
@@ -50,7 +50,7 @@ class Confraternities_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -58,9 +58,6 @@ class Confraternities_model extends CI_Model
                 't1.name,' .
                 't1.address_1,' .
                 't1.address_2,' .
-                't1.city AS city_code,' .
-                't1.province AS province_code,' .
-                't1.country AS country_code,' .
                 't1.birthdate,' .
                 't1.landline,' .
                 't1.mobile,' .
@@ -69,8 +66,11 @@ class Confraternities_model extends CI_Model
                 't1.dt_updated,' .    
                 't3.id AS status_id,' .
                 't3.name AS status_name,' .
+                't1.city AS city_code,' .
                 't4.name AS city_name,' .
+                't1.province AS province_code,' .
                 't5.name AS province_name,' .
+                't1.country AS country_code,' .
                 't6.name AS country_name,' .
                 'CONCAT(t7.first_name, " ", t7.last_name) AS created_by,' .
                 'CONCAT(t8.first_name, " ", t8.last_name) AS updated_by')
@@ -84,7 +84,7 @@ class Confraternities_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.module_id' => 4,
                     't1.sub_module_id' => 1,
                     't1.id' => $id

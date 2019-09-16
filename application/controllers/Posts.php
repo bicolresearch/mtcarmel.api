@@ -5,8 +5,8 @@
     Location    : application/controllers/Posts.php
     Purpose     : Posts controller
     Created     : 06/20/2019 11:48:09 by Spiderman
-    Updated     : 09/04/2019 19:04:12 by Spiderman
-    Changes     : Added branch_id parameters to get_all and get_by_id
+    Updated     : 09/16/2019 18:40:16 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -27,7 +27,7 @@ class Posts extends REST_Controller
     public function index_get()
     {
         // Get the branch_id parameters
-        $branch_id = (string)$this->get('branch_id');
+        $branch_id = (int)$this->get('branch_id');
 
         // Get the data from a model
         $get_all = $this->posts_model->_get_all($branch_id);

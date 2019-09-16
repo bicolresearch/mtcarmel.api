@@ -5,7 +5,7 @@
     Location    : application/models/Prayer_requests_model.php
     Purpose     : Prayer requests model
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 09/03/2019 04:20:40 by Spiderman
+    Updated     : 09/16/2019 21:50:44 by Spiderman
     Changes     : 
 */
 
@@ -21,16 +21,16 @@ class Prayer_requests_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
                 't1.id,' .
                 't1.prayer,' .
-                't1.dt_created,' .
-                't1.dt_updated,' .    
                 't2.id AS status_id,' .
                 't2.name AS status_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .    
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('service_transactions AS t1')         
@@ -40,7 +40,7 @@ class Prayer_requests_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.module_id' => 5,
                     't1.sub_module_id' => 2
                 ]
@@ -50,16 +50,16 @@ class Prayer_requests_model extends CI_Model
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
                 't1.id,' .
                 't1.prayer,' .
-                't1.dt_created,' .
-                't1.dt_updated,' .    
                 't2.id AS status_id,' .
                 't2.name AS status_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .    
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('service_transactions AS t1')         
@@ -69,7 +69,7 @@ class Prayer_requests_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
-                    't1.branch_id' => 1,
+                    't1.branch_id' => $branch_id,
                     't1.module_id' => 5,
                     't1.sub_module_id' => 2,
                     't1.id' => $id
