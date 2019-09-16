@@ -4,15 +4,9 @@
     Filename    : Donation_Type.php
     Location    : application/controllers/Donation_Type.php
     Purpose     : Donation Type controller
-<<<<<<< HEAD
     Created     : 07/01/2019 23:27:59 by Scarlet Witch 
     Updated     : 09/16/2019 23:27:41 by Spiderman
     Changes     : 
-=======
-    Created     : 2019-07-01 16:15:16 by Scarlet Witch 
-    Updated     : 12/11/2019 16:13:38 by Scarlet Witch
-    Changes     : changed model - _get_all_donation_type
->>>>>>> 161c11e3929c571edb4821a405d3dfddf8e4579d
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
