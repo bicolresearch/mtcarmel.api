@@ -4,8 +4,8 @@
     Filename    : Users.php
     Location    : application/controllers/Users.php
     Purpose     : Users controller
-    Created     : 07/15/2019 11:43:27 by Spiderman
-    Updated     : 
+    Created     : 07/15/2019 01:18:14 by Spiderman
+    Updated     : 09/17/2019 01:18:25 by Spiderman
     Changes     : 
 */
 
@@ -26,57 +26,48 @@ class Users extends REST_Controller
 
     public function index_get()
     {
-        // Users model
-        $users = $this->users_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = (int)$this->get('id');
+        $get_all = $this->users_model->_get_all($branch_id);
 
-        // If the id parameter doesn't exists return all the users
-        if (empty($id)) {
-            // Check if the users data store contains users (in case the database result returns NULL)
-            if (empty($users)) {
-                // Set the response and exit
+        if(empty($branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                // Set the response and exit
-                $this->response($users, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit.
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
     public function user_get()
     {
-        // Find and return a single record for a particular user
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        // Validate the parameters.
-        if (empty($id)) {
-            // Invalid parameters, set the response and exit.
+        if (empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the user from the array, using the id as key for retrieval.
-        $user = $this->users_model->_get_by_id($id);
+        $get_by_id = $this->users_model->_get_by_id($branch_id, $id);
 
-        if (empty($user)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($user, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -100,20 +91,15 @@ class Users extends REST_Controller
             'dt_created' => date('Y-m-d H:i:s')
         ];
 
-        // Merge arrays
         $data = array_merge($arr1, $arr2);
 
-        // Validate data array if it contains NULL values
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, create new resource to database
             $this->users_model->_create($arr1, $arr2);        
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Account Created'
@@ -124,44 +110,26 @@ class Users extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular user.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the user from the array, using the id as key for retrieval.
-        $user = $this->users_model->_get_by_id($id);
-
-        if (empty($user)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->users_model->_update($id, $data);
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -177,40 +145,22 @@ class Users extends REST_Controller
             'dt_updated' => date('Y-m-d H:i:s')
         ];
 
-        // Find and return a single record for a particular ad.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the user from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $user = $this->users_model->_get_by_id($id);
-
-        if (empty($user)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
         if (in_array(null, $data, true)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // If data array does not contains NULL values, update the resource
             $this->users_model->_update($id, $data);
-            // Set the response and exit
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -220,40 +170,15 @@ class Users extends REST_Controller
 
     public function hard_delete_delete()
     {
-        // Find and return a single record for a particular ad.
         $id = (int)$this->get('id');
 
-        // Validate the id.
         if (empty($id)) {
-            // Invalid id, set the response and exit.
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        // Get the user from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        $user = $this->users_model->_get_by_id($id);
-
-        if (empty($user)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        }
-
-        // Validate data array if it contains NULL value
-        if (empty($id)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            // Delete the resource
             $this->users_model->_hard_delete($id);
-            // Set the response and exit
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'

@@ -36,16 +36,16 @@ class Ads extends REST_Controller
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
-            if(empty($type_id)) {
-                if (empty($get_all)) {
-                    $this->response([
-                        'status' => FALSE,
-                        'message' => 'Not Found'
-                    ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-                } else {
-                    $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-                }
+        } 
+
+        if(empty($type_id)) {
+            if (empty($get_all)) {
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'Not Found'
+                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            } else {
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
         }
 
