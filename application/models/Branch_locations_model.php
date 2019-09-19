@@ -1,19 +1,19 @@
 <?php
 
 /*
-    Filename    : Branches_model.php
-    Location    : application/models/Branches_model.php
-    Purpose     : Branches reference model
-    Created     : 09/13/2019 13:40:50 by Scarlet Witch
-    Updated     : 09/19/2019 15:42:27 by Scarlet Witch
-    Changes     : updated location id and added location name
+    Filename    : Branch_locations_model.php
+    Location    : application/models/Branch_locations_model.php
+    Purpose     : Branch locations model
+    Created     : 09/19/2019 15:28:36 by Scarlet Witch
+    Updated     : 
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Branches_model extends CI_Model
+class Branch_locations_model extends CI_Model
 {
 
     public function __construct()
@@ -27,20 +27,14 @@ class Branches_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
-                't1.description,' . 
-                't1.location_id,' .
-                't5.name AS location_name,' .                 
-                't4.id AS church_order_id,' .
-                't4.name AS church_order_name,' .
+                't1.description,' .  
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('branch AS t1')
+            ->from('branch_locations AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left') 
-            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')      
-            ->join('branch_locations AS t5', 't5.id = t1.location_id', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0
@@ -58,19 +52,14 @@ class Branches_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' .
-                't1.location_id,' .
-                't5.name AS location_name,' .
-                't4.id AS church_order_id,' .
-                't4.name AS church_order_name,' .
+                't1.location,' .
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('branch AS t1')
+            ->from('branch_locations AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left') 
-            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')            
-            ->join('branch_locations AS t5', 't5.id = t1.location_id', 'left')
+            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
@@ -86,7 +75,7 @@ class Branches_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db->insert('global_reference_value', $data);
+        $this->db->insert('branch_locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -97,7 +86,7 @@ class Branches_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('global_reference_value', $data);
+            ->update('branch_locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -108,7 +97,7 @@ class Branches_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('global_reference_value', $data);
+            ->update('branch_locations', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
@@ -119,7 +108,7 @@ class Branches_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->delete('global_reference_value');
+            ->delete('branch_locations');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

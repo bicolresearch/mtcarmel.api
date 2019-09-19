@@ -170,7 +170,7 @@ $autoload['model'] = array(
     'crypt_lobby_model',
     'november_mass_model',
     'liturgicals_model',
-    'certification_model',
+    'certifications_model',
     'first_communion_model',
     'confirmation_model',
     'individual_model',
@@ -179,5 +179,6 @@ $autoload['model'] = array(
     'countries_model',
     'provinces_model',
     'cities_model',
-    'branches_model'
+    'branches_model',
+    'branch_locations_model'
 );
