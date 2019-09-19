@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : Donation_Type.php
-    Location    : application/controllers/Donation_Type.php
+    Filename    : Donation_type.php
+    Location    : application/controllers/Donation_type.php
     Purpose     : Donation Type controller
     Created     : 07/01/2019 23:27:59 by Scarlet Witch 
-    Updated     : 09/16/2019 23:27:41 by Spiderman
-    Changes     : 
+    Updated     : 09/19/2019 13:47:31 by Scarlet Witch
+    Changes     : renamed filename from Donation_Type to Donation_type
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
