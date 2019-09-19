@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : Certification.php
-    Location    : application/controllers/Certification.php
-    Purpose     : Certification controller
+    Filename    : Certifications.php
+    Location    : application/controllers/Certifications.php
+    Purpose     : Certifications controller
     Created     : 08/06/2019 19:18:21 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 09/16/2019 17:01:36 by Scarlet Witch
+    Changes     : add user role id and user id filter
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Certification extends REST_Controller
+class Certifications extends REST_Controller
 {
     function __construct()
     {
@@ -26,58 +26,54 @@ class Certification extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->certification_model->_get_all();
+        $role_id = (int)$this->get('role_id');
+        $branch_id = (int)$this->get('branch_id');
+        $user_id = (int)$this->get('user_id');
+        
+        if ($role_id = 1 && $role_id != 2 && $role_id != 3 )  {
+            $get_all = $this->certifications_model->_get_all($branch_id); //Admin
+        } elseif ($role_id != 1 && $role_id != 2 && $role_id = 3 ) {
+            $get_all = $this->certifications_model->_get_all_user($user_id); //User
+        }
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
-
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
+        if(empty($role_id) && empty($branch_id) && empty($user_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
-    public function medium_get()
+    public function certification_get()
     {
-        // Get the id parameter
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
 
-        // Validate the id
-        if (empty($id)) {
-            // Set the response and exit
+        if (empty($branch_id) && empty($id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->certification_model->_get_by_id($id);
+        $get_by_id = $this->certifications_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
