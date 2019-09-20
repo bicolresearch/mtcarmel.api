@@ -5,8 +5,8 @@
     Location    : application/controllers/Branches.php
     Purpose     : Branches controller
     Created     : 09/13/2019 13:32:28 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 09/19/2019 16:26:00 by Scarlet Witch
+    Changes     : added filter for location id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -69,6 +69,29 @@ class Branches extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
+    }
+
+    public function branch_location_get()
+    {
+        $location_id = (int)$this->get('location_id');
+
+        if (empty($location_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+
+        $get_by_location_id = $this->branches_model->_get_by_location_id($location_id);
+
+        if (empty($get_by_location_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            $this->response($get_by_location_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
