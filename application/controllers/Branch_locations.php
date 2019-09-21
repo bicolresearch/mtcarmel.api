@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : Donation_type.php
-    Location    : application/controllers/Donation_type.php
-    Purpose     : Donation Type controller
-    Created     : 07/01/2019 23:27:59 by Scarlet Witch 
-    Updated     : 09/19/2019 13:47:31 by Scarlet Witch
-    Changes     : renamed filename from Donation_Type to Donation_type
+    Filename    : Branch_locations.php
+    Location    : application/controllers/Branch_locations.php
+    Purpose     : Branch locations controller
+    Created     : 09/19/2019 15:27:06 by Scarlet Witch
+    Updated     : 
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -16,25 +16,20 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Donation_type extends REST_Controller
+class Branch_locations extends REST_Controller
 {
+
     private $group_id;
-    private $module_id;
-    private $sub_module_id;
 
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
-        $this->group_id = 21;
-        $this->module_id = null;
-        $this->sub_module_id = null;
     }
 
     public function index_get()
     {
-        $get_all = $this->global_reference_model->_get_all($this->group_id, $this->module_id, $this->sub_module_id);
-
+        $get_all = $this->branch_locations_model->_get_all();
         $id = (int)$this->get('id');
 
         if (empty($id)) {
@@ -46,9 +41,26 @@ class Donation_type extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
+        } else {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }       
+    }
+
+    public function branch_get()
+    {
+        $id = (int)$this->get('id');
+
+        if (empty($id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_id = $this->global_reference_model->_get_by_id($id, $this->group_id, $this->module_id, $this->sub_module_id);
+        $get_by_id = $this->branch_locations_model->_get_by_id($id);
 
         if (empty($get_by_id)) {
             $this->response([
@@ -59,4 +71,5 @@ class Donation_type extends REST_Controller
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
+
 }
