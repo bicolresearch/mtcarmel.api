@@ -152,7 +152,7 @@ class Users_model extends CI_Model
 
         $this->db
             ->where('id', $id)
-            ->update('users', $data);
+            ->update('user_info', $data);
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

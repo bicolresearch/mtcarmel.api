@@ -110,6 +110,15 @@ class Users extends REST_Controller
     public function update_put()
     {
         $data = [
+            'first_name' => $this->put('first_name'),
+            'last_name' => $this->put('last_name'),
+            'address_1' => $this->put('address_1'),
+            'address_2' => $this->put('address_2'),
+            'city' => $this->put('city'),
+            'province' => $this->put('province'),
+            'country' => $this->put('country'),
+            'landline' => $this->put('landline'),
+            'mobile' => $this->put('mobile'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
