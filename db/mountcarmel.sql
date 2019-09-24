@@ -11,7 +11,7 @@
  Target Server Version : 100139
  File Encoding         : 65001
 
- Date: 08/09/2019 23:32:49
+ Date: 25/09/2019 01:04:35
 */
 
 SET NAMES utf8mb4;
@@ -96,11 +96,15 @@ CREATE TABLE `ads`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `branch_id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `company_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `media_id` int(11) NOT NULL,
-  `type_id` int(11) NULL DEFAULT NULL,
+  `media_id` int(11) NULL DEFAULT NULL,
+  `type_id` int(11) NOT NULL,
+  `service_type_id` int(11) NOT NULL,
   `expiration` datetime(0) NOT NULL,
+  `total` decimal(11, 2) NOT NULL,
+  `status_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated_by` int(11) NULL DEFAULT NULL,
@@ -112,13 +116,13 @@ CREATE TABLE `ads`  (
 -- ----------------------------
 -- Records of ads
 -- ----------------------------
-INSERT INTO `ads` VALUES (1, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'https://sites.google.com/site/apostleshipofprayerphilippines/', 53, 111, '2022-08-23 00:00:00', 1, '2019-06-24 14:30:17', 1, '2019-09-05 01:25:35', b'0');
-INSERT INTO `ads` VALUES (2, 1, 'Pepsi', 'Pepsi', 'https://pepsiphilippines.com/', 54, 111, '2022-08-23 00:00:00', 1, '2019-06-24 14:30:31', 1, '2019-09-05 01:24:41', b'0');
-INSERT INTO `ads` VALUES (3, 1, 'BDO', 'BDO', 'https://www.bdo.com.ph/personal', 52, 111, '2022-08-23 00:00:00', 1, '2019-06-24 14:30:47', 1, '2019-09-05 01:23:05', b'0');
-INSERT INTO `ads` VALUES (4, 1, 'Cabalen', 'Cabalen Naga City', 'https://www.cabalen.ph/', 51, 111, '2022-08-23 00:00:00', 1, '2019-06-24 14:30:56', 1, '2019-09-05 01:24:01', b'0');
-INSERT INTO `ads` VALUES (5, 1, 'Splash Ad 1', 'Splash Ad 1', '', 12, 112, '2022-08-23 00:00:00', 1, '2019-08-16 23:13:43', 1, '2019-08-23 09:08:35', b'0');
-INSERT INTO `ads` VALUES (6, 1, 'Splash Ad 2', 'Splash Ad 2', 'https://play.google.com/store/apps', 14, 112, '2022-08-23 00:00:00', 1, '2019-08-16 23:14:10', 1, '2019-08-23 09:08:40', b'0');
-INSERT INTO `ads` VALUES (7, 1, 'Splash Ad 3', 'Splash Ad 3', '', 13, 112, '2022-08-23 00:00:00', 1, '2019-08-16 23:14:45', 1, '2019-08-23 09:08:09', b'0');
+INSERT INTO `ads` VALUES (1, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'Apostleship of Prayer', 'https://sites.google.com/site/apostleshipofprayerphilippines/', 53, 111, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-06-24 14:30:17', 1, '2019-09-05 01:25:35', b'0');
+INSERT INTO `ads` VALUES (2, 1, 'Pepsi', 'Pepsi', 'Pepsi', 'https://pepsiphilippines.com/', 54, 111, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-06-24 14:30:31', 1, '2019-09-05 01:24:41', b'0');
+INSERT INTO `ads` VALUES (3, 1, 'BDO', 'BDO', 'BDO', 'https://www.bdo.com.ph/personal', 52, 111, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-06-24 14:30:47', 1, '2019-09-05 01:23:05', b'0');
+INSERT INTO `ads` VALUES (4, 1, 'Cabalen', 'Cabalen', 'Cabalen Naga City', 'https://www.cabalen.ph/', 51, 111, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-06-24 14:30:56', 1, '2019-09-16 16:21:35', b'0');
+INSERT INTO `ads` VALUES (5, 1, 'Splash Ad 1', 'Splash Ad 1', 'Splash Ad 1', '', 12, 112, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-08-16 23:13:43', 1, '2019-08-23 09:08:35', b'0');
+INSERT INTO `ads` VALUES (6, 1, 'Splash Ad 2', 'Splash Ad 2', 'Splash Ad 2', 'https://play.google.com/store/apps', 14, 112, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-08-16 23:14:10', 1, '2019-08-23 09:08:40', b'0');
+INSERT INTO `ads` VALUES (7, 1, 'Splash Ad 3', 'Splash Ad 3', 'Splash Ad 3', '', 13, 112, 0, '2022-08-23 00:00:00', 0.00, 0, 1, '2019-08-16 23:14:45', 1, '2019-08-23 09:08:09', b'0');
 
 -- ----------------------------
 -- Table structure for audit_trail
@@ -158,7 +162,7 @@ CREATE TABLE `boundaries`  (
 INSERT INTO `boundaries` VALUES (1, 1, 'North', 'E. Rodriguez Avenue (formerly España Extension)', 1, '2019-06-19 16:46:24', 1, '2019-09-06 19:23:57', b'0');
 INSERT INTO `boundaries` VALUES (2, 1, 'South', 'Ermitaño Creek', 1, '2019-06-19 16:46:53', 1, '2019-09-06 19:23:51', b'0');
 INSERT INTO `boundaries` VALUES (3, 1, 'West', 'San Juan River', 1, '2019-06-19 16:47:19', 1, '2019-09-06 19:23:45', b'0');
-INSERT INTO `boundaries` VALUES (4, 1, 'East', 'Balete Drive through N. Domingo and Horseshoe Drive until Ermitaño Creek', 1, '2019-06-19 16:47:43', 1, '2019-09-07 02:26:51', b'0');
+INSERT INTO `boundaries` VALUES (4, 1, 'East', 'Balete Drive through N. Domingo and Horseshoe Drive until Ermitaño Creek', 1, '2019-06-19 16:47:43', 1, '2019-09-16 20:30:38', b'0');
 
 -- ----------------------------
 -- Table structure for branch
@@ -2120,7 +2124,7 @@ CREATE TABLE `global_reference_group`  (
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of global_reference_group
@@ -2146,6 +2150,8 @@ INSERT INTO `global_reference_group` VALUES (18, 'Gender', 'Gender', 1, '2019-08
 INSERT INTO `global_reference_group` VALUES (19, 'Clergy Type', 'Clergy Type', 1, '2019-08-25 15:21:04', NULL, NULL, b'0');
 INSERT INTO `global_reference_group` VALUES (20, 'Ad Type', 'Ad Type', 1, '2019-08-25 19:27:58', NULL, NULL, b'0');
 INSERT INTO `global_reference_group` VALUES (21, 'Donation Type', 'Donation Type', 1, '2019-08-27 19:18:57', NULL, NULL, b'0');
+INSERT INTO `global_reference_group` VALUES (22, 'Product / Service Type', 'Product / Service Type', 1, '2019-09-24 16:19:48', NULL, NULL, b'0');
+INSERT INTO `global_reference_group` VALUES (23, 'Ad Status', 'Ad Status', 1, '2019-09-24 23:04:18', NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for global_reference_value
@@ -2168,14 +2174,14 @@ CREATE TABLE `global_reference_value`  (
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 120 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 144 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of global_reference_value
 -- ----------------------------
 INSERT INTO `global_reference_value` VALUES (1, 1, NULL, NULL, 1, 'On-going', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
-INSERT INTO `global_reference_value` VALUES (2, 1, NULL, NULL, 2, 'Done', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
-INSERT INTO `global_reference_value` VALUES (3, 1, NULL, NULL, 3, 'Denied', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (2, 1, NULL, NULL, 3, 'Done', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (3, 1, NULL, NULL, 2, 'Denied', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
 INSERT INTO `global_reference_value` VALUES (4, 1, NULL, NULL, 4, 'Expired', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
 INSERT INTO `global_reference_value` VALUES (5, 1, NULL, NULL, 5, 'Other', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'1');
 INSERT INTO `global_reference_value` VALUES (6, 2, NULL, NULL, NULL, 'Waiting', NULL, NULL, NULL, NULL, 1, '2019-06-20 15:15:44', NULL, NULL, b'0');
@@ -2292,6 +2298,30 @@ INSERT INTO `global_reference_value` VALUES (116, 21, NULL, NULL, NULL, 'Feeding
 INSERT INTO `global_reference_value` VALUES (117, 21, NULL, NULL, NULL, 'Noche Buena', 'Handog Noche Buena sa Pamilya', NULL, 0, 30, 1, '2019-06-21 12:30:54', NULL, NULL, b'0');
 INSERT INTO `global_reference_value` VALUES (118, 21, NULL, NULL, NULL, 'Christmas Gift', 'My Christmas Gift to Infant Jesus ', NULL, 0, 29, 1, '2019-06-21 12:30:54', NULL, NULL, b'0');
 INSERT INTO `global_reference_value` VALUES (119, 21, NULL, NULL, NULL, 'Fiesta', 'Feast of Our Lady of Mount Carmel', NULL, 0, 31, 1, '2019-07-01 18:38:05', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (120, 22, NULL, NULL, 1, 'Apparel', 'Apparel', NULL, NULL, NULL, 1, '2019-09-24 16:20:45', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (121, 22, NULL, NULL, 2, 'Arts & Entertainment', 'Arts & Entertainment', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (122, 22, NULL, NULL, 3, 'Autos & Vehicles', 'Autos & Vehicles', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (123, 22, NULL, NULL, 4, 'Beauty & Personal Care', 'Beauty & Personal Care', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (124, 22, NULL, NULL, 5, 'Business & Industrial', 'Business & Industrial', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (125, 22, NULL, NULL, 6, 'Computers & Consumer Electronics', 'Computers & Consumer Electronics', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (126, 22, NULL, NULL, 7, 'Dining & Nightlife', 'Dining & Nightlife', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (127, 22, NULL, NULL, 8, 'Family & Community', 'Family & Community', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (128, 22, NULL, NULL, 9, 'Finance', 'Finance', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (129, 22, NULL, NULL, 10, 'Food & Groceries', 'Food & Groceries', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (130, 22, NULL, NULL, 11, 'Health', 'Health', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (131, 22, NULL, NULL, 12, 'Hobbies, Games & Leisure', 'Hobbies, Games & Leisure', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (132, 22, NULL, NULL, 13, 'Home & Garden', 'Home & Garden', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (133, 22, NULL, NULL, 14, 'Internet & Telecom', 'Internet & Telecom', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (134, 22, NULL, NULL, 15, 'Jobs & Education', 'Jobs & Education', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (135, 22, NULL, NULL, 16, 'Law & Government', 'Law & Government', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (136, 22, NULL, NULL, 17, 'Mobile App Utilities', 'Mobile App Utilities', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (137, 22, NULL, NULL, 18, 'News, Books & Publications', 'News, Books & Publications', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (138, 22, NULL, NULL, 19, 'Occasions & Gifts', 'Occasions & Gifts', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (139, 22, NULL, NULL, 20, 'Real State', 'Real State', NULL, NULL, NULL, 1, '2019-09-24 16:20:46', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (140, 22, NULL, NULL, 21, 'Sports & Fitness', 'Sports & Fitness', NULL, NULL, NULL, 1, '2019-09-24 16:20:47', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (141, 22, NULL, NULL, 22, 'Travel & Tourism', 'Travel & Tourism', NULL, NULL, NULL, 1, '2019-09-24 16:20:47', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (142, 23, NULL, NULL, 1, 'Approved', 'Approved', NULL, NULL, NULL, 1, '2019-09-24 23:04:34', NULL, NULL, b'0');
+INSERT INTO `global_reference_value` VALUES (143, 23, NULL, NULL, 2, 'Declined', 'Declined', NULL, NULL, NULL, 1, '2019-09-24 23:04:36', NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for history
@@ -2662,10 +2692,10 @@ INSERT INTO `media` VALUES (47, 1, 'Wedding', 'Wedding', 'wedding.png', 'image/p
 INSERT INTO `media` VALUES (48, 1, 'Coca Cola', 'Coca Cola', '4.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/4.jpg', NULL, NULL, NULL, '.jpg', '593.24', NULL, NULL, NULL, NULL, NULL, 1, '2019-07-25 09:00:43', 1, '2019-07-25 12:47:16', b'0');
 INSERT INTO `media` VALUES (49, 1, 'Pepsi', 'Pepsi', '5.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/5.jpg', NULL, NULL, NULL, '.jpg', '636.1', NULL, NULL, NULL, NULL, NULL, 1, '2019-07-25 09:09:13', 1, '2019-08-23 09:10:19', b'0');
 INSERT INTO `media` VALUES (50, 1, 'YTS', 'YTS', 'WWW_YTS_RE.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/WWW_YTS_RE.jpg', NULL, NULL, NULL, '.jpg', '107.92', NULL, NULL, NULL, NULL, NULL, 1, '2019-08-06 02:03:14', 1, '2019-08-08 22:48:58', b'1');
-INSERT INTO `media` VALUES (51, 1, 'Cabalen', 'Cabalen Naga City', 'Cabalen_Naga_City.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Cabalen_Naga_City.jpg', NULL, NULL, NULL, '.jpg', '272.66', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:09:44', NULL, NULL, b'0');
-INSERT INTO `media` VALUES (52, 1, 'BDO', 'BDO', 'BDO.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/BDO.jpg', NULL, NULL, NULL, '.jpg', '120.52', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:16:07', NULL, NULL, b'0');
-INSERT INTO `media` VALUES (53, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'Apostleship_of_Prayer.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Apostleship_of_Prayer.jpg', NULL, NULL, NULL, '.jpg', '185.09', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:16:25', NULL, NULL, b'0');
-INSERT INTO `media` VALUES (54, 1, 'Pepsi', 'Pepsi', 'Pepsi.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Pepsi.jpg', NULL, NULL, NULL, '.jpg', '127.78', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:22:16', NULL, NULL, b'0');
+INSERT INTO `media` VALUES (51, 1, 'Cabalen', 'Cabalen Naga City', 'Cabalen_Naga_City.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Cabalen_Naga_City.jpg', NULL, NULL, NULL, '.jpg', '272.66', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:09:44', 1, '2019-09-16 19:11:20', b'0');
+INSERT INTO `media` VALUES (52, 1, 'BDO', 'BDO', 'BDO.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/BDO.jpg', NULL, NULL, NULL, '.jpg', '120.52', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:16:07', 1, '2019-09-16 19:11:17', b'0');
+INSERT INTO `media` VALUES (53, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'Apostleship_of_Prayer.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Apostleship_of_Prayer.jpg', NULL, NULL, NULL, '.jpg', '185.09', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:16:25', 1, '2019-09-16 19:11:03', b'0');
+INSERT INTO `media` VALUES (54, 1, 'Pepsi', 'Pepsi', 'Pepsi.jpg', 'image/jpeg', 'public/assets/uploads/', 'public/assets/uploads/Pepsi.jpg', NULL, NULL, NULL, '.jpg', '127.78', NULL, NULL, NULL, NULL, NULL, 1, '2019-09-04 04:22:16', 1, '2019-09-16 19:11:00', b'0');
 
 -- ----------------------------
 -- Table structure for ministers
@@ -2829,7 +2859,7 @@ CREATE TABLE `posts`  (
 -- ----------------------------
 INSERT INTO `posts` VALUES (1, 1, 'Official Web and Mobile App', '<p style=\"text-align: justify\">We have released the new official web and mobile applications of Minor Basilica of the National Shrine of Our Lady of Mount Carmel, located at 90 4th Street, New Manila, Quezon City, Philippines.</p><p>\r\n</p><p style=\"text-align: justify\">Our vision for the new system will help the church improve its security, sustainability, and efficiency.</p><p>\r\n</p><p style=\"text-align: justify\">We have seen massive loopholes in the old system, that is undoubtedly been exploited by countless people.</p><p>\r\n</p><p style=\"text-align: justify\">We have automated the old system to remove the presence of human resources as middlemen in every transaction, such as donations and services. In result, it ceases theft and temptations from employees and other people. Despite the innumerable security measures that we have installed, the system can also identify thieves and unscrupulous transactions, should there be any.</p><p>\r\n</p><p style=\"text-align: justify\">The Pope demands the church to loosen up from asking donations from people. We have designed a plan called the Progressive Leap Strategy that requires zero donations.</p><p>\r\n</p><p style=\"text-align: justify\">To achieve a self-sustaining technology, we have monetized the platform to build and expand the system. We have placed a number of ad placements in the applications, aiming to produce a platform without asking for any donations. Eventually, the system will lessen the monetary help needed by the church.</p><p>\r\n</p><p style=\"text-align: justify\">This approach will aggressively expand the system throughout Mount Carmel Churches in the Philippines, in parallel with the improvement of the system by adding more features and upgrading the overall performance of the application.</p><p>\r\n</p><p style=\"text-align: justify\">The Catholic Church ought to focus on the next generation of Christians, the survival of Catholicism is highly dependent on the new generation than of the previous. Adapting to the information age is a great way of reaching out to the young ones, being available to anyone, anytime and anywhere.</p><p>\r\n</p><p style=\"text-align: justify\">This platform will serve as a tool to secure transactions, promote efficiency and preserve Christianity.</p>', 57, NULL, 14, 1, '2019-06-18 14:49:12', 1, '2019-08-08 22:54:33', b'0');
 INSERT INTO `posts` VALUES (2, 1, 'Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica', '<p style=\"text-align: justify\">Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica. Let us be at the service of others and bring Christ to them. So that the presence of a Basilica is a strong confirmation that we are never alone. God is with us!</p>', 57, NULL, 24, 1, '2019-06-19 17:38:33', 1, '2019-08-08 22:54:26', b'0');
-INSERT INTO `posts` VALUES (3, 1, 'Sample Ads - Coca-Cola Awarded for Advertising Innovations', '<p style=\"text-align: justify\">When Coca-Cola was named \"Marketer of the Year\" by AdAge in 2011, the flagship brand was 125 years old. But even today, the company is not too old to learn and does not rest on its laurels. Coke\'s marketing strategies have produced some volatility over the long-haul, but part of that is due to the willingness of The Coca-Cola Company to innovate. Apparently, the marketing overhaul has worked.</p><p>\r\n</p><p style=\"text-align: justify\">According to Natalie Zmuda of AdAge, Coca-Cola\'s marketing focus changed in 2007 when Mr. Tripodi came on board from Allstate. AdAge described the following marketing challenges:</p><p>\r\n</p><p style=\"text-align: justify\">Coca-Cola was too dependent on its flagship drink - Coke® Coca-Cola\'s advertising and use of advertising agencies was inconsistent Coca-Cola was seen as a \"sluggish, hidebound marketer.\" Mr. Tripodi told Zamuda he believes that the culture at Coca-Cola has a lot to do with its success. The team is said to share both the successes and the learnings from failures, which is a must given the size and scale of The Coca-Cola Company. Mr. Tripodi said, \"We\'ve got a team of people around the world that is less concerned with getting credit and more concerned with getting behind a great idea.\" The Coca-Cola Company could be classified as a learning organization as it has demonstrated adaptability and creativity over many decades.</p>', 62, NULL, 48, 1, '2019-06-20 17:52:40', 1, '2019-09-07 01:08:51', b'0');
+INSERT INTO `posts` VALUES (3, 1, 'Sample Ads - Coca-Cola Awarded for Advertising Innovations', '<p style=\"text-align: justify\">When Coca-Cola was named \"Marketer of the Year\" by AdAge in 2011, the flagship brand was 125 years old. But even today, the company is not too old to learn and does not rest on its laurels. Coke\'s marketing strategies have produced some volatility over the long-haul, but part of that is due to the willingness of The Coca-Cola Company to innovate. Apparently, the marketing overhaul has worked.</p><p>\r\n</p><p style=\"text-align: justify\">According to Natalie Zmuda of AdAge, Coca-Cola\'s marketing focus changed in 2007 when Mr. Tripodi came on board from Allstate. AdAge described the following marketing challenges:</p><p>\r\n</p><p style=\"text-align: justify\">Coca-Cola was too dependent on its flagship drink - Coke® Coca-Cola\'s advertising and use of advertising agencies was inconsistent Coca-Cola was seen as a \"sluggish, hidebound marketer.\" Mr. Tripodi told Zamuda he believes that the culture at Coca-Cola has a lot to do with its success. The team is said to share both the successes and the learnings from failures, which is a must given the size and scale of The Coca-Cola Company. Mr. Tripodi said, \"We\'ve got a team of people around the world that is less concerned with getting credit and more concerned with getting behind a great idea.\" The Coca-Cola Company could be classified as a learning organization as it has demonstrated adaptability and creativity over many decades.</p>', 62, NULL, 48, 1, '2019-06-20 17:52:40', 1, '2019-09-16 14:41:03', b'0');
 INSERT INTO `posts` VALUES (4, 1, 'Apostleship of Prayer', '<p>Apostleship of Prayer</p>', 0, NULL, 53, 1, '2019-09-04 20:01:20', 1, '2019-09-04 20:44:17', b'1');
 INSERT INTO `posts` VALUES (5, 1, 'We Find Ways', '<p>We Find Ways</p>', 0, NULL, 52, 1, '2019-09-04 20:04:45', 1, '2019-09-04 20:44:13', b'1');
 
@@ -3059,7 +3089,7 @@ CREATE TABLE `schedules`  (
   `time_from` time(0) NULL DEFAULT NULL,
   `time_to` time(0) NULL DEFAULT NULL,
   `day` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `schedule_type_id` int(11) NULL DEFAULT NULL,
+  `type_id` int(11) NULL DEFAULT NULL,
   `language_id` int(11) NULL DEFAULT NULL,
   `others` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
@@ -3531,10 +3561,10 @@ INSERT INTO `service_transactions` VALUES (1, 1, 4, 1, 'Raymond Baguio', '1983-1
 INSERT INTO `service_transactions` VALUES (2, 1, 4, 1, 'Adrian', '1977-10-25', 'Somewhere', 'Down the Road', '137602', '1375', '01', '(12) 345-6789', '(234) 567-890', 'asd@gfs.ph', NULL, NULL, NULL, NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-02 02:00:30', 1, '2019-09-03 02:39:23', b'0');
 INSERT INTO `service_transactions` VALUES (3, 1, 4, 1, 'Jane Doe', '2019-09-26', 'Somewhere', 'Near', '137404', '1376', '01', '(23) 456-7890', '(567) 956-7890', 'janedoe@yahoo.com', NULL, NULL, NULL, NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-02 02:18:02', 1, '2019-09-03 02:38:34', b'0');
 INSERT INTO `service_transactions` VALUES (4, 1, 4, 1, 'John Doe', '2019-09-26', 'Somewhere', 'Down the road', '137602', '1339', '01', '(12) 345-6789', '(234) 567-890', 'johndoe@gmail.com', NULL, NULL, NULL, NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-02 02:18:29', 1, '2019-09-03 02:36:33', b'0');
-INSERT INTO `service_transactions` VALUES (5, 1, 4, 1, 'Adrian', '2019-09-24', 'Somewhere', 'Down the Road', '137607', '1339', '01', '(02) 123-4567', '(927) 123-4567', 'asd@gfs.ph', NULL, NULL, NULL, NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-02 02:18:52', 1, '2019-09-03 04:02:52', b'0');
-INSERT INTO `service_transactions` VALUES (6, 1, 5, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, 'Please pray for my salary increase! :)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 04:53:47', 1, '2019-09-04 02:41:05', b'0');
-INSERT INTO `service_transactions` VALUES (7, 1, 5, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie massa a turpis convallis dictum. Etiam at vehicula arcu. Mauris vel aliquet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu ante in dui vulputate tincidunt. Aliquam at risus ultrices, molestie lacus eget, iaculis purus. Aliquam sodales, mi ac tincidunt efficitur, enim ipsum ullamcorper ligula, semper egestas felis ante vitae justo. Fusce finibus at lectus ut vulputate. Pellentesque ac viverra nisl. Mauris id dapibus diam, sit amet pellentesque velit. Phasellus consectetur, arcu non sagittis feugiat, ligula libero tristique nibh, ut malesuada libero metus ac odio. Nullam iaculis mi quis ipsum rutrum, eu vehicula dolor tempus. Fusce id neque vestibulum mi blandit efficitur. In quis risus consequat, placerat elit eu, gravida elit.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 05:07:48', 1, '2019-09-04 02:40:59', b'0');
-INSERT INTO `service_transactions` VALUES (9, 1, 5, 3, 'John Doe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, NULL, 68, '2019-09-03 12:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 21:39:15', 1, '2019-09-07 02:04:52', b'0');
+INSERT INTO `service_transactions` VALUES (5, 1, 4, 1, 'Adrian', '2019-09-24', 'Somewhere', 'Down the Road', '137607', '1339', '01', '(02) 123-4567', '(927) 123-4567', 'asd@gfs.ph', NULL, NULL, NULL, NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-02 02:18:52', 1, '2019-09-16 21:43:32', b'0');
+INSERT INTO `service_transactions` VALUES (6, 1, 5, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, 'Please pray for my salary increase! :)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 04:53:47', 1, '2019-09-16 22:08:37', b'0');
+INSERT INTO `service_transactions` VALUES (7, 1, 5, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie massa a turpis convallis dictum. Etiam at vehicula arcu. Mauris vel aliquet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu ante in dui vulputate tincidunt. Aliquam at risus ultrices, molestie lacus eget, iaculis purus. Aliquam sodales, mi ac tincidunt efficitur, enim ipsum ullamcorper ligula, semper egestas felis ante vitae justo. Fusce finibus at lectus ut vulputate. Pellentesque ac viverra nisl. Mauris id dapibus diam, sit amet pellentesque velit. Phasellus consectetur, arcu non sagittis feugiat, ligula libero tristique nibh, ut malesuada libero metus ac odio. Nullam iaculis mi quis ipsum rutrum, eu vehicula dolor tempus. Fusce id neque vestibulum mi blandit efficitur. In quis risus consequat, placerat elit eu, gravida elit.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 05:07:48', 1, '2019-09-16 22:08:25', b'0');
+INSERT INTO `service_transactions` VALUES (9, 1, 5, 3, 'John Doe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', NULL, NULL, 68, '2019-09-03 12:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0', b'0', b'0', b'0', b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 1, '2019-09-03 21:39:15', 1, '2019-09-16 23:48:21', b'0');
 
 -- ----------------------------
 -- Table structure for social_media
@@ -3655,10 +3685,10 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 1, 'System', NULL, 'Admin', 'admin@mountcarmel.ph', 'St. Mary Street', NULL, NULL, NULL, NULL, NULL, NULL, 3, 1, '2019-06-21 12:38:50', NULL, NULL, b'0');
+INSERT INTO `user_info` VALUES (1, 1, 'System', NULL, 'Admin', 'admin@mountcarmel.ph', '90 4th Street', 'New Manila', 137404, 1339, 1, '(263) 123-4567', '(02) 123-4567', 3, 1, '2019-06-21 12:38:50', 1, '2019-09-23 14:22:44', b'0');
 INSERT INTO `user_info` VALUES (2, 2, 'John', NULL, 'Appleseed', 'john@appleseed.com', 'St. Mary Street', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, '2019-06-21 12:38:50', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (3, 3, 'Jane', NULL, 'Doe', 'jane@doe.com', 'St. Mary Street', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '2019-07-16 12:48:05', NULL, NULL, b'0');
-INSERT INTO `user_info` VALUES (4, 4, 'John', NULL, 'Doe', 'john@doe.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 1, '2019-07-17 22:46:53', NULL, NULL, b'0');
+INSERT INTO `user_info` VALUES (4, 4, 'John', NULL, 'Doe', 'john@doe.com', '78 St. Mary Street', 'Cubao', 137404, 1339, 1, '(123) 456-7890', '(12) 345-6789', 5, 1, '2019-07-17 22:46:53', 4, '2019-09-20 23:17:01', b'0');
 INSERT INTO `user_info` VALUES (5, 5, 'Adrian', NULL, 'Evangelista', 'adriane.macer@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, 1, '2019-07-18 21:16:07', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (6, 6, 'Adrian', NULL, 'Evangelista', 'adrianevangelista.bicolresearch@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, 2, '2019-07-18 21:20:05', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (7, 7, 'Adrian', NULL, 'Evangelista', 'macer_0001@yahoo.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 8, 2, '2019-07-19 14:32:36', NULL, NULL, b'0');
@@ -3687,10 +3717,10 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-09-08 21:31:45', b'0');
+INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-09-23 22:00:45', b'0');
 INSERT INTO `users` VALUES (2, 1, 2, 'john@appleseed.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:37:34', 2, '2019-08-22 09:33:14', b'0');
-INSERT INTO `users` VALUES (3, 1, 2, 'jane@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-16 12:48:05', 3, '2019-07-18 19:18:55', b'0');
-INSERT INTO `users` VALUES (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-08-27 00:16:27', b'0');
+INSERT INTO `users` VALUES (3, 1, 2, 'jane@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-16 12:48:05', 3, '2019-09-18 23:46:20', b'0');
+INSERT INTO `users` VALUES (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-09-24 13:20:03', b'0');
 INSERT INTO `users` VALUES (5, 1, 2, 'adriane.macer@gmail.com', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 1, '2019-07-18 21:16:07', NULL, NULL, b'0');
 INSERT INTO `users` VALUES (6, 1, 2, 'adrianevangelista.bicolresearch@gmail.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 2, '2019-07-18 21:20:05', NULL, NULL, b'0');
 INSERT INTO `users` VALUES (7, 1, 2, 'macer_0001@yahoo.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 2, '2019-07-19 14:32:36', NULL, NULL, b'0');
