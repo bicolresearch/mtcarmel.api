@@ -5,8 +5,8 @@
     Location    : application/models/Branch_donations_model.php
     Purpose     : Branch donations type model
     Created     : 09/25/2019 13:42:21 by Scarlet Witch
-    Updated     : 09/25/2019 14:13:07 by Scarlet Witch
-    Changes     : added media id and path
+    Updated     : 09/25/2019 14:44:25 by Scarlet Witch
+    Changes     : added description
 */
 
 if (!defined('BASEPATH')) {
@@ -27,7 +27,8 @@ class Branch_donations_model extends CI_Model
             ->select(
                 't1.id,' .  
                 't2.id AS donation_id,' .
-                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .                   
+                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .       
+                't2.description AS donation_description,' .             
                 't2.media_id,' .    
                 't6.full_path AS media_path,' .
                 't1.dt_created,' .
@@ -58,7 +59,8 @@ class Branch_donations_model extends CI_Model
             ->select(
                 't1.id,' .  
                 't2.id AS donation_id,' .
-                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .                   
+                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .  
+                't2.description AS donation_description,' .
                 't2.media_id,' .    
                 't6.full_path AS media_path,' .
                 't1.dt_created,' .
