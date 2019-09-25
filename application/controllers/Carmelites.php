@@ -5,8 +5,8 @@
     Location    : application/controllers/Carmelites.php
     Purpose     : Carmelites controller
     Created     : 06/24/2019 23:33:07 by Spiderman
-    Updated     : 09/06/2019 20:35:27 by Spiderman
-    Changes     : 
+    Updated     : 09/25/2019 15:48:41 by Scarlet Witch
+    Changes     : added type id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -44,6 +44,30 @@ class Carmelites extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
+        }
+    }
+
+    public function carmelite_by_type_get()
+    {
+        $branch_id = (int)$this->get('branch_id');
+        $type_id = (int)$this->get('type_id');
+
+        if(empty($branch_id) && empty($type_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+
+        $get_all_by_type_id = $this->carmelites_model->_get_all_by_type_id($branch_id, $type_id);
+
+        if (empty($get_all_by_type_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            $this->response($get_all_by_type_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 

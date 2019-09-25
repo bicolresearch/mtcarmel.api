@@ -5,8 +5,8 @@
     Location    : application/models/Carmelites_model.php
     Purpose     : Carmelites model
     Created     : 06/27/2019 23:37:57 by Scarlet Witch
-    Updated     : 09/16/2019 20:27:56 by Spiderman
-    Changes     : 
+    Updated     : 09/25/2019 15:46:57 by Scarlet Witch
+    Changes     : added filter per typeid
 */
 
 if (!defined('BASEPATH')) {
@@ -50,6 +50,40 @@ class Carmelites_model extends CI_Model
                 ]
             )     
             ->order_by('t1.id', 'DESC');
+        
+        return json_decode($this->datatables->generate());
+    }
+
+    public function _get_all_by_type_id($branch_id, $type_id)
+    {
+        $this->datatables
+            ->select(
+                't1.id,' .
+                't1.name,' .
+                't1.position,' .
+                't1.congregation,' .
+                't1.sequence,' .        
+                't1.media_id,' .
+                't2.full_path AS media_path,' . 
+                't1.type_id,' .  
+                't3.name AS type_name,' .    
+                't1.dt_created,' .
+                't1.dt_updated,' .              
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
+            ->from('ministers AS t1') 
+            ->join('media AS t2', 't2.id = t1.media_id', 'left')
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => $branch_id,
+                    't1.type_id' => $type_id
+                ]
+            )     
+            ->order_by('t1.sequence', 'ASC');
         
         return json_decode($this->datatables->generate());
     }
