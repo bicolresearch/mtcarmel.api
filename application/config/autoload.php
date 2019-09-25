@@ -180,5 +180,6 @@ $autoload['model'] = array(
     'provinces_model',
     'cities_model',
     'branches_model',
-    'branch_locations_model'
+    'branch_locations_model',
+    'branch_donations_model'
 );
