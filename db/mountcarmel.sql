@@ -1,17 +1,17 @@
 /*
- Navicat Premium Data Transfer
+ Navicat MySQL Data Transfer
 
- Source Server         : bicolresearch
+ Source Server         : Bicol Research
  Source Server Type    : MySQL
- Source Server Version : 100139
+ Source Server Version : 100316
  Source Host           : localhost:3306
  Source Schema         : mountcarmel
 
  Target Server Type    : MySQL
- Target Server Version : 100139
+ Target Server Version : 100316
  File Encoding         : 65001
 
- Date: 25/09/2019 01:04:35
+ Date: 25/09/2019 18:41:23
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `acceptance`  (
   `content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'photo',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -84,7 +84,7 @@ CREATE TABLE `access`  (
   `all_access` tinyint(1) NOT NULL DEFAULT 0,
   `controller` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `date_created` datetime(0) NULL DEFAULT NULL,
-  `date_modified` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `date_modified` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -106,7 +106,7 @@ CREATE TABLE `ads`  (
   `total` decimal(11, 2) NOT NULL,
   `status_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -135,7 +135,7 @@ CREATE TABLE `audit_trail`  (
   `module_id` int(11) NULL DEFAULT NULL,
   `sub_module_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -149,7 +149,7 @@ CREATE TABLE `boundaries`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -169,22 +169,71 @@ INSERT INTO `boundaries` VALUES (4, 1, 'East', 'Balete Drive through N. Domingo 
 -- ----------------------------
 DROP TABLE IF EXISTS `branch`;
 CREATE TABLE `branch`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `description` varchar(2500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `order_id` int(11) NULL DEFAULT NULL,
+  `location_id` int(11) NULL DEFAULT NULL,
   `main_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
-  `is_deleted` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of branch
 -- ----------------------------
-INSERT INTO `branch` VALUES (1, 'Mount Carmel', 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 1, 1, '2019-06-18 16:02:09', 1, '2019-06-18 16:03:01', b'0');
+INSERT INTO `branch` VALUES (1, 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 120, 1, 1, 1, '2019-06-18 16:02:09', 1, '2019-06-18 16:03:01', b'0');
+INSERT INTO `branch` VALUES (2, 'St. Joseph the Worker Parish', 'St. Joseph the Worker Parish', 120, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (3, 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', 121, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (4, 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', 122, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (5, 'Our Lady\'s Hill Center of Spirituality', 'Our Lady\'s Hill Center of Spirituality', 123, 3, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (6, 'Our Lady of the Smiles Community', 'Our Lady of the Smiles Community', 122, 4, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (7, 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', 121, 6, 0, 1, '2019-09-16 12:59:20', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (8, 'Sto. Niño de Cebu Community', 'Sto. Niño de Cebu Community', 122, 6, 0, 1, '2019-09-21 14:20:43', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (9, 'Carmel of the Immaculate Heart of Mary', 'Carmel of the Immaculate Heart of Mary', 121, 5, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (10, 'Carmelite Monastery of St. John of The Cross', 'Carmelite Monastery of St. John of The Cross', 121, 7, 0, 1, '2019-09-21 15:08:37', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (11, 'Saint John of the Cross Community', 'Saint John of the Cross Community', 122, 7, 0, 1, '2019-09-21 15:09:20', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (12, 'Carmel of  Mary, Mother of The Church and of Saint Joseph', 'Carmel of  Mary, Mother of The Church and of Saint Joseph', 121, 8, 0, 1, '2019-09-21 15:12:06', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (13, 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', 122, 8, 0, 1, '2019-09-21 15:12:48', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (14, 'Saint Joseph and Saint John of the Cross', 'Saint Joseph and Saint John of the Cross', 122, 8, 0, 1, '2019-09-21 15:13:31', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (15, 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', 121, 9, 0, 1, '2019-09-21 15:14:23', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (16, 'Saint Joseph Community', 'Saint Joseph Community', 122, 9, 0, 1, '2019-09-21 15:48:43', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (17, 'Saint Therese of the Child Jesus Community', 'Saint Therese of the Child Jesus Community', 122, 9, 0, 1, '2019-09-21 15:53:11', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (18, 'Saint Teresa of Jesus Community', 'Saint Teresa of Jesus Community', 122, 9, 0, 1, '2019-09-21 15:53:46', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (19, 'Carmel of Saint Teresa of Jesus', 'Carmel of Saint Teresa of Jesus', 121, 10, 0, 1, '2019-09-21 15:54:21', NULL, NULL, b'0');
+INSERT INTO `branch` VALUES (20, 'St. Teresa of Jesus', 'St. Teresa of Jesus', 122, 10, 0, 1, '2019-09-21 15:54:52', NULL, NULL, b'0');
+
+-- ----------------------------
+-- Table structure for branch_locations
+-- ----------------------------
+DROP TABLE IF EXISTS `branch_locations`;
+CREATE TABLE `branch_locations`  (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `description` varchar(2500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
+  `updated_by` int(11) NULL DEFAULT NULL,
+  `dt_updated` datetime(0) NULL DEFAULT NULL,
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of branch_locations
+-- ----------------------------
+INSERT INTO `branch_locations` VALUES (1, 'Quezon City', 'Quezon City', 1, '2019-09-19 14:41:02', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (2, 'Iloilo City', 'Iloilo City', 1, '2019-09-19 14:41:29', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (3, 'Bago City', 'Bago City', 1, '2019-09-19 14:42:53', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (4, 'Bacolod City', 'Bacolod City', 1, '2019-09-19 14:43:20', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (5, 'Naga City', 'Naga City', 1, '2019-09-19 14:43:38', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (6, 'Cebu City', 'Cebu City', 1, '2019-09-19 15:38:57', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (7, 'Ozamis City', 'Ozamis City', 1, '2019-09-21 14:22:15', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (8, 'Cagayan de Oro City', 'Cagayan de Oro City', 1, '2019-09-21 14:22:38', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (9, 'Davao City', 'Davao City', 1, '2019-09-21 14:23:04', NULL, NULL, b'0');
+INSERT INTO `branch_locations` VALUES (10, 'Mati City', 'Mati City', 1, '2019-09-21 14:23:22', NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for calendar
@@ -199,7 +248,7 @@ CREATE TABLE `calendar`  (
   `start` datetime(0) NULL DEFAULT NULL,
   `end` datetime(0) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -222,7 +271,7 @@ CREATE TABLE `chapel`  (
   `other_charges` decimal(10, 0) NULL DEFAULT NULL,
   `other_charges_per` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NULL DEFAULT NULL,
-  `dt_created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -249,7 +298,7 @@ CREATE TABLE `city`  (
   `city_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `country_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -1722,7 +1771,7 @@ CREATE TABLE `contacts`  (
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `social_media_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2048,7 +2097,7 @@ CREATE TABLE `couple`  (
   `name_mother_bride` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `nationality_mother_bride` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2069,7 +2118,7 @@ CREATE TABLE `donations`  (
   `or_receipt` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `anonymous` bit(1) NOT NULL DEFAULT b'0',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2119,7 +2168,7 @@ CREATE TABLE `global_reference_group`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2169,7 +2218,7 @@ CREATE TABLE `global_reference_value`  (
   `project_id` int(11) NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2337,7 +2386,7 @@ CREATE TABLE `history`  (
   `content` varchar(2500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'photo',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2369,7 +2418,7 @@ CREATE TABLE `household`  (
   `province` int(11) NULL DEFAULT NULL,
   `country` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2411,7 +2460,7 @@ CREATE TABLE `language_info`  (
   `lang1` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `lang2` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2439,7 +2488,7 @@ CREATE TABLE `live_streams`  (
 -- ----------------------------
 -- Records of live_streams
 -- ----------------------------
-INSERT INTO `live_streams` VALUES (1, 1, 'Mount Carmel Live Mass', 'National Shrine of Mount Carmel Minor Basilica Live Mass', 'LtKHvOXxbV4', 1, '2019-07-19 21:26:10', 1, '2019-09-07 02:00:38', b'0');
+INSERT INTO `live_streams` VALUES (1, 1, 'Mount Carmel Live Mass', 'National Shrine of Mount Carmel Minor Basilica Live Mass', 'VlUw-E_IWjs', 1, '2019-07-19 21:26:10', 1, '2019-09-25 08:43:55', b'0');
 
 -- ----------------------------
 -- Table structure for locations
@@ -2452,7 +2501,7 @@ CREATE TABLE `locations`  (
   `lat_center` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `lng_center` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2493,7 +2542,7 @@ CREATE TABLE `maps`  (
   `lat` decimal(10, 8) NULL DEFAULT NULL,
   `lng` decimal(11, 8) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2634,7 +2683,7 @@ CREATE TABLE `media`  (
   `image_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `image_size_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2711,7 +2760,7 @@ CREATE TABLE `ministers`  (
   `sequence` int(11) NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'photo',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2761,7 +2810,7 @@ CREATE TABLE `modules`  (
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'icons',
   `sub_module_url` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2799,7 +2848,7 @@ CREATE TABLE `package`  (
   `other_charges` decimal(10, 0) NULL DEFAULT NULL,
   `other_charges_per` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2827,7 +2876,7 @@ CREATE TABLE `permissions`  (
   `user_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2847,7 +2896,7 @@ CREATE TABLE `posts`  (
   `expiration` datetime(0) NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -2859,7 +2908,7 @@ CREATE TABLE `posts`  (
 -- ----------------------------
 INSERT INTO `posts` VALUES (1, 1, 'Official Web and Mobile App', '<p style=\"text-align: justify\">We have released the new official web and mobile applications of Minor Basilica of the National Shrine of Our Lady of Mount Carmel, located at 90 4th Street, New Manila, Quezon City, Philippines.</p><p>\r\n</p><p style=\"text-align: justify\">Our vision for the new system will help the church improve its security, sustainability, and efficiency.</p><p>\r\n</p><p style=\"text-align: justify\">We have seen massive loopholes in the old system, that is undoubtedly been exploited by countless people.</p><p>\r\n</p><p style=\"text-align: justify\">We have automated the old system to remove the presence of human resources as middlemen in every transaction, such as donations and services. In result, it ceases theft and temptations from employees and other people. Despite the innumerable security measures that we have installed, the system can also identify thieves and unscrupulous transactions, should there be any.</p><p>\r\n</p><p style=\"text-align: justify\">The Pope demands the church to loosen up from asking donations from people. We have designed a plan called the Progressive Leap Strategy that requires zero donations.</p><p>\r\n</p><p style=\"text-align: justify\">To achieve a self-sustaining technology, we have monetized the platform to build and expand the system. We have placed a number of ad placements in the applications, aiming to produce a platform without asking for any donations. Eventually, the system will lessen the monetary help needed by the church.</p><p>\r\n</p><p style=\"text-align: justify\">This approach will aggressively expand the system throughout Mount Carmel Churches in the Philippines, in parallel with the improvement of the system by adding more features and upgrading the overall performance of the application.</p><p>\r\n</p><p style=\"text-align: justify\">The Catholic Church ought to focus on the next generation of Christians, the survival of Catholicism is highly dependent on the new generation than of the previous. Adapting to the information age is a great way of reaching out to the young ones, being available to anyone, anytime and anywhere.</p><p>\r\n</p><p style=\"text-align: justify\">This platform will serve as a tool to secure transactions, promote efficiency and preserve Christianity.</p>', 57, NULL, 14, 1, '2019-06-18 14:49:12', 1, '2019-08-08 22:54:33', b'0');
 INSERT INTO `posts` VALUES (2, 1, 'Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica', '<p style=\"text-align: justify\">Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica. Let us be at the service of others and bring Christ to them. So that the presence of a Basilica is a strong confirmation that we are never alone. God is with us!</p>', 57, NULL, 24, 1, '2019-06-19 17:38:33', 1, '2019-08-08 22:54:26', b'0');
-INSERT INTO `posts` VALUES (3, 1, 'Sample Ads - Coca-Cola Awarded for Advertising Innovations', '<p style=\"text-align: justify\">When Coca-Cola was named \"Marketer of the Year\" by AdAge in 2011, the flagship brand was 125 years old. But even today, the company is not too old to learn and does not rest on its laurels. Coke\'s marketing strategies have produced some volatility over the long-haul, but part of that is due to the willingness of The Coca-Cola Company to innovate. Apparently, the marketing overhaul has worked.</p><p>\r\n</p><p style=\"text-align: justify\">According to Natalie Zmuda of AdAge, Coca-Cola\'s marketing focus changed in 2007 when Mr. Tripodi came on board from Allstate. AdAge described the following marketing challenges:</p><p>\r\n</p><p style=\"text-align: justify\">Coca-Cola was too dependent on its flagship drink - Coke® Coca-Cola\'s advertising and use of advertising agencies was inconsistent Coca-Cola was seen as a \"sluggish, hidebound marketer.\" Mr. Tripodi told Zamuda he believes that the culture at Coca-Cola has a lot to do with its success. The team is said to share both the successes and the learnings from failures, which is a must given the size and scale of The Coca-Cola Company. Mr. Tripodi said, \"We\'ve got a team of people around the world that is less concerned with getting credit and more concerned with getting behind a great idea.\" The Coca-Cola Company could be classified as a learning organization as it has demonstrated adaptability and creativity over many decades.</p>', 62, NULL, 48, 1, '2019-06-20 17:52:40', 1, '2019-09-16 14:41:03', b'0');
+INSERT INTO `posts` VALUES (3, 1, 'Sample Ads - Coca-Cola Awarded for Advertising Innovations', '<p style=\"text-align: justify\">When Coca-Cola was named \"Marketer of the Year\" by AdAge in 2011, the flagship brand was 125 years old. But even today, the company is not too old to learn and does not rest on its laurels. Coke\'s marketing strategies have produced some volatility over the long-haul, but part of that is due to the willingness of The Coca-Cola Company to innovate. Apparently, the marketing overhaul has worked.</p><p>\r\n</p><p style=\"text-align: justify\">According to Natalie Zmuda of AdAge, Coca-Cola\'s marketing focus changed in 2007 when Mr. Tripodi came on board from Allstate. AdAge described the following marketing challenges:</p><p>\r\n</p><p style=\"text-align: justify\">Coca-Cola was too dependent on its flagship drink - Coke® Coca-Cola\'s advertising and use of advertising agencies was inconsistent Coca-Cola was seen as a \"sluggish, hidebound marketer.\" Mr. Tripodi told Zamuda he believes that the culture at Coca-Cola has a lot to do with its success. The team is said to share both the successes and the learnings from failures, which is a must given the size and scale of The Coca-Cola Company. Mr. Tripodi said, \"We\'ve got a team of people around the world that is less concerned with getting credit and more concerned with getting behind a great idea.\" The Coca-Cola Company could be classified as a learning organization as it has demonstrated adaptability and creativity over many decades.</p>', 62, NULL, 48, 1, '2019-06-20 17:52:40', 1, '2019-09-25 12:09:55', b'0');
 INSERT INTO `posts` VALUES (4, 1, 'Apostleship of Prayer', '<p>Apostleship of Prayer</p>', 0, NULL, 53, 1, '2019-09-04 20:01:20', 1, '2019-09-04 20:44:17', b'1');
 INSERT INTO `posts` VALUES (5, 1, 'We Find Ways', '<p>We Find Ways</p>', 0, NULL, 52, 1, '2019-09-04 20:04:45', 1, '2019-09-04 20:44:13', b'1');
 
@@ -2876,7 +2925,7 @@ CREATE TABLE `project`  (
   `expiration` datetime(0) NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0'
@@ -2894,7 +2943,7 @@ CREATE TABLE `province`  (
   `province_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `country_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3003,7 +3052,7 @@ CREATE TABLE `region`  (
   `region_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `country_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3046,7 +3095,7 @@ CREATE TABLE `requirements`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3063,7 +3112,7 @@ CREATE TABLE `roles`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3093,7 +3142,7 @@ CREATE TABLE `schedules`  (
   `language_id` int(11) NULL DEFAULT NULL,
   `others` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3158,7 +3207,7 @@ CREATE TABLE `service_references`  (
   `selections` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'for dropdown fields',
   `max_lines` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT b'0',
@@ -3576,7 +3625,7 @@ CREATE TABLE `social_media`  (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `contacts` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3603,7 +3652,7 @@ CREATE TABLE `sponsors`  (
   `province` int(11) NULL DEFAULT NULL,
   `country` int(11) NULL DEFAULT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3627,7 +3676,7 @@ CREATE TABLE `sub_modules`  (
   `create_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'icons',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3675,7 +3724,7 @@ CREATE TABLE `user_info`  (
   `landline` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `media_id` int(11) NULL DEFAULT NULL COMMENT 'photo',
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3685,10 +3734,10 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 1, 'System', NULL, 'Admin', 'admin@mountcarmel.ph', '90 4th Street', 'New Manila', 137404, 1339, 1, '(263) 123-4567', '(02) 123-4567', 3, 1, '2019-06-21 12:38:50', 1, '2019-09-23 14:22:44', b'0');
+INSERT INTO `user_info` VALUES (1, 1, 'System', NULL, 'Admin', 'admin@mountcarmel.ph', '90 4th Street', 'New Manila', 137404, 1339, 1, '(927) 123-4567', '(02) 123-4567', 3, 1, '2019-06-21 12:38:50', 1, '2019-09-25 12:09:47', b'0');
 INSERT INTO `user_info` VALUES (2, 2, 'John', NULL, 'Appleseed', 'john@appleseed.com', 'St. Mary Street', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, '2019-06-21 12:38:50', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (3, 3, 'Jane', NULL, 'Doe', 'jane@doe.com', 'St. Mary Street', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '2019-07-16 12:48:05', NULL, NULL, b'0');
-INSERT INTO `user_info` VALUES (4, 4, 'John', NULL, 'Doe', 'john@doe.com', '78 St. Mary Street', 'Cubao', 137404, 1339, 1, '(123) 456-7890', '(12) 345-6789', 5, 1, '2019-07-17 22:46:53', 4, '2019-09-20 23:17:01', b'0');
+INSERT INTO `user_info` VALUES (4, 4, 'John', NULL, 'Doe', 'john@doe.com', '78 St. Mary Street', 'Cubao', 137404, 1339, 1, '(123) 456-7890', '(12) 345-6789', 5, 1, '2019-07-17 22:46:53', 4, '2019-09-25 12:11:33', b'0');
 INSERT INTO `user_info` VALUES (5, 5, 'Adrian', NULL, 'Evangelista', 'adriane.macer@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, 1, '2019-07-18 21:16:07', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (6, 6, 'Adrian', NULL, 'Evangelista', 'adrianevangelista.bicolresearch@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7, 2, '2019-07-18 21:20:05', NULL, NULL, b'0');
 INSERT INTO `user_info` VALUES (7, 7, 'Adrian', NULL, 'Evangelista', 'macer_0001@yahoo.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 8, 2, '2019-07-19 14:32:36', NULL, NULL, b'0');
@@ -3707,7 +3756,7 @@ CREATE TABLE `users`  (
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `password` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_by` int(11) NOT NULL,
-  `dt_created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `dt_created` datetime(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_by` int(11) NULL DEFAULT NULL,
   `dt_updated` datetime(0) NULL DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT b'0',
@@ -3717,10 +3766,10 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-09-23 22:00:45', b'0');
+INSERT INTO `users` VALUES (1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-09-25 12:04:05', b'0');
 INSERT INTO `users` VALUES (2, 1, 2, 'john@appleseed.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:37:34', 2, '2019-08-22 09:33:14', b'0');
 INSERT INTO `users` VALUES (3, 1, 2, 'jane@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-16 12:48:05', 3, '2019-09-18 23:46:20', b'0');
-INSERT INTO `users` VALUES (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-09-24 13:20:03', b'0');
+INSERT INTO `users` VALUES (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-09-25 12:10:49', b'0');
 INSERT INTO `users` VALUES (5, 1, 2, 'adriane.macer@gmail.com', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 1, '2019-07-18 21:16:07', NULL, NULL, b'0');
 INSERT INTO `users` VALUES (6, 1, 2, 'adrianevangelista.bicolresearch@gmail.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 2, '2019-07-18 21:20:05', NULL, NULL, b'0');
 INSERT INTO `users` VALUES (7, 1, 2, 'macer_0001@yahoo.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 2, '2019-07-19 14:32:36', NULL, NULL, b'0');
