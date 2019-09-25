@@ -5,8 +5,8 @@
     Location    : application/models/Branch_donations_model.php
     Purpose     : Branch donations type model
     Created     : 09/25/2019 13:42:21 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 09/25/2019 14:13:07 by Scarlet Witch
+    Changes     : added media id and path
 */
 
 if (!defined('BASEPATH')) {
@@ -27,7 +27,9 @@ class Branch_donations_model extends CI_Model
             ->select(
                 't1.id,' .  
                 't2.id AS donation_id,' .
-                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .
+                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .                   
+                't2.media_id,' .    
+                't6.full_path AS media_path,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .  
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
@@ -36,7 +38,8 @@ class Branch_donations_model extends CI_Model
             ->join('global_reference_value AS t2', 't2.id = t1.donation_type_id', 'left')      
             ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
             ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')                           
-            ->join('global_reference_value AS t5', 't5.id = t1.donation_schedule_type_id', 'left')   
+            ->join('global_reference_value AS t5', 't5.id = t1.donation_schedule_type_id', 'left')                                  
+            ->join('media AS t6', 't6.id = t2.media_id', 'left')    
             ->where_in('t5.name', array('', 'Always', date('F')))                            
             ->where(                
                 [
@@ -55,7 +58,9 @@ class Branch_donations_model extends CI_Model
             ->select(
                 't1.id,' .  
                 't2.id AS donation_id,' .
-                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .
+                'CONCAT(t2.name, " ", t1.name)  AS donation_name,' .                   
+                't2.media_id,' .    
+                't6.full_path AS media_path,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .  
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
@@ -64,7 +69,8 @@ class Branch_donations_model extends CI_Model
             ->join('global_reference_value AS t2', 't2.id = t1.donation_type_id', 'left')      
             ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
             ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')                           
-            ->join('global_reference_value AS t5', 't5.id = t1.donation_schedule_type_id', 'left')   
+            ->join('global_reference_value AS t5', 't5.id = t1.donation_schedule_type_id', 'left')                                  
+            ->join('media AS t6', 't6.id = t2.media_id', 'left')    
             ->where_in('t5.name', array('', 'Always', date('F')))                                                 
             ->where(                
                 [
