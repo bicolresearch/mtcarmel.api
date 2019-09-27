@@ -5,8 +5,8 @@
     Location    : application/models/Branches_model.php
     Purpose     : Branches reference model
     Created     : 09/13/2019 13:40:50 by Scarlet Witch
-    Updated     : 09/19/2019 16:25:34 by Scarlet Witch
-    Changes     : added funtion for _get_by_location_id
+    Updated     : 09/27/2019 15:42:34 by Scarlet Witch
+    Changes     : added branch features id and name
 */
 
 if (!defined('BASEPATH')) {
@@ -30,8 +30,12 @@ class Branches_model extends CI_Model
                 't1.description,' . 
                 't1.location_id,' .
                 't5.name AS location_name,' .                 
-                't4.id AS church_order_id,' .
-                't4.name AS church_order_name,' .
+                'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
+                'CONCAT(t4.name , " - ", t6.name)  AS church_order_name,' .                                
+                't4.id AS order_id,' .
+                't4.name AS order_name,' .                              
+                't6.id AS features_id,' .
+                't6.name AS features_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
@@ -41,6 +45,7 @@ class Branches_model extends CI_Model
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left') 
             ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')      
             ->join('branch_locations AS t5', 't5.id = t1.location_id', 'left')
+            ->join('global_reference_value AS t6', 't6.id = t1.features_id', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0
@@ -57,11 +62,15 @@ class Branches_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
-                't1.description,' .
+                't1.description,' . 
                 't1.location_id,' .
-                't5.name AS location_name,' .
-                't4.id AS church_order_id,' .
-                't4.name AS church_order_name,' .
+                't5.name AS location_name,' .                 
+                'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
+                'CONCAT(t4.name , " - ", t6.name)  AS church_order_name,' .                                
+                't4.id AS order_id,' .
+                't4.name AS order_name,' .                              
+                't6.id AS features_id,' .
+                't6.name AS features_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
@@ -69,8 +78,9 @@ class Branches_model extends CI_Model
             ->from('branch AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left') 
-            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')            
+            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')      
             ->join('branch_locations AS t5', 't5.id = t1.location_id', 'left')
+            ->join('global_reference_value AS t6', 't6.id = t1.features_id', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
@@ -88,11 +98,15 @@ class Branches_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
-                't1.description,' .
+                't1.description,' . 
                 't1.location_id,' .
-                't5.name AS location_name,' .
-                't4.id AS church_order_id,' .
-                't4.name AS church_order_name,' .
+                't5.name AS location_name,' .                 
+                'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
+                'CONCAT(t4.name , " - ", t6.name)  AS church_order_name,' .                                
+                't4.id AS order_id,' .
+                't4.name AS order_name,' .                              
+                't6.id AS features_id,' .
+                't6.name AS features_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
@@ -100,8 +114,9 @@ class Branches_model extends CI_Model
             ->from('branch AS t1')
             ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
             ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left') 
-            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')            
+            ->join('global_reference_value AS t4', 't4.id = t1.order_id', 'left')      
             ->join('branch_locations AS t5', 't5.id = t1.location_id', 'left')
+            ->join('global_reference_value AS t6', 't6.id = t1.features_id', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
