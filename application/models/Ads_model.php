@@ -59,23 +59,32 @@ class Ads_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
+                't1.branch_id,' .
+                't5.name AS branch_name,' .
+                't1.location_id,' .
+                't6.name AS location_name,' .
                 't1.name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
+                't4.id AS status_id,' .
+                't4.name AS status_name,' .
                 't1.media_id,' .
                 't2.full_path AS media_path,' .
                 't3.id AS type_id,' .
                 't3.name AS type_name,' .
                 't1.dt_created,' .
                 't1.dt_updated,' .
-                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
-                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
+                'CONCAT(t7.first_name, " ", t7.last_name) AS created_by,' .
+                'CONCAT(t8.first_name, " ", t8.last_name) AS updated_by')
             ->from('ads AS t1')
             ->join('media AS t2', 't2.id = t1.media_id', 'left')
             ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')
-            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
-            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->join('global_reference_value AS t4', 't4.id = t1.status_id', 'left')
+            ->join('branch AS t5', 't5.id = t1.branch_id', 'left')
+            ->join('branch_locations AS t6', 't6.id = t1.location_id', 'left')
+            ->join('user_info AS t7', 't7.user_id = t1.created_by', 'left')
+            ->join('user_info AS t8', 't8.user_id = t1.updated_by', 'left')
             ->where(
                 [
                     't1.is_deleted' => 0,
