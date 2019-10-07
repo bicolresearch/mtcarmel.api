@@ -5,8 +5,8 @@
     Location    : application/models/Sub_modules_model.php
     Purpose     : Sub_modules_model model
     Created     : 2019-07-26 10:44:51 by Scarlet Witch 
-    Updated     : 09/12/2019 08:57:18 by Scarlet Witch    
-    Changes     : added branch_id
+    Updated     : 10/07/2019 14:40:51 by Scarlet Witch  
+    Changes     : updated get all and get by id - updated table - sub module and sub module info, deleted _get_confra
 */
 
 if (!defined('BASEPATH')) {
@@ -25,22 +25,22 @@ class Sub_modules_model extends CI_Model
     {
         $this->datatables
             ->select(
-                't4.id as module_id,' .
-                't1.id,' .
-                't1.name,' .
-                't1.description,' .
-                't1.description,' .
-                't1.acceptance_content,' .
-                't1.thank_you_content,' .
-                't1.create_url as url, ' .
-                't2.full_path as cover_photo')
-            ->from('sub_modules AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
-            ->join('modules AS t4', 't4.id = t1.module_id', 'left')
+                't5.id as module_id,' .
+                't2.id,' .
+                't2.name,' .
+                't2.description,' .
+                't2.acceptance_content,' .
+                't2.thank_you_content,' .
+                't2.create_url as url, ' .
+                't3.full_path as cover_photo')
+            ->from('sub_modules_info AS t1')
+            ->join('sub_modules AS t2', 't2.id = t1.sub_module_id', 'left')
+            ->join('media AS t3', 't3.id = t2.media_id', 'left')
+            ->join('branch AS t4', 't4.id = t1.branch_id', 'left')            
+            ->join('modules AS t5', 't5.id = t2.module_id', 'left')
             ->where(                
                 [
-                    't1.program_id' => 3,
+                    't2.program_id' => 3,
                     't1.is_deleted' => 0,
                     't1.branch_id' => $branch_id
                 ]
@@ -50,54 +50,29 @@ class Sub_modules_model extends CI_Model
         return json_decode($this->datatables->generate());        
     }
 
-    public function _get_confra()
-    {
-        $this->db
-        ->select(           
-            't1.attribute,' .
-            't1.text_field_type,' .
-            't1.value,' .                
-            't1.hint,' .    
-            't1.label_text,' .
-            't1.validator_is_required,' .
-            't1.validator_is_numeric,' .
-            't1.validator_min_value,' .
-            't1.validator_max_value,' .
-            't1.error_text,' .            
-            't1.selections')
-        ->from('service_references AS t1')
-        ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-        ->join('sub_modules AS t3', 't3.id = t1.sub_module_id', 'left')
-        ->where('t1.is_deleted', 0);
-            
-        $query = $this->db->get();
-
-        return ($query->num_rows() > 0) ? $query->result_array() : false;
-    }
-
     public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
-                't4.id as module_id,' .
-                't1.id,' .
-                't1.name,' .
-                't1.description,' .
-                't1.description,' .
-                't1.acceptance_content,' .
-                't1.thank_you_content,' .
-                't1.create_url as url, ' .
-                't2.full_path as cover_photo')
-            ->from('sub_modules AS t1')
-            ->join('media AS t2', 't2.id = t1.media_id', 'left')
-            ->join('branch AS t3', 't3.id = t1.branch_id', 'left')            
-            ->join('modules AS t4', 't4.id = t1.module_id', 'left')
+                't5.id as module_id,' .
+                't2.id,' .
+                't2.name,' .
+                't2.description,' .
+                't2.acceptance_content,' .
+                't2.thank_you_content,' .
+                't2.create_url as url, ' .
+                't3.full_path as cover_photo')
+            ->from('sub_modules_info AS t1')
+            ->join('sub_modules AS t2', 't2.id = t1.sub_module_id', 'left')
+            ->join('media AS t3', 't3.id = t2.media_id', 'left')
+            ->join('branch AS t4', 't4.id = t1.branch_id', 'left')            
+            ->join('modules AS t5', 't5.id = t2.module_id', 'left')
             ->where(                
                 [
-                    't1.program_id' => 3,
+                    't2.program_id' => 3,
                     't1.is_deleted' => 0,
                     't1.branch_id' => $branch_id,
-                    't1.id' => $id
+                    't1.sub_module_id' => $id
                 ]
             );
             
