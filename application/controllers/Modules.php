@@ -5,8 +5,8 @@
     Location    : application/controllers/Modules.php
     Purpose     : Modules controller
     Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 09/11/2019 16:45:20 by Scarlet Witch
-    Changes     : Added branch_id on get all and get by id, removed branch_id on update  
+    Updated     : 10/08/2019 12:31:16 by Scarlet Witch
+    Changes     : Added function module_all_get by branch id 
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -83,6 +83,34 @@ class Modules extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
             $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
+
+    }
+
+    public function module_all_get()
+    {        
+        $branch_id = (int)$this->get('branch_id');
+        
+        // Validate the id.
+        if (empty($branch_id)) {
+            // Invalid id, set the response and exit.
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+
+        // Get the module from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        $_get_all_by_branch_id = $this->modules_model->_get_all_by_branch_id($branch_id);
+
+        if (empty($_get_all_by_branch_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            $this->response($_get_all_by_branch_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
 
     }

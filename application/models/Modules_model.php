@@ -5,8 +5,8 @@
     Location    : application/models/Modules_model.php
     Purpose     : Modules model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 10/07/2019 23:27:33 by Scarlet Witch
-    Changes     : added new table modules_info
+    Updated     : 10/08/2019 12:34:11 by Scarlet Witch
+    Changes     : Added function module_all_get by branch id 
 */
 
 if (!defined('BASEPATH')) {
@@ -46,6 +46,33 @@ class Modules_model extends CI_Model
 
             return json_decode($this->datatables->generate());
     }
+
+    public function _get_all_by_branch_id($branch_id)
+    {
+        $this->datatables
+            ->select(
+                't2.id,' .
+                't1.branch_id,' .
+                't2.name,' .
+                't2.description,' .
+                't3.full_path as cover_photo,' .
+                't2.sub_module_ids as sub_modules_ids' )
+            ->from('modules_info AS t1')
+            ->join('modules AS t2', 't2.id = t1.module_id', 'left')
+            ->join('media AS t3', 't3.id = t2.media_id', 'left')
+            ->join('branch AS t4', 't4.id = t1.branch_id', 'left')     
+            ->where_in('t2.program_id', array(4, 5))      
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => $branch_id
+                ]
+            )             
+            ->order_by('t1.id', 'ASC');
+
+            return json_decode($this->datatables->generate());
+    }
+
 
     public function _get_by_id($branch_id, $id)
     {
