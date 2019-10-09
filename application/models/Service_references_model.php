@@ -5,8 +5,8 @@
     Location    : application/models/Service_references_model.php
     Purpose     : Service references model
     Created     : 07/25/2019 18:42:23 by Scarlet Witch
-    Updated     : 10/03/2019 19:25:00 by Scarlet Witch
-    Changes     : added service application form and get sub modules, updated other services - added new table sub_modules_info, added branch id
+    Updated     : 10/08/2019 14:13:49 by Scarlet Witch
+    Changes     : added service function for bookings
 */
 
 if (!defined('BASEPATH')) {
@@ -735,6 +735,45 @@ class Service_references_model extends CI_Model
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     } 
+
+    //Bookings - Bookings Retreat 
+    public function _get_all_bookings($branch_id)
+    {
+        $this->db
+        ->select(           
+            't1.attribute,' .
+            't1.text_field_type,' .
+            't1.value,' .                
+            't1.hint,' .    
+            't1.label_text,' .
+            't1.validator_is_required,' .
+            't1.validator_is_numeric,' .
+            't1.validator_min_value,' .
+            't1.validator_max_value,' .
+            't1.validator_pattern,' .
+            't1.validator_min_date,' .
+            't1.validator_max_date,' .
+            't1.error_text,' .           
+            't1.selections,' .           
+            't1.max_lines')
+        ->from('service_references AS t1')
+        ->join('sub_modules_info AS t2', 't2.sub_module_id = t1.sub_module_id', 'left')  
+        ->where(                
+            [
+                't1.module_id' => 18,
+                't1.sub_module_id' => 19,
+                't1.is_active' => 0,
+                't1.is_deleted' => 0,
+                't2.branch_id' => $branch_id
+            ]
+        )
+        ->order_by('t1.rank', "ASC");
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    } 
+
 
 
 
