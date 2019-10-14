@@ -5,8 +5,8 @@
     Location    : application/models/Maps_model.php
     Purpose     : Maps model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 10/10/2019 14:06:08 by Scarlet Witch
+    Changes     : Added branch_id to _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -21,7 +21,7 @@ class Maps_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->db
         ->select(           
@@ -31,14 +31,19 @@ class Maps_model extends CI_Model
             't1.lng,')
         ->from('maps AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-        ->where('t1.is_deleted', 0)
+        ->where(                
+            [
+                't1.is_deleted' => 0,
+                't1.branch_id' => $branch_id
+            ]
+        )
         ->order_by('t1.id', 'asc');
 
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
-
+    
     public function _get_by_id($id)
     {
         $this->db 

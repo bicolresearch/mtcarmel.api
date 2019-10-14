@@ -5,8 +5,8 @@
     Location    : application/models/Locations_model.php
     Purpose     : Locations model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 6/28/2019 by Spiderman
-    Changes     : Changed commenting format
+    Updated     : 10/10/2019 14:05:34 by Scarlet Witch
+    Changes     : Added branch_id to _get_all
 */
 
 if (!defined('BASEPATH')) {
@@ -21,7 +21,7 @@ class Locations_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->db
         ->select(           
@@ -31,7 +31,12 @@ class Locations_model extends CI_Model
             't1.lng_center,')
         ->from('locations AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
-        ->where('t1.is_deleted', 0);
+        ->where(                
+            [
+                't1.is_deleted' => 0,
+                't1.branch_id' => $branch_id
+            ]
+        );
 
         $query = $this->db->get();
 
@@ -91,7 +96,7 @@ class Locations_model extends CI_Model
     {
         $this->db->trans_begin();
 
-        $this->db
+        $this->dbu
             ->where('id', $id)
             ->delete('locations');
 

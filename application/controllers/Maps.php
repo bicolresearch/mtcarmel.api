@@ -5,8 +5,8 @@
     Location    : application/controllers/Maps.php
     Purpose     : Maps controller
     Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 7/1/2019 by Scarlet Witch
-    Changes     : Back to previous format for location
+    Updated     : 10/10/2019 13:50:41 by Scarlet Witch
+    Changes     : added branch_id, updated the response status from FALSE to empty ''
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -28,34 +28,42 @@ class Maps extends REST_Controller
 
     public function index_get()
     {
-        // Maps from a data store e.g. database
-        $maps = [
-            'map_center' => $this->locations_model->_get_all(),
-            'map_boundaries' => $this->maps_model->_get_all()
-        ];
+        // Find and return a single record for a particular map.
+        $branch_id = (int)$this->get('branch_id');
 
-        $id = $this->get('id');
-
-        // If the id parameter doesn't exists return all the maps
-        if (empty($id)) {
-            // Check if the maps data store contains maps (in case the database result returns NULL)
-            if (empty($maps)) {
-                // Set the response and exit
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Not Found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($maps, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-        } else {
-            // Set the response and exit.
+        // Validate the id.
+        if (empty($branch_id)) {
+            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
+
+        // Get the map from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        /*
+        $maps = [
+            'map_center' => $this->locations_model->_get_all($branch_id),
+            'map_boundaries' => $this->maps_model->_get_all($branch_id)
+        ];*/
+        
+        $maps = $this->locations_model->_get_all($branch_id);
+        $map_boundaries = $this->maps_model->_get_all($branch_id);
+
+        if (empty($maps)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        }
+        else if (empty($map_boundaries) && !empty($maps)){
+            $this->response(['map_center' => $maps, 'map_boundaries' => $maps], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
+        else if (!empty($map_boundaries) && !empty($maps)){
+            $this->response(['map_center' => $maps, 'map_boundaries' => $map_boundaries], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+        }
+
     }
 
     public function map_get()
@@ -85,7 +93,7 @@ class Maps extends REST_Controller
             $this->response($map, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
-
+    
     public function create_post()
     {
         $data = [
