@@ -4,9 +4,10 @@
     Filename    : Maps.php
     Location    : application/controllers/Maps.php
     Purpose     : Maps controller
-    Created     : 6/24/2019 by Scarlet Witch
-    Updated     : 10/10/2019 13:50:41 by Scarlet Witch
-    Changes     : added branch_id, updated the response status from FALSE to empty ''
+    Created     : 6/24/2019 by Scarlet Witch 
+    Updated     : 10/14/2019 15:50:03 by Scarlet Witch
+    Changes     : Added if null branch maps boundaries - get the maps center with attribute name of map locations
+
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -50,6 +51,7 @@ class Maps extends REST_Controller
         
         $maps = $this->locations_model->_get_all($branch_id);
         $map_boundaries = $this->maps_model->_get_all($branch_id);
+        $map_boundaries2 = $this->locations_model->_get_all_locations($branch_id);
 
         if (empty($maps)) {
             $this->response([
@@ -58,7 +60,7 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
         else if (empty($map_boundaries) && !empty($maps)){
-            $this->response(['map_center' => $maps, 'map_boundaries' => $maps], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response(['map_center' => $maps, 'map_boundaries' => $map_boundaries2], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
         else if (!empty($map_boundaries) && !empty($maps)){
             $this->response(['map_center' => $maps, 'map_boundaries' => $map_boundaries], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code

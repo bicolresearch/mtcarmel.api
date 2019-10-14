@@ -5,8 +5,8 @@
     Location    : application/models/Locations_model.php
     Purpose     : Locations model
     Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 10/10/2019 14:05:34 by Scarlet Witch
-    Changes     : Added branch_id to _get_all
+    Updated     : 10/14/2019 15:50:03 by Scarlet Witch
+    Changes     : Added function if null branch maps boundaries - get the maps center with attribute name of map locations
 */
 
 if (!defined('BASEPATH')) {
@@ -29,6 +29,28 @@ class Locations_model extends CI_Model
             't1.branch_id,' .
             't1.lat_center,' .
             't1.lng_center,')
+        ->from('locations AS t1')
+        ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
+        ->where(                
+            [
+                't1.is_deleted' => 0,
+                't1.branch_id' => $branch_id
+            ]
+        );
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
+
+    public function _get_all_locations($branch_id)
+    {
+        $this->db
+        ->select(           
+            't1.id,' .
+            't1.branch_id,' .
+            't1.lat_center as lat,' .
+            't1.lng_center as lng,')
         ->from('locations AS t1')
         ->join('branch AS t2', 't2.id = t1.branch_id', 'left')
         ->where(                
