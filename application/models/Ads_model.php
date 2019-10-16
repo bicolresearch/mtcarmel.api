@@ -26,7 +26,7 @@ class Ads_model extends CI_Model
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.name,' .
+                't1.brand_name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
@@ -63,7 +63,7 @@ class Ads_model extends CI_Model
                 't5.name AS branch_name,' .
                 't1.location_id,' .
                 't6.name AS location_name,' .
-                't1.name,' .
+                't1.brand_name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
@@ -103,7 +103,7 @@ class Ads_model extends CI_Model
         $this->db
             ->select(
                 't1.id,' .
-                't1.name,' .
+                't1.brand_name,' .
                 't1.description,' .
                 't1.url,' .
                 't1.expiration,' .
@@ -123,6 +123,7 @@ class Ads_model extends CI_Model
             ->where(
                 [
                     't1.is_deleted' => 0,
+                    't1.status_id' => 1,
                     't1.branch_id' => $branch_id,
                     't3.id' => $type_id
                 ]

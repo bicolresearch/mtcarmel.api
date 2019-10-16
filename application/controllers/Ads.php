@@ -4,8 +4,8 @@
     Filename    : Ads.php
     Location    : application/controllers/Ads.php
     Purpose     : Ads controller
-    Created     : 06/2/2019 16:14:47 by Scarlet Witch
-    Updated     : 09/16/2019 18:31:32 by Spiderman
+    Created     : 06/02/2019 13:51:30 by Scarlet Witch
+    Updated     : 10/15/2019 13:51:16 by Spiderman
     Changes     : 
 */
 
@@ -89,11 +89,15 @@ class Ads extends REST_Controller
     {
         $data = [
             'branch_id' => $this->post('branch_id'),
-            'name' => $this->post('name'),
+            'brand_name' => $this->post('brand_name'),
+            'company_name' => $this->post('company_name'),
             'description' => $this->post('description'),
-            'media_id' => $this->post('media_id'),
+            'service_type_id' => $this->post('service_type_id'),
+            //'media_id' => $this->post('media_id'),
             'type_id' => $this->post('type_id'),
             'url' => $this->post('url'),
+            'durations' => $this->post('durations'),
+            'total' => $this->post('total'),
             'expiration' => $this->post('expiration'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
@@ -116,13 +120,18 @@ class Ads extends REST_Controller
     public function update_put()
     {
         $data = [
-            'branch_id' => $this->put('branch_id'),
-            'name' => $this->put('name'),
-            'description' => $this->put('description'),
-            'media_id' => $this->put('media_id'),
-            'type_id' => $this->put('type_id'),
-            'url' => $this->put('url'),
-            'expiration' => $this->put('expiration'),
+            'branch_id' => $this->post('branch_id'),
+            'brand_name' => $this->post('brand_name'),
+            'company_name' => $this->post('company_name'),
+            'description' => $this->post('description'),
+            'service_type_id' => $this->post('type_id'),
+            'media_id' => $this->post('media_id'),
+            'type_id' => $this->post('type_id'),
+            'url' => $this->post('url'),
+            'expiration' => $this->post('expiration'),
+            'durations' => $this->post('durations'),
+            'total' => $this->post('total'),
+            'status_id' => $this->post('status_id'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
