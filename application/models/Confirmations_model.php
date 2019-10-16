@@ -1,19 +1,20 @@
 <?php
 
 /*
-    Filename    : Confirmation_model.php
-    Location    : application/models/Confirmation_model.php
-    Purpose     : Confirmation model
+    Filename    : Confirmations_model.php
+    Location    : application/models/Confirmations_model.php
+    Purpose     : Confirmations model
     Created     : 08/06/2019 20:12:05 by Scarlet Witch
-    Updated     : 08/27/2019 13:59:29 by Scarlet Witch
-    Changes     : changed table status to global_reference_value
+    Updated     : 09/27/2019 15:13:19 by Scarlet Witch
+    Changes     : added function get_all_priest, get_all_user,
+                  added branch_id 
 */
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Confirmation_model extends CI_Model
+class Confirmations_model extends CI_Model
 {
 
     public function __construct()
@@ -21,7 +22,7 @@ class Confirmation_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all()
+    public function _get_all($branch_id)
     {
         $this->datatables
             ->select(
@@ -51,17 +52,22 @@ class Confirmation_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                    
-            ->where('t1.module_id', 8)
-            ->where('t1.sub_module_id', 11)
-            ->where('t1.is_deleted', 0)                        
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left') 
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.module_id' => 8,
+                    't1.sub_module_id' => 11,
+                    't1.branch_id' => $branch_id
+                ]
+            )  
             ->order_by('t1.status', 'ASC')                    
-            ->order_by('t1.id', 'DESC');             
+            ->order_by('t1.id', 'DESC');     
 
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_by_id($id)
+    public function _get_by_id($branch_id, $id)
     {
         $this->db
             ->select(
@@ -91,11 +97,63 @@ class Confirmation_model extends CI_Model
             ->from('service_transactions AS t1')
             ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
             ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
-            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')                   
-            ->where('t1.module_id', 8)
-            ->where('t1.sub_module_id', 11)
-            ->where('t1.is_deleted', 0)  
-            ->where('t1.id', $id);
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')  
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.module_id' => 8,
+                    't1.sub_module_id' => 11,
+                    't1.branch_id' => $branch_id,
+                    't1.id' => $id
+                ]
+            );
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->row() : false;
+    }
+
+    public function _get_all_user($user_id)
+    {
+        $this->db
+            ->select(
+                't1.id,' .
+                't1.name,' .
+                't1.dt_birth,' .
+                't1.address_1,' .
+                't1.address_2,' .
+                't1.barangay,' .
+                't1.city,' .
+                't1.province,' .
+                't1.country,' .
+                't1.dt_baptism,' .
+                't1.church_of_baptism,' .
+                't1.name_father,' .
+                't1.name_mother,' .
+                't1.name_contact_person,' .
+                't1.landline_contact_person,' .
+                't1.mobile_contact_person,' .
+                't1.remarks,' .
+                't1.sponsor,' .
+                't1.requirements,' .
+                't4.name AS status,' .
+                't1.dt_created AS posted_on,' .
+                't1.dt_updated AS updated_on,' .                
+                't3.username AS author')
+            ->from('service_transactions AS t1')
+            ->join('branch AS t2', 't2.id = t1.branch_id', 'left')              
+            ->join('users AS t3', 't3.id = t1.created_by', 'left')                                    
+            ->join('global_reference_value AS t4', 't4.id = t1.status', 'left')  
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.module_id' => 8,
+                    't1.sub_module_id' => 11,
+                    't1.created_by' => $user_id
+                ]
+            )
+            ->order_by('t1.id', 'DESC');   
+
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
