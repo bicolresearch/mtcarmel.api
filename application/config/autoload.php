@@ -151,7 +151,7 @@ $autoload['model'] = array(
     'carmelites_model',
     'contacts_model',
     'maps_model',
-    'histories_model',
+    'history_model',
     'boundaries_model',
     'locations_model',
     'users_model',
@@ -172,7 +172,7 @@ $autoload['model'] = array(
     'liturgicals_model',
     'certifications_model',
     'first_communion_model',
-    'confirmation_model',
+    //'confirmation_model',
     'individual_model',
     'community_model',
     'adults_model',
@@ -181,5 +181,5 @@ $autoload['model'] = array(
     'cities_model',
     'branches_model',
     'branch_locations_model',
-    'branch_donations_model'
+    'branch_donations_model',
 );

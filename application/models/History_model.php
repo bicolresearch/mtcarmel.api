@@ -1,9 +1,9 @@
 <?php
 
 /*
-    Filename    : Histories_model.php
-    Location    : application/models/Histories_model.php
-    Purpose     : Histories model
+    Filename    : History_model.php
+    Location    : application/models/History_model.php
+    Purpose     : History model
     Created     : 06/27/2019 20:44:50 by Spiderman
     Updated     : 09/07/2019 01:12:41 by Spiderman
     Changes     : 
@@ -13,7 +13,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Histories_model extends CI_Model
+class History_model extends CI_Model
 {
 
     public function __construct()
@@ -23,7 +23,7 @@ class Histories_model extends CI_Model
 
     public function _get_all($branch_id)
     {
-        $this->datatables
+        $this->db
             ->select(
                 't1.id,' .
                 't1.titular,' .
@@ -46,34 +46,6 @@ class Histories_model extends CI_Model
             )     
             ->order_by('t1.id', 'DESC');
         
-        return json_decode($this->datatables->generate());
-    }
-
-    public function _get_by_id($branch_id, $id)
-    {
-        $this->db
-            ->select(
-                't1.id,' .
-                't1.titular,' .
-                't1.diocese,' .
-                't1.date_of_establishment,' .
-                't1.feast_day,' .
-                't1.content,' .                
-                't1.dt_created,' .
-                't1.dt_updated,' .
-                'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .
-                'CONCAT(t3.first_name, " ", t3.last_name) AS updated_by')
-            ->from('history AS t1')         
-            ->join('user_info AS t2', 't2.user_id = t1.created_by', 'left')
-            ->join('user_info AS t3', 't3.user_id = t1.updated_by', 'left')
-            ->where(                
-                [
-                    't1.is_deleted' => 0,
-                    't1.branch_id' => $branch_id,
-                    't1.id' => $id
-                ]
-            );
-
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : Histories.php
-    Location    : application/controllers/Histories.php
-    Purpose     : Histories controller
+    Filename    : History.php
+    Location    : application/controllers/History.php
+    Purpose     : History controller
     Created     : 06/24/2019 22:30:50 by Spiderman
-    Updated     : 09/16/2019 20:44:57 by Spiderman
+    Updated     : 10/22/2019 21:50:11 by Spiderman
     Changes     : 
 */
 
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Histories extends REST_Controller
+class History extends REST_Controller
 {
     function __construct()
     {
@@ -28,7 +28,7 @@ class Histories extends REST_Controller
     {
         $branch_id = (int)$this->get('branch_id');
 
-        $get_all = $this->histories_model->_get_all($branch_id);
+        $get_all = $this->history_model->_get_all($branch_id);
 
         if(empty($branch_id)) {
             $this->response([
@@ -44,30 +44,6 @@ class Histories extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        }
-    }
-
-    public function history_get()
-    {
-        $branch_id = (int)$this->get('branch_id');
-        $id = (int)$this->get('id');
-
-        if(empty($branch_id) && empty($id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-
-        $get_by_id = $this->histories_model->_get_by_id($branch_id, $id);
-
-        if (empty($get_by_id)) {
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Not Found'
-            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-        } else {
-            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -90,7 +66,7 @@ class Histories extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->histories_model->_create($data);
+            $this->history_model->_create($data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Created'
@@ -125,7 +101,7 @@ class Histories extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->histories_model->_update($id, $data);
+            $this->history_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -156,7 +132,7 @@ class Histories extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->histories_model->_update($id, $data);
+            $this->history_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'
@@ -174,7 +150,7 @@ class Histories extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->histories_model->_hard_delete($id);
+            $this->history_model->_hard_delete($id);
             $this->set_response([
                 'status' => TRUE,
                 'message' => 'Deleted'
