@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2019 at 10:29 AM
+-- Generation Time: Oct 22, 2019 at 05:12 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -115,9 +115,9 @@ CREATE TABLE `ads` (
   `type_id` int(11) NOT NULL,
   `service_type_id` int(11) NOT NULL,
   `expiration` datetime DEFAULT NULL,
-  `durations` int(1) NOT NULL DEFAULT '1',
-  `total` int(11) NOT NULL,
-  `status_id` bit(1) NOT NULL DEFAULT b'0',
+  `durations` int(1) DEFAULT '1',
+  `total` int(11) DEFAULT NULL,
+  `status_id` int(11) NOT NULL DEFAULT '0',
   `created_by` int(11) NOT NULL,
   `dt_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_by` int(11) DEFAULT NULL,
@@ -130,15 +130,15 @@ CREATE TABLE `ads` (
 --
 
 INSERT INTO `ads` (`id`, `branch_id`, `brand_name`, `company_name`, `description`, `url`, `media_id`, `type_id`, `service_type_id`, `expiration`, `durations`, `total`, `status_id`, `created_by`, `dt_created`, `updated_by`, `dt_updated`, `is_deleted`) VALUES
-(1, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'Apostleship of Prayer', 'https://sites.google.com/site/apostleshipofprayerphilippines/', 53, 111, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-06-24 14:30:17', 1, '2019-09-05 01:25:35', b'0'),
-(2, 1, 'Pepsi', 'Pepsi', 'Pepsi', 'https://pepsiphilippines.com/', 54, 111, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-06-24 14:30:31', 1, '2019-09-05 01:24:41', b'0'),
-(3, 1, 'BDO', 'BDO', 'BDO', 'https://www.bdo.com.ph/personal', 52, 111, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-06-24 14:30:47', 1, '2019-09-05 01:23:05', b'0'),
-(4, 1, 'Cabalen', 'Cabalen', 'Cabalen Naga City', 'https://www.cabalen.ph/', 51, 111, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-06-24 14:30:56', 1, '2019-09-16 16:21:35', b'0'),
-(5, 1, 'Splash Ad 1', 'Splash Ad 1', 'Splash Ad 1', '', 12, 112, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-08-16 23:13:43', 1, '2019-08-23 09:08:35', b'0'),
-(6, 1, 'Splash Ad 2', 'Splash Ad 2', 'Splash Ad 2', 'https://play.google.com/store/apps', 14, 112, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-08-16 23:14:10', 1, '2019-08-23 09:08:40', b'0'),
-(7, 1, 'Splash Ad 3', 'Splash Ad 3', 'Splash Ad 3', '', 13, 112, 0, '2022-08-23 00:00:00', 1, 0, b'1', 1, '2019-08-16 23:14:45', 1, '2019-08-23 09:08:09', b'0'),
-(8, 1, 'Carmel App', 'Carmel App', 'Carmel App', 'https://carmel.ph', NULL, 111, 136, NULL, 1, 17885, b'0', 4, '2019-10-15 15:53:51', NULL, NULL, b'0'),
-(9, 1, 'Sample', 'Sample', 'Sample', '', NULL, 111, 133, '2024-10-15 05:41:45', 5, 89425, b'0', 4, '2019-10-15 17:41:57', NULL, NULL, b'0');
+(1, 1, 'Apostleship of Prayer', 'Apostleship of Prayer', 'Apostleship of Prayer', 'https://sites.google.com/site/apostleshipofprayerphilippines/', 53, 111, 134, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-06-24 14:30:17', 1, '2019-10-21 22:15:57', b'0'),
+(2, 1, 'Pepsi', 'Pepsi', 'Pepsi', 'https://pepsiphilippines.com/', 54, 111, 129, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-06-24 14:30:31', 1, '2019-10-21 22:16:14', b'0'),
+(3, 1, 'BDO', 'BDO', 'BDO', 'https://www.bdo.com.ph/personal', 52, 111, 128, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-06-24 14:30:47', 1, '2019-10-21 22:16:31', b'0'),
+(4, 1, 'Cabalen', 'Cabalen', 'Cabalen Naga City', 'https://www.cabalen.ph/', 51, 111, 126, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-06-24 14:30:56', 1, '2019-10-21 22:16:48', b'0'),
+(5, 1, 'Splash Ad 1', 'Splash Ad 1', 'Splash Ad 1', '', 12, 112, 133, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-08-16 23:13:43', 1, '2019-10-21 22:15:13', b'0'),
+(6, 1, 'Splash Ad 2', 'Splash Ad 2', 'Splash Ad 2', 'https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem', 14, 112, 136, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-08-16 23:14:10', 1, '2019-10-21 22:14:12', b'0'),
+(7, 1, 'Splash Ad 3', 'Splash Ad 3', 'Splash Ad 3', '', 13, 112, 0, '2022-08-23 00:00:00', 1, 0, 1, 1, '2019-08-16 23:14:45', 1, '2019-08-23 09:08:09', b'0'),
+(8, 1, 'Carmel App', 'Carmel App', 'Carmel App', 'https://carmel.ph', NULL, 111, 136, NULL, 1, 17885, 0, 4, '2019-10-15 15:53:51', 1, '2019-10-21 16:34:27', b'1'),
+(9, 1, 'Sample', 'Sample', 'Sample', '', NULL, 111, 133, '2024-10-15 05:41:45', 5, 89425, 0, 4, '2019-10-15 17:41:57', 1, '2019-10-21 16:34:30', b'1');
 
 -- --------------------------------------------------------
 
@@ -194,6 +194,7 @@ CREATE TABLE `branch` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` varchar(2500) DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
   `features_id` int(11) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
@@ -209,27 +210,27 @@ CREATE TABLE `branch` (
 -- Dumping data for table `branch`
 --
 
-INSERT INTO `branch` (`id`, `name`, `description`, `order_id`, `features_id`, `location_id`, `main_id`, `created_by`, `dt_created`, `updated_by`, `dt_updated`, `is_deleted`) VALUES
-(1, 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 144, 147, 1, 1, 1, '2019-06-18 16:02:09', 1, '2019-06-18 16:03:01', b'0'),
-(2, 'St. Joseph the Worker Parish', 'St. Joseph the Worker Parish', 144, 147, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(3, 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', 145, 157, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(4, 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', 146, 158, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(5, 'Our Lady\'s Hill Center of Spirituality', 'Our Lady\'s Hill Center of Spirituality', 144, 148, 3, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(6, 'Our Lady of the Smiles Community', 'Our Lady of the Smiles Community', 146, 158, 4, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(7, 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', 145, 157, 6, 0, 1, '2019-09-16 12:59:20', NULL, NULL, b'0'),
-(8, 'Sto. Niño de Cebu Community', 'Sto. Niño de Cebu Community', 146, 158, 6, 0, 1, '2019-09-21 14:20:43', NULL, NULL, b'0'),
-(9, 'Carmel of the Immaculate Heart of Mary', 'Carmel of the Immaculate Heart of Mary', 145, 157, 5, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
-(10, 'Carmelite Monastery of St. John of The Cross', 'Carmelite Monastery of St. John of The Cross', 145, 157, 7, 0, 1, '2019-09-21 15:08:37', NULL, NULL, b'0'),
-(11, 'Saint John of the Cross Community', 'Saint John of the Cross Community', 146, 158, 7, 0, 1, '2019-09-21 15:09:20', NULL, NULL, b'0'),
-(12, 'Carmel of  Mary, Mother of The Church and of Saint Joseph', 'Carmel of  Mary, Mother of The Church and of Saint Joseph', 145, 157, 8, 0, 1, '2019-09-21 15:12:06', NULL, NULL, b'0'),
-(13, 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', 146, 158, 8, 0, 1, '2019-09-21 15:12:48', NULL, NULL, b'0'),
-(14, 'Saint Joseph and Saint John of the Cross', 'Saint Joseph and Saint John of the Cross', 146, 158, 8, 0, 1, '2019-09-21 15:13:31', NULL, NULL, b'0'),
-(15, 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', 145, 157, 9, 0, 1, '2019-09-21 15:14:23', NULL, NULL, b'0'),
-(16, 'Saint Joseph Community', 'Saint Joseph Community', 146, 158, 9, 0, 1, '2019-09-21 15:48:43', NULL, NULL, b'0'),
-(17, 'Saint Therese of the Child Jesus Community', 'Saint Therese of the Child Jesus Community', 146, 158, 9, 0, 1, '2019-09-21 15:53:11', NULL, NULL, b'0'),
-(18, 'Saint Teresa of Jesus Community', 'Saint Teresa of Jesus Community', 146, 158, 9, 0, 1, '2019-09-21 15:53:46', NULL, NULL, b'0'),
-(19, 'Carmel of Saint Teresa of Jesus', 'Carmel of Saint Teresa of Jesus', 145, 157, 10, 0, 1, '2019-09-21 15:54:21', NULL, NULL, b'0'),
-(20, 'St. Teresa of Jesus', 'St. Teresa of Jesus', 146, 158, 10, 0, 1, '2019-09-21 15:54:52', NULL, NULL, b'0');
+INSERT INTO `branch` (`id`, `name`, `description`, `url`, `order_id`, `features_id`, `location_id`, `main_id`, `created_by`, `dt_created`, `updated_by`, `dt_updated`, `is_deleted`) VALUES
+(1, 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 'Minor Basilica of the National Shrine of Our Lady of Mount Carmel', 'https://carmel.ph', 144, 147, 1, 1, 1, '2019-06-18 16:02:09', 1, '2019-06-18 16:03:01', b'0'),
+(2, 'St. Joseph the Worker Parish', 'St. Joseph the Worker Parish', '', 144, 147, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(3, 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', 'Our Lady of Mt. Carmel and St. Therese of the Child Jesus', '', 145, 157, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(4, 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', 'Our Lady of Mount Carmel, Mary, Queen of Peace Community', '', 146, 158, 2, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(5, 'Our Lady\'s Hill Center of Spirituality', 'Our Lady\'s Hill Center of Spirituality', '', 144, 148, 3, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(6, 'Our Lady of the Smiles Community', 'Our Lady of the Smiles Community', '', 146, 158, 4, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(7, 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', 'Carmel of The Child Jesus and of Mary Mediatrix of All Graces', '', 145, 157, 6, 0, 1, '2019-09-16 12:59:20', NULL, NULL, b'0'),
+(8, 'Sto. Niño de Cebu Community', 'Sto. Niño de Cebu Community', '', 146, 158, 6, 0, 1, '2019-09-21 14:20:43', NULL, NULL, b'0'),
+(9, 'Carmel of the Immaculate Heart of Mary', 'Carmel of the Immaculate Heart of Mary', '', 145, 157, 5, 0, 1, '2019-09-13 15:16:58', NULL, NULL, b'0'),
+(10, 'Carmelite Monastery of St. John of The Cross', 'Carmelite Monastery of St. John of The Cross', '', 145, 157, 7, 0, 1, '2019-09-21 15:08:37', NULL, NULL, b'0'),
+(11, 'Saint John of the Cross Community', 'Saint John of the Cross Community', '', 146, 158, 7, 0, 1, '2019-09-21 15:09:20', NULL, NULL, b'0'),
+(12, 'Carmel of  Mary, Mother of The Church and of Saint Joseph', 'Carmel of  Mary, Mother of The Church and of Saint Joseph', '', 145, 157, 8, 0, 1, '2019-09-21 15:12:06', NULL, NULL, b'0'),
+(13, 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', 'Our Lady of Mount Carmel of Holy Mother Teresa of Jesus Community', '', 146, 158, 8, 0, 1, '2019-09-21 15:12:48', NULL, NULL, b'0'),
+(14, 'Saint Joseph and Saint John of the Cross', 'Saint Joseph and Saint John of the Cross', '', 146, 158, 8, 0, 1, '2019-09-21 15:13:31', NULL, NULL, b'0'),
+(15, 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', 'Carmel of the Sacred Heart of Jesus and The Immaculate Heart of Mary', '', 145, 157, 9, 0, 1, '2019-09-21 15:14:23', NULL, NULL, b'0'),
+(16, 'Saint Joseph Community', 'Saint Joseph Community', '', 146, 158, 9, 0, 1, '2019-09-21 15:48:43', NULL, NULL, b'0'),
+(17, 'Saint Therese of the Child Jesus Community', 'Saint Therese of the Child Jesus Community', '', 146, 158, 9, 0, 1, '2019-09-21 15:53:11', NULL, NULL, b'0'),
+(18, 'Saint Teresa of Jesus Community', 'Saint Teresa of Jesus Community', '', 146, 158, 9, 0, 1, '2019-09-21 15:53:46', NULL, NULL, b'0'),
+(19, 'Carmel of Saint Teresa of Jesus', 'Carmel of Saint Teresa of Jesus', '', 145, 157, 10, 0, 1, '2019-09-21 15:54:21', NULL, NULL, b'0'),
+(20, 'St. Teresa of Jesus', 'St. Teresa of Jesus', '', 146, 158, 10, 0, 1, '2019-09-21 15:54:52', NULL, NULL, b'0');
 
 -- --------------------------------------------------------
 
@@ -3121,7 +3122,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `branch_id`, `title`, `content`, `post_type_id`, `expiration`, `media_id`, `created_by`, `dt_created`, `updated_by`, `dt_updated`, `is_deleted`) VALUES
-(1, 1, 'Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor BasilicaOfficial Web and Mobile App', '<p style=\"text-align: justify\">Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica. Let us be at the service of others and bring Christ to them. So that the presence of a Basilica is a strong confirmation that we are never alone. God is with us!</p>', 57, NULL, 24, 1, '2019-06-18 14:49:12', 1, '2019-09-08 23:54:01', b'0'),
+(1, 1, 'Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica', '<p style=\"text-align: justify\">Solemn Declaration of The National Shrine of Our Lady of Mt. Carmel as Minor Basilica. Let us be at the service of others and bring Christ to them. So that the presence of a Basilica is a strong confirmation that we are never alone. God is with us!</p>', 57, NULL, 24, 1, '2019-06-18 14:49:12', 1, '2019-10-22 14:34:16', b'0'),
 (2, 1, 'Official Web and Mobile App', '<p style=\"text-align: justify\">We have released the new official web and mobile applications of Minor Basilica of the National Shrine of Our Lady of Mount Carmel, located at 90 4th Street, New Manila, Quezon City, Philippines.</p><p>\r\n</p><p style=\"text-align: justify\">Our vision for the new system will help the church improve its security, sustainability, and efficiency.</p><p>\r\n</p><p style=\"text-align: justify\">We have seen massive loopholes in the old system, that is undoubtedly been exploited by countless people.</p><p>\r\n</p><p style=\"text-align: justify\">We have automated the old system to remove the presence of human resources as middlemen in every transaction, such as donations and services. In result, it ceases theft and temptations from employees and other people. Despite the innumerable security measures that we have installed, the system can also identify thieves and unscrupulous transactions, should there be any.</p><p>\r\n</p><p style=\"text-align: justify\">The Pope demands the church to loosen up from asking donations from people. We have designed a plan called the Progressive Leap Strategy that requires zero donations.</p><p>\r\n</p><p style=\"text-align: justify\">To achieve a self-sustaining technology, we have monetized the platform to build and expand the system. We have placed a number of ad placements in the applications, aiming to produce a platform without asking for any donations. Eventually, the system will lessen the monetary help needed by the church.</p><p>\r\n</p><p style=\"text-align: justify\">This approach will aggressively expand the system throughout Mount Carmel Churches in the Philippines, in parallel with the improvement of the system by adding more features and upgrading the overall performance of the application.</p><p>\r\n</p><p style=\"text-align: justify\">The Catholic Church ought to focus on the next generation of Christians, the survival of Catholicism is highly dependent on the new generation than of the previous. Adapting to the information age is a great way of reaching out to the young ones, being available to anyone, anytime and anywhere.</p><p>\r\n</p><p style=\"text-align: justify\">This platform will serve as a tool to secure transactions, promote efficiency and preserve Christianity.</p>', 57, NULL, 14, 1, '2019-06-19 17:38:33', 1, '2019-09-08 23:53:38', b'0'),
 (3, 1, 'Sample Ads - Coca-Cola Awarded for Advertising Innovations', '<p style=\"text-align: justify\">When Coca-Cola was named \"Marketer of the Year\" by AdAge in 2011, the flagship brand was 125 years old. But even today, the company is not too old to learn and does not rest on its laurels. Coke\'s marketing strategies have produced some volatility over the long-haul, but part of that is due to the willingness of The Coca-Cola Company to innovate. Apparently, the marketing overhaul has worked.</p><p>\r\n</p><p style=\"text-align: justify\">According to Natalie Zmuda of AdAge, Coca-Cola\'s marketing focus changed in 2007 when Mr. Tripodi came on board from Allstate. AdAge described the following marketing challenges:</p><p>\r\n</p><p style=\"text-align: justify\">Coca-Cola was too dependent on its flagship drink - Coke® Coca-Cola\'s advertising and use of advertising agencies was inconsistent Coca-Cola was seen as a \"sluggish, hidebound marketer.\" Mr. Tripodi told Zamuda he believes that the culture at Coca-Cola has a lot to do with its success. The team is said to share both the successes and the learnings from failures, which is a must given the size and scale of The Coca-Cola Company. Mr. Tripodi said, \"We\'ve got a team of people around the world that is less concerned with getting credit and more concerned with getting behind a great idea.\" The Coca-Cola Company could be classified as a learning organization as it has demonstrated adaptability and creativity over many decades.</p>', 62, NULL, 48, 1, '2019-06-20 17:52:40', 1, '2019-09-26 11:12:18', b'1'),
 (4, 1, 'Apostleship of Prayer', '<p>Apostleship of Prayer</p>', 0, NULL, 53, 1, '2019-09-04 20:01:20', 1, '2019-09-04 20:44:17', b'1'),
@@ -4048,7 +4049,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `branch_id`, `role_id`, `username`, `password`, `created_by`, `dt_created`, `updated_by`, `dt_updated`, `is_deleted`) VALUES
-(1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-09-27 16:29:30', b'0'),
+(1, 1, 1, 'admin@mountcarmel.ph', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:36:40', 1, '2019-10-22 14:33:48', b'0'),
 (2, 1, 2, 'john@appleseed.com', '933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754', 1, '2019-06-21 12:37:34', 2, '2019-08-22 09:33:14', b'0'),
 (3, 1, 2, 'jane@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-16 12:48:05', 3, '2019-07-18 19:18:55', b'0'),
 (4, 1, 2, 'john@doe.com', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1, '2019-07-17 22:46:53', 4, '2019-10-15 13:08:25', b'0'),
