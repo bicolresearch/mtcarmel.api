@@ -27,7 +27,7 @@ class Branch_locations_model extends CI_Model
             ->select(
                 't1.id,' .
                 't1.name,' .
-                't1.description,' .  
+                't1.description,' .    
                 't1.dt_created,' .
                 't1.dt_updated,' . 
                 'CONCAT(t2.first_name, " ", t2.last_name) AS created_by,' .

@@ -28,6 +28,7 @@ class Branches_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' . 
+                't1.url,' .
                 't1.location_id,' .
                 't5.name AS location_name,' .                 
                 'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
@@ -63,6 +64,7 @@ class Branches_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' . 
+                't1.url,' .
                 't1.location_id,' .
                 't5.name AS location_name,' .                 
                 'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
@@ -99,6 +101,7 @@ class Branches_model extends CI_Model
                 't1.id,' .
                 't1.name,' .
                 't1.description,' . 
+                't1.url,' .
                 't1.location_id,' .
                 't5.name AS location_name,' .                 
                 'CONCAT(t4.id , " - ", t6.id)  AS church_order_id,' .
