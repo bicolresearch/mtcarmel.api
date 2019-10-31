@@ -5,7 +5,7 @@
     Location    : application/controllers/Auth.php
     Purpose     : Auth controller
     Created     : 07/09/2019 09:52:03 by Spiderman
-    Updated     : 08/25/2019 13:35:07 by Spiderman
+    Updated     : 10/25/2019 15:11:03 by Spiderman
     Changes     : 
 */
 
@@ -26,25 +26,20 @@ class Auth extends REST_Controller
 
     public function login_get()
     {
-        // Get the username and password parameters
+        $branch_id = (int)$this->get('branch_id');
         $username = (string)$this->get('username');
         $password = (string)$this->get('password');
 
-        // Check if the parameters are empty or null
-        if (empty($username) && empty($password)) {
-            // Set the response and exit
+        if (empty($branch_id) && empty($username) && empty($password)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the user by username and password from a model
-        $user = $this->users_model->_get_by_username($username, $password);
+        $user = $this->users_model->_get_by_username($branch_id, $username, $password);
 
-        // Check if data is empty or null
         if (empty($user)) {
-            // Set the response and exit
             $this->response([
                 'status' => FALSE,
                 'message' => 'User not found. Please double check your username and password.'

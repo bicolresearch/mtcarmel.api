@@ -4,9 +4,9 @@
     Filename    : Maps.php
     Location    : application/controllers/Maps.php
     Purpose     : Maps controller
-    Created     : 6/24/2019 by Scarlet Witch 
-    Updated     : 10/14/2019 15:50:03 by Scarlet Witch
-    Changes     : Added if null branch maps boundaries - get the maps center with attribute name of map locations
+    Created     : 06/24/2019 17:20:27 by Scarlet Witch 
+    Updated     : 10/29/2019 17:20:27 by Spiderman
+    Changes     : 
 
 */
 
@@ -14,9 +14,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use Restserver\Libraries\REST_Controller;
 
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/Format.php';
 
 class Maps extends REST_Controller
@@ -41,14 +39,6 @@ class Maps extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the map from the array, using the id as key for retrieval.
-        // Usually a model is to be used for this.
-        /*
-        $maps = [
-            'map_center' => $this->locations_model->_get_all($branch_id),
-            'map_boundaries' => $this->maps_model->_get_all($branch_id)
-        ];*/
-        
         $maps = $this->locations_model->_get_all($branch_id);
         $map_boundaries = $this->maps_model->_get_all($branch_id);
         $map_boundaries2 = $this->locations_model->_get_all_locations($branch_id);

@@ -25,8 +25,6 @@ class Locations_model extends CI_Model
     {
         $this->db
         ->select(           
-            't1.id,' .
-            't1.branch_id,' .
             't1.lat_center,' .
             't1.lng_center,')
         ->from('locations AS t1')
@@ -47,8 +45,6 @@ class Locations_model extends CI_Model
     {
         $this->db
         ->select(           
-            't1.id,' .
-            't1.branch_id,' .
             't1.lat_center as lat,' .
             't1.lng_center as lng,')
         ->from('locations AS t1')
@@ -69,8 +65,6 @@ class Locations_model extends CI_Model
     {
         $this->db 
         ->select(           
-            't1.id,' .
-            't1.branch_id,' .
             't1.lat_center,' .
             't1.lng_center,')
         ->from('locations AS t1')

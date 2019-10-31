@@ -4,9 +4,9 @@
     Filename    : Maps_model.php
     Location    : application/models/Maps_model.php
     Purpose     : Maps model
-    Created     : 6/27/2019 by Scarlet Witch
-    Updated     : 10/10/2019 14:06:08 by Scarlet Witch
-    Changes     : Added branch_id to _get_all
+    Created     : 06/27/2019 18:45:49 by Scarlet Witch
+    Updated     : 10/29/2019 18:45:49 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -25,8 +25,6 @@ class Maps_model extends CI_Model
     {
         $this->db
         ->select(           
-            't1.id,' .
-            't1.branch_id,' .
             't1.lat,' .
             't1.lng,')
         ->from('maps AS t1')
@@ -48,8 +46,6 @@ class Maps_model extends CI_Model
     {
         $this->db 
         ->select(           
-            't1.id,' .
-            't1.branch_id,' .
             't1.lat,' .
             't1.lng,')
         ->from('maps AS t1')

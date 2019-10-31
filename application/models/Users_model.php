@@ -101,7 +101,7 @@ class Users_model extends CI_Model
         return ($query->num_rows() > 0) ? $query->row() : false;
     }
 
-    public function _get_by_username($username, $password)
+    public function _get_by_username($branch_id, $username, $password)
     {
         $this->db
             ->select(
@@ -119,12 +119,15 @@ class Users_model extends CI_Model
             ->join('user_info AS t2', 't2.user_id = t1.id', 'left')      
             ->join('roles AS t3', 't3.id = t1.role_id', 'left')                       
             ->join('media AS t4', 't4.id = t2.media_id', 'left')     
-            ->where([
+            ->where(
+                [
+                't1.is_deleted'=> 0,      
+                't1.branch_id' => $branch_id,          
                 't1.username' => $username,
-                't1.password' => $password,
-                't1.is_deleted'=> 0
-            ]);
-
+                't1.password' => $password
+                ]
+            );
+        
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;

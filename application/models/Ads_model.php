@@ -67,6 +67,8 @@ class Ads_model extends CI_Model
                 't1.company_name,' .
                 't1.description,' .
                 't1.url,' .
+                't1.total,' .
+                't1.durations,' .
                 't1.expiration,' .
                 't4.id AS status_id,' .
                 't4.name AS status_name,' .

@@ -5,8 +5,8 @@
     Location    : application/models/Carmelites_model.php
     Purpose     : Carmelites model
     Created     : 06/27/2019 23:37:57 by Scarlet Witch
-    Updated     : 09/25/2019 15:46:57 by Scarlet Witch
-    Changes     : added filter per typeid
+    Updated     : 10/31/2019 14:24:50 by Spiderman
+    Changes     : 
 */
 
 if (!defined('BASEPATH')) {
@@ -46,10 +46,11 @@ class Carmelites_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
+                    't1.status_id' => 1,
                     't1.branch_id' => $branch_id
                 ]
             )     
-            ->order_by('t1.id', 'DESC');
+            ->order_by('t1.sequence', 'ASC');
         
         return json_decode($this->datatables->generate());
     }
@@ -79,6 +80,7 @@ class Carmelites_model extends CI_Model
             ->where(                
                 [
                     't1.is_deleted' => 0,
+                    't1.status_id' => 1,
                     't1.branch_id' => $branch_id,
                     't1.type_id' => $type_id
                 ]

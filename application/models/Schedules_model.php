@@ -31,11 +31,11 @@ class Schedules_model extends CI_Model
                 't1.day,' .
                 't2.name AS language,' .
                 't1.time_from,' .
-                't1.time_to,' .                
-                't1.dt_created,' .
-                't1.dt_updated,' .       
+                't1.time_to,' .      
                 't1.type_id,' . 
-                't3.name AS type_name,' .          
+                't3.name AS type_name,' .            
+                't1.dt_created,' .
+                't1.dt_updated,' .               
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
@@ -64,11 +64,11 @@ class Schedules_model extends CI_Model
                 't1.day,' .
                 't2.name AS language,' .
                 't1.time_from,' .
-                't1.time_to,' .                
-                't1.dt_created,' .
-                't1.dt_updated,' .       
+                't1.time_to,' . 
                 't1.type_id,' . 
-                't3.name AS type_name,' .          
+                't3.name AS type_name,' .                 
+                't1.dt_created,' .
+                't1.dt_updated,' .               
                 'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
                 'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
             ->from('schedules AS t1')
@@ -86,6 +86,42 @@ class Schedules_model extends CI_Model
             $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
+    }
+
+    public function _get_by_type($branch_id, $type_id)
+    {
+        $this->db
+            ->select(
+                't1.id,' .
+                't1.name,' .                             
+                't1.description,' .  
+                't1.day,' .
+                't2.name AS language,' .
+                't1.time_from,' .
+                't1.time_to,' .       
+                't1.type_id,' . 
+                't3.name AS type_name,' .            
+                't1.dt_created,' .
+                't1.dt_updated,' .              
+                'CONCAT(t4.first_name, " ", t4.last_name) AS created_by,' .
+                'CONCAT(t5.first_name, " ", t5.last_name) AS updated_by')
+            ->from('schedules AS t1')
+            ->join('global_reference_value AS t2', 't2.id = t1.language_id', 'left')          
+            ->join('global_reference_value AS t3', 't3.id = t1.type_id', 'left')                         
+            ->join('user_info AS t4', 't4.user_id = t1.created_by', 'left')
+            ->join('user_info AS t5', 't5.user_id = t1.updated_by', 'left')
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.branch_id' => $branch_id,
+                    't1.type_id' => $type_id
+                ]
+            )
+            ->order_by('t1.time_from', 'ASC');
+
+            $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
 
     public function _create($data)

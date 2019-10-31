@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Filename    : History.php
-    Location    : application/controllers/History.php
-    Purpose     : History controller
-    Created     : 06/24/2019 22:30:50 by Spiderman
-    Updated     : 10/24/2019 18:19:40 by Spiderman
+    Filename    : Contact.php
+    Location    : application/controllers/Contact.php
+    Purpose     : Contact controller
+    Created     : 06/27/2019 22:16:38 by Scarlet Witch
+    Updated     : 10/24/2019 21:57:48 by Spiderman
     Changes     : 
 */
 
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class History extends REST_Controller
+class contact extends REST_Controller
 {
     function __construct()
     {
@@ -35,7 +35,7 @@ class History extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $get_by_branch_id = $this->history_model->_get_by_branch_id($branch_id);
+        $get_by_branch_id = $this->contact_model->_get_by_branch_id($branch_id);
 
         if (empty($get_by_branch_id)) {
             $this->response([
@@ -50,11 +50,16 @@ class History extends REST_Controller
     public function update_put()
     {
         $data = [
-            'titular' => $this->put('titular'),
-            'diocese' => $this->put('diocese'),
-            'date_of_establishment' => $this->put('date_of_establishment'),            
-            'feast_day' => $this->put('feast_day'),
-            'content' => $this->put('content'),
+            'name' => $this->put('name'),
+            'description' => $this->put('description'),
+            'address1' => $this->put('address1'),            
+            'address2' => $this->put('address2'),
+            'city' => $this->put('city'),
+            'province' => $this->put('province'),
+            'country' => $this->put('country'),
+            'landline' => $this->put('landline'),
+            'mobile' => $this->put('mobile'),
+            'email' => $this->put('email'),
             'updated_by' => $this->put('user_id'),
             'dt_updated' => date('Y-m-d H:i:s')
         ];
@@ -74,7 +79,7 @@ class History extends REST_Controller
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
-            $this->history_model->_update($id, $data);
+            $this->contact_model->_update($id, $data);
             $this->response([
                 'status' => TRUE,
                 'message' => 'Updated'

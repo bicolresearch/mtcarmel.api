@@ -149,7 +149,7 @@ $autoload['model'] = array(
     'modules_model',
     'schedules_model',
     'carmelites_model',
-    'contacts_model',
+    'contact_model',
     'maps_model',
     'history_model',
     'boundaries_model',

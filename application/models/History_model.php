@@ -5,7 +5,7 @@
     Location    : application/models/History_model.php
     Purpose     : History model
     Created     : 06/27/2019 20:44:50 by Spiderman
-    Updated     : 09/07/2019 01:12:41 by Spiderman
+    Updated     : 10/24/2019 20:45:16 by Spiderman
     Changes     : 
 */
 
@@ -21,7 +21,7 @@ class History_model extends CI_Model
         parent::__construct();
     }
 
-    public function _get_all($branch_id)
+    public function _get_by_branch_id($branch_id)
     {
         $this->db
             ->select(
@@ -43,21 +43,11 @@ class History_model extends CI_Model
                     't1.is_deleted' => 0,
                     't1.branch_id' => $branch_id
                 ]
-            )     
-            ->order_by('t1.id', 'DESC');
+            );
         
         $query = $this->db->get();
 
         return ($query->num_rows() > 0) ? $query->row() : false;
-    }
-
-    public function _create($data)
-    {
-        $this->db->trans_begin();
-
-        $this->db->insert('history', $data);
-
-        ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }
 
     public function _update($id, $data)
@@ -67,28 +57,6 @@ class History_model extends CI_Model
         $this->db
             ->where('id', $id)
             ->update('history', $data);
-
-        ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
-    }
-
-    public function _soft_delete($id, $data)
-    {
-        $this->db->trans_begin();
-
-        $this->db
-            ->where('id', $id)
-            ->update('history', $data);
-
-        ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
-    }
-
-    public function _hard_delete($id)
-    {
-        $this->db->trans_begin();
-
-        $this->db
-            ->where('id', $id)
-            ->delete('history');
 
         ($this->db->trans_status() === false) ? $this->db->trans_rollback() : $this->db->trans_commit();
     }

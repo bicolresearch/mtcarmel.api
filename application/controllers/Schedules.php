@@ -5,7 +5,7 @@
     Location    : application/controllers/Schedules.php
     Purpose     : Schedules controller
     Created     : 06/24/2019 12:39:19 by Spiderman
-    Updated     : 09/16/2019 20:18:25 by Spiderman
+    Updated     : 10/25/2019 16:27:20 by Spiderman
     Changes     : 
 */
 
@@ -27,15 +27,18 @@ class Schedules extends REST_Controller
     public function index_get()
     {
         $branch_id = (int)$this->get('branch_id');
+        $type_id = (int)$this->get('type_id');
 
         $get_all = $this->schedules_model->_get_all($branch_id);
 
-        if(empty($branch_id)) {
+        if(empty($branch_id) && empty($type_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        } else {
+        } 
+
+        if(empty($type_id)) {
             if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
@@ -44,6 +47,17 @@ class Schedules extends REST_Controller
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
+        }
+
+        $get_by_id = $this->schedules_model->_get_by_type($branch_id, $type_id);
+
+        if (empty($get_by_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+        } else {
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
