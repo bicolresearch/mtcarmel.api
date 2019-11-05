@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : First_communion.php
-    Location    : application/controllers/First_communion.php
-    Purpose     : First communion controller
+    Filename    : First_communions.php
+    Location    : application/controllers/First_communions.php
+    Purpose     : First communions controller
     Created     : 08/06/2019 20:03:49 by Scarlet Witch
-    Updated     : 08/15/2019 13:06:40 by Scarlet Witch
-    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
+    Updated     : 10/30/2019 12:53:11 by Scarlet Witch
+    Changes     : renamed form, added branch id, role id and user id    
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class First_communion extends REST_Controller
+class First_communions extends REST_Controller
 {
     function __construct()
     {
@@ -26,31 +26,33 @@ class First_communion extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->first_communion_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->first_communions_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->first_communions_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->first_communions_model->_get_by_priest($branch_id);    //Priest
+        }
 
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Not Found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-        } else {
-            // Set the response and exit
+        if(empty($branch_id) && empty($role_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'Not Found'
+                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            } 
+            else {
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            }
         }
     }
 

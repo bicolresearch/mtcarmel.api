@@ -5,8 +5,8 @@
     Location    : application/controllers/Communion_of_the_sick.php
     Purpose     : Communion of the sick controller
     Created     : 08/06/2019 16:31:17 by Scarlet Witch
-    Updated     : 
-    Changes     : 
+    Updated     : 10/30/2019 14:21:59 by Scarlet Witch
+    Changes     : added branch id, role id and user id, updated medium_get to communion_get - added branch id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -26,58 +26,62 @@ class Communion_of_the_sick extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->communion_of_the_sick_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->communion_of_the_sick_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->communion_of_the_sick_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->communion_of_the_sick_model->_get_by_priest($branch_id);    //Priest
+        }
 
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
+        if(empty($branch_id) && empty($role_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            } 
+            else {
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
     }
 
-    public function medium_get()
+    public function communion_get()
     {
         // Get the id parameter
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
-
-        // Validate the id
-        if (empty($id)) {
-            // Set the response and exit
+        
+        // Validate the id.
+        if (empty($branch_id) && empty($id)) {
+            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->communion_of_the_sick_model->_get_by_id($id);
+        // Get the module from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        $get_by_id = $this->communion_of_the_sick_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
