@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Filename    : Community.php
-    Location    : application/controllers/Community.php
-    Purpose     : Community baptism controller
-    Created     : 08/07/2019 12:38:27 by Scarlet Witch
-    Updated     : 08/15/2019 13:02:44 by Scarlet Witch
-    Changes     : updated the create post/update - from country to country_code, barangay to barangay_code, city to city_code and provice to province_code
+    Filename    : Individuals.php
+    Location    : application/controllers/Individuals.php
+    Purpose     : Individuals baptism controller
+    Created     : 08/07/2019 12:29:37 by Scarlet Witch
+    Updated     : 10/30/2019 11:29:29 by Scarlet Witch
+    Changes     : renamed form, added branch id, role id and user id, updated medium_get to individual - added branch id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -16,7 +16,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Community extends REST_Controller
+class Individuals extends REST_Controller
 {
     function __construct()
     {
@@ -26,58 +26,62 @@ class Community extends REST_Controller
 
     public function index_get()
     {
-        // Get the data from the database
-        $getAll = $this->community_model->_get_all();
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
+        
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->individuals_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->individuals_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->individuals_model->_get_by_priest($branch_id);    //Priest
+        }
 
-        // Get the id parameter
-        $id = (int)$this->get('id');
-
-        // Validate id
-        if (empty($id)) {
-            // In case the database result returns NULL
-            if (empty($getAll)) {
-                // Set the response and exit
+         if(empty($branch_id) && empty($role_id)) {
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Request'
+            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        } else {
+            if (empty($get_all)) {
                 $this->response([
                     'status' => FALSE,
                     'message' => 'Not Found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            } else {
-                // Set the response and exit
-                $this->response($getAll, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            } 
+            else {
+                $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
-        } else {
-            // Set the response and exit
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Request'
-            ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
+        }        
     }
 
-    public function medium_get()
+    public function individual_get()
     {
         // Get the id parameter
+        $branch_id = (int)$this->get('branch_id');
         $id = (int)$this->get('id');
-
-        // Validate the id
-        if (empty($id)) {
-            // Set the response and exit
+        
+        // Validate the id.
+        if (empty($branch_id) && empty($id)) {
+            // Invalid id, set the response and exit.
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        // Get the data from the array, using the id as key for retrieval
-        $getById = $this->community_model->_get_by_id($id);
+        // Get the module from the array, using the id as key for retrieval.
+        // Usually a model is to be used for this.
+        $get_by_id = $this->individuals_model->_get_by_id($branch_id, $id);
 
-        if (empty($getById)) {
+        if (empty($get_by_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Not Found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         } else {
-            $this->response($getById, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            $this->response($get_by_id, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         }
     }
 
@@ -86,7 +90,7 @@ class Community extends REST_Controller
         $data = [
             'branch_id' => $this->post('branch_id'),    
             'module_id' => 6,
-            'sub_module_id' => 7,
+            'sub_module_id' => 6,
             'name' => $this->post('name'),
             'dt_birth' => $this->post('dt_birth'),
             'birth_place' => $this->post('birth_place'),
@@ -103,12 +107,13 @@ class Community extends REST_Controller
             'barangay' => $this->post('barangay_code'),
             'city' => $this->post('city_code'),
             'province' => $this->post('province_code'),
-            'country' => $this->post('country_code'),                        
+            'country' => $this->post('country_code'),
             'marriage' => $this->post('marriage'),
             'place_marriage' => $this->post('place_marriage'),
             'name_contact_person' => $this->post('name_contact_person'),
             'landline_contact_person' => $this->post('landline_contact_person'),
             'mobile_contact_person' => $this->post('mobile_contact_person'),
+            //'officiating_priest' => $this->post('officiating_priest'),
             'dt_baptism' => $this->post('dt_baptism'),
             'time_baptism' => $this->post('time_baptism'),
             'created_by' => $this->post('user_id'),
@@ -128,7 +133,7 @@ class Community extends REST_Controller
             //$this->base64_to_image($this->post('base64'), $data['full_path']);
 
             // If data array does not contains NULL values, create new resource to database
-            $this->community_model->_create($data);
+            $this->individual_model->_create($data);
             
             // Set the response and exit
             $this->response([
@@ -153,7 +158,7 @@ class Community extends REST_Controller
             'dt_birth_mother' => $this->put('dt_birth_mother'),
             'birth_place_mother' => $this->put('birth_place_mother'),
             'address_1' => $this->put('address_1'),
-            'address_2' => $this->put('address_2'),                       
+            'address_2' => $this->put('address_2'),
             'barangay' => $this->put('barangay_code'),
             'city' => $this->put('city_code'),
             'province' => $this->put('province_code'),
@@ -163,6 +168,7 @@ class Community extends REST_Controller
             'name_contact_person' => $this->put('name_contact_person'),
             'landline_contact_person' => $this->put('landline_contact_person'),
             'mobile_contact_person' => $this->put('mobile_contact_person'),
+            //'officiating_priest' => $this->put('officiating_priest'),
             'dt_baptism' => $this->put('dt_baptism'),
             'time_baptism' => $this->put('time_baptism'),
             'updated_by' => $this->put('user_id'),
@@ -182,7 +188,7 @@ class Community extends REST_Controller
         }
 
         // Get the data from the array, using the id as key for retrieval
-        $getById = $this->community_model->_get_by_id($id);
+        $getById = $this->individual_model->_get_by_id($id);
 
         if (empty($getById)) {
             $this->response([
@@ -200,7 +206,7 @@ class Community extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->community_model->_update($id, $data);
+            $this->individual_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -230,7 +236,7 @@ class Community extends REST_Controller
         }
 
         // Get the data from the array, using the id as key for retrieval
-        $getById = $this->community_model->_get_by_id($id);
+        $getById = $this->individual_model->_get_by_id($id);
 
         if (empty($getById)) {
             $this->response([
@@ -248,7 +254,7 @@ class Community extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // If data array does not contains NULL values, update the resource
-            $this->community_model->_update($id, $data);
+            $this->individual_model->_update($id, $data);
 
             $this->response([
                 'status' => TRUE,
@@ -272,7 +278,7 @@ class Community extends REST_Controller
         }
 
         // Get the data from the array, using the id as key for retrieval.
-        $getById = $this->community_model->_get_by_id($id);
+        $getById = $this->individual_model->_get_by_id($id);
 
         if (empty($getById)) {
             $this->response([
@@ -290,7 +296,7 @@ class Community extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             // Delete the resource
-            $this->community_model->_hard_delete($id);
+            $this->individual_model->_hard_delete($id);
 
             // Set the response and exit
             $this->set_response([

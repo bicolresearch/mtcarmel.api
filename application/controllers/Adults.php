@@ -5,11 +5,8 @@
     Location    : application/controllers/Adults.php
     Purpose     : Adults baptism controller
     Created     : 08/07/2019 12:38:27 by Scarlet Witch
-    Updated     : 09/13/2019 11:53:06 by Scarlet Witch
-    Changes     : renamed controller name from adult to adults,
-                  renamed model name from adult_model to adults_model,
-                  renamed function name for get by id, 
-                  added branch_id
+    Updated     : 10/30/2019 12:17:58 by Scarlet Witch
+    Changes     : added role id and user id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -28,12 +25,20 @@ class Adults extends REST_Controller
     }
 
     public function index_get()
-    {        
-        $branch_id = (int)$this->get('branch_id');
+    {
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
 
-        $get_all = $this->adults_model->_get_all($branch_id);
-        
-        if(empty($branch_id)) {
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->adults_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->adults_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->adults_model->_get_by_priest($branch_id);    //Priest
+        }
+
+        if(empty($branch_id) && empty($role_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
@@ -53,8 +58,7 @@ class Adults extends REST_Controller
 
     public function adult_get()
     {
-        $branch_id = (int)$this->get('branch_id');
-        
+        $branch_id = (int)$this->get('branch_id');        
         $id = (int)$this->get('id');
 
         if (empty($branch_id) && empty($id)) {
