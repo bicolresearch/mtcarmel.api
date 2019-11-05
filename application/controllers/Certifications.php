@@ -5,8 +5,8 @@
     Location    : application/controllers/Certifications.php
     Purpose     : Certifications controller
     Created     : 08/06/2019 19:18:21 by Scarlet Witch
-    Updated     : 09/16/2019 17:01:36 by Scarlet Witch
-    Changes     : add user role id and user id filter
+    Updated     : 10/30/2019 11:11:52 by Scarlet Witch
+    Changes     : updated user role id and user id filter
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -25,18 +25,20 @@ class Certifications extends REST_Controller
     }
 
     public function index_get()
-    {
-        $role_id = (int)$this->get('role_id');
-        $branch_id = (int)$this->get('branch_id');
+    {        
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
         $user_id = (int)$this->get('user_id');
         
-        if ($role_id = 1 && $role_id != 2 && $role_id != 3 )  {
-            $get_all = $this->certifications_model->_get_all($branch_id); //Admin
-        } elseif ($role_id != 1 && $role_id != 2 && $role_id = 3 ) {
-            $get_all = $this->certifications_model->_get_all_user($user_id); //User
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->certifications_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->certifications_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->certifications_model->_get_by_priest($branch_id);    //Priest
         }
 
-        if(empty($role_id) && empty($branch_id) && empty($user_id)) {
+        if(empty($branch_id) && empty($role_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'

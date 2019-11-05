@@ -5,8 +5,8 @@
     Location    : application/controllers/Mass_requests.php
     Purpose     : Mass requests controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
-    Updated     : 09/16/2019 22:30:01 by Spiderman
-    Changes     : 
+    Updated     : 10/30/2019 10:15:32 by Scarlet Witch
+    Changes     : added role id and user id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -26,11 +26,19 @@ class Mass_requests extends REST_Controller
 
     public function index_get()
     {
-        $branch_id = (int)$this->get('branch_id');
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
 
-        $get_all = $this->mass_requests_model->_get_all($branch_id);
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->mass_requests_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->mass_requests_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->mass_requests_model->_get_by_priest($branch_id);    //Priest
+        }
 
-        if(empty($branch_id)) {
+        if(empty($branch_id) && empty($role_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'

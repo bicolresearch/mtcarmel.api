@@ -5,9 +5,8 @@
     Location    : application/models/Certifications_model.php
     Purpose     : Certifications model
     Created     : 08/06/2019 19:15:59 by Scarlet Witch
-    Updated     : 09/16/2019 16:59:35 by Scarlet Witch
-    Changes     : added function get_all_priest, get_all_user,
-                  added branch_id 
+    Updated     : 10/30/2019 11:13:18 by Scarlet Witch
+    Changes     : updated get_all_user to _get_by_user_id and added _get_by_priest
 */
 
 if (!defined('BASEPATH')) {
@@ -27,11 +26,11 @@ class Certifications_model extends CI_Model
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.name,' .
-                't1.dt_created,' .
-                't1.dt_updated,' .    
+                't1.name,' .   
                 't2.id AS status_id,' .
                 't2.name AS status_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' . 
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('service_transactions AS t1')                                          
@@ -45,23 +44,24 @@ class Certifications_model extends CI_Model
                     't1.sub_module_id' => 5,
                     't1.branch_id' => $branch_id
                 ]
-            )
-            ->order_by('t1.id', 'DESC');   
+            )                            
+            ->order_by('t1.status_id', 'ASC')                    
+            ->order_by('t1.id', 'DESC');       
                   
 
         return json_decode($this->datatables->generate());
     }
 
-    public function _get_all_user($user_id)
+    public function _get_by_user_id($user_id)
     {
         $this->datatables
             ->select(
                 't1.id,' .
-                't1.name,' .
-                't1.dt_created,' .
-                't1.dt_updated,' .    
+                't1.name,' . 
                 't2.id AS status_id,' .
                 't2.name AS status_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' .   
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('service_transactions AS t1')                                          
@@ -75,9 +75,42 @@ class Certifications_model extends CI_Model
                     't1.sub_module_id' => 5,
                     't1.created_by' => $user_id
                 ]
-            )
-            ->order_by('t1.id', 'DESC');   
+            )                            
+            ->order_by('t1.status_id', 'ASC')                    
+            ->order_by('t1.id', 'DESC');      
         
+        return json_decode($this->datatables->generate());
+    }
+
+    public function _get_by_priest($branch_id)
+    {
+        $this->datatables
+            ->select(
+                't1.id,' .
+                't1.name,' .   
+                't2.id AS status_id,' .
+                't2.name AS status_name,' .
+                't1.dt_created,' .
+                't1.dt_updated,' . 
+                'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
+                'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
+            ->from('service_transactions AS t1')                                          
+            ->join('global_reference_value AS t2', 't2.id = t1.status_id', 'left')      
+            ->join('user_info AS t3', 't3.user_id = t1.created_by', 'left')
+            ->join('user_info AS t4', 't4.user_id = t1.updated_by', 'left')                                   
+            ->where(                
+                [
+                    't1.is_deleted' => 0,
+                    't1.status_id' => 1,
+                    't1.module_id' => 5,
+                    't1.sub_module_id' => 5,
+                    't1.branch_id' => $branch_id
+                ]
+            )                            
+            ->order_by('t1.status_id', 'ASC')                    
+            ->order_by('t1.id', 'DESC');      
+                  
+
         return json_decode($this->datatables->generate());
     }
 
@@ -94,11 +127,11 @@ class Certifications_model extends CI_Model
                 't1.name_contact_person,' .
                 't1.landline_contact_person,' .
                 't1.mobile_contact_person,' .
-                't1.dt_marriage,' .                
+                't1.dt_marriage,' .
+                't2.id AS status_id,' .
+                't2.name AS status_name,' .      
                 't1.dt_created,' .
                 't1.dt_updated,' .  
-                't2.id AS status_id,' .
-                't2.name AS status_name,' .
                 'CONCAT(t3.first_name, " ", t3.last_name) AS created_by,' .
                 'CONCAT(t4.first_name, " ", t4.last_name) AS updated_by')
             ->from('service_transactions AS t1')                                          

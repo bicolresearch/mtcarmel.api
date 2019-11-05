@@ -5,8 +5,8 @@
     Location    : application/controllers/Prayer_requests.php
     Purpose     : Prayer requests controller
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 09/16/2019 21:46:58 by Spiderman
-    Changes     : 
+    Updated     : 10/29/2019 14:56:16 by Scarlet Witch
+    Changes     : added role id and user id
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -25,26 +25,35 @@ class Prayer_requests extends REST_Controller
     }
 
     public function index_get()
-    {
-        $branch_id = (int)$this->get('branch_id');
+    {        
+        $branch_id = (int)$this->get('branch_id');             
+        $role_id = (int)$this->get('role_id');   
+        $user_id = (int)$this->get('user_id');
 
-        $get_all = $this->prayer_requests_model->_get_all($branch_id);
+        if ($role_id == 1 && $role_id !== 2 && $role_id !== 3)  {
+            $get_all = $this->prayer_requests_model->_get_all($branch_id);          //Admin
+        } elseif ($role_id == 2 && $role_id !== 1 &&  $role_id !== 3) {
+            $get_all = $this->prayer_requests_model->_get_by_user_id($user_id);     //User
+        } elseif ($role_id == 3 && $role_id !== 1 && $role_id !== 2) {
+            $get_all = $this->prayer_requests_model->_get_by_priest($branch_id);    //Priest
+        }
 
-        if(empty($branch_id)) {
+        if(empty($branch_id) && empty($role_id)) {
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Request'
             ], REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         } else {
             if (empty($get_all)) {
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Not Found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Not Found'
+            ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             } else {
                 $this->response($get_all, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
-        }
+            }       
+        }        
+        
     }
 
     public function prayer_request_get()
