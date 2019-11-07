@@ -5,8 +5,8 @@
     Location    : application/controllers/Mass_requests.php
     Purpose     : Mass requests controller
     Created     : 07/31/2019 13:44:50 by Scarlet Witch
-    Updated     : 10/30/2019 10:15:32 by Scarlet Witch
-    Changes     : added role id and user id
+    Updated     : 11/07/2019 16:04:12 by Scarlet Witch
+    Changes     : deleted status_id in create
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -85,7 +85,6 @@ class Mass_requests extends REST_Controller
             'branch_id' => $this->post('branch_id'),  
             'module_id' => $this->post('module_id'),
             'sub_module_id' => $this->post('sub_module_id'),
-            'status_id' => $this->post('status_id'),
             'name' => $this->post('name'),
             'purpose_id' => $this->post('purpose_id'),
             'dt_offered' => $this->post('dt_offered'),

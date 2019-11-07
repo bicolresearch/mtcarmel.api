@@ -5,8 +5,8 @@
     Location    : application/controllers/Prayer_requests.php
     Purpose     : Prayer requests controller
     Created     : 07/30/2019 15:53:10 by Scarlet Witch
-    Updated     : 10/29/2019 14:56:16 by Scarlet Witch
-    Changes     : added role id and user id
+    Updated     : 11/07/2019 12:21:55 by Scarlet Witch
+    Changes     : deleted status_id in create
 */
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -86,7 +86,6 @@ class Prayer_requests extends REST_Controller
             'branch_id' => $this->post('branch_id'),    
             'module_id' => $this->post('module_id'),
             'sub_module_id' => $this->post('sub_module_id'),
-            'status_id' => $this->post('status_id'),
             'prayer' => $this->post('prayer'),
             'created_by' => $this->post('user_id'),
             'dt_created' => date('Y-m-d H:i:s')
